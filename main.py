@@ -19,7 +19,7 @@ async def funcion_help(mensaje):
     embedh= discord.Embed(
         title = "Help",
         colour= discord.Colour.blue(),
-        description="Tipos de $help rimas, cs, sr"
+        description="Tipos de $help = rimas / comandos"
         )
     
     if analizar_contenido(mensaje.content)=="rimas":
