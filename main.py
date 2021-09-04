@@ -7,12 +7,22 @@ client= discord.Client()
 #-------------------------------Funciones------------------------------------#
 
 def longitud(medible):
+    #mide los caracteres de la palabra ingresada
     return len(medible)
 
-def analizar_contenido(msg,comando):
+def analizar_contenido(msg):
+    #retorna solo la primer palabra despues del comando
     linea=msg.split(" ")
-    return linea[1] #retorna solo la primer palabra despues del comando
+    return linea[1]
 
+def funcion_help(msg):
+    if analizar_contenido(msg)=="rimas":
+        for rimas in RIMAS.keys():
+            mensaje.channel.send(rimas+": "+RIMAS[rimas])
+            
+    if analizar_contenido(msg)=="cs":
+        for comandos in COMANDOS_SIMPLES.keys():
+            mensaje.channel.send(comandos+": "+COMANDOS_SIMPLES[comandos])
 
 #---------------------------------V. globales--------------------------------#
 
@@ -37,6 +47,7 @@ RIMAS={
 'que': 'so'
 }
 
+#Comandos que devuelven una string 
 COMANDOS_SIMPLES={
 'saludo':"hoal",
 'auris':"https://www.youtube.com/watch?v=ptJJG8ucn48",
@@ -45,7 +56,12 @@ COMANDOS_SIMPLES={
 'babadungo':"https://www.youtube.com/watch?v=y-BWKxp322w",
 'O.o':"o.O",
 'o.O':"O.o",
-'len':longitud,
+'len':longitud
+}
+
+#Comandos que NO devuelven una string (Sin Return)
+COMANDOS_SR={
+"help", funcion_help
 }
 
 PREFIJO="$"
@@ -74,8 +90,12 @@ async def on_message(mensaje):
                 await mensaje.channel.send(COMANDOS_SIMPLES[comando])
 
             else:
-                await mensaje.channel.send(COMANDOS_SIMPLES[comando](analizar_contenido(msg,comando)))
-                
+                await mensaje.channel.send(COMANDOS_SIMPLES[comando](analizar_contenido(msg)))
+
+    for comando in COMANDOS_SR.keys():
+        if msg.startswith(PREFIJO+comando):
+            comando(msg)
+
                 
     if SWITCH_RIMAS:  
         for numero in RIMAS.keys():
