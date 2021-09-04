@@ -16,13 +16,25 @@ def analizar_contenido(msg):
     return linea[1]
 
 async def funcion_help(mensaje):
+    embedh= discord.Embed(
+        title = "Help",
+        colour= discord.Colour.blue()
+        )
+    
+    
     if analizar_contenido(mensaje.content)=="rimas":
         for rimas in RIMAS.keys():
-            await mensaje.channel.send(rimas+": "+RIMAS[rimas])
+            embedh.add_field(name= rimas,value= RIMAS[rimas])
+            #await mensaje.channel.send(rimas+": "+RIMAS[rimas])
+        await mensaje.channel.send(embed=embedh)
             
     if analizar_contenido(mensaje.content)=="cs":
         for comandos in COMANDOS_SIMPLES.keys():
             await mensaje.channel.send(comandos+": "+COMANDOS_SIMPLES[comandos])
+    
+    if analizar_contenido(mensaje.content)=="sr":
+        for comandos in COMANDOS_SR.keys():
+            await mensaje.channel.send(comandos+": "+COMANDOS_SR[comandos])
 
 #---------------------------------V. globales--------------------------------#
 
