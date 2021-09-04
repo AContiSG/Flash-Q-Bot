@@ -3,6 +3,17 @@ from keep_alive import keep_alive
 
 client= discord.Client()
 
+
+#-------------------------------Funciones------------------------------------#
+
+def longitud(medible):
+    return len(medible)
+
+def analizar_contenido(msg,comando):
+    linea=msg.split(" ")
+    return linea[1] #retorna solo la primer palabra despues del comando
+
+
 #---------------------------------V. globales--------------------------------#
 
 RIMAS={
@@ -40,16 +51,6 @@ COMANDOS_SIMPLES={
 PREFIJO="$"
 
 SWITCH_RIMAS=True
-
-
-#-------------------------------Funciones------------------------------------#
-
-def longitud(medible):
-    return len(medible)
-
-def analizar_contenido(msg,comando):
-    linea=msg.split(" ")
-    return linea[1] #retorna solo la primer palabra despues del comando
 
 
 #-------------------------------Al ejecutar-----------------------------------#
