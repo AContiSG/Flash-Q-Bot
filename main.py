@@ -3,6 +3,8 @@ from keep_alive import keep_alive
 
 client= discord.Client()
 
+#---------------------------------V. globales--------------------------------#
+
 RIMAS={
 '20': 'Mi pene en tu mente',
 '15': 'No me la hagas un esguince',
@@ -21,8 +23,8 @@ RIMAS={
 '2': 'Esta es para vos',
 '1': 'Tu culo vacuno',
 '0': 'Te la meto en el trasero',
-'que': 'so',
-'Que': 'so'}
+'que': 'so'
+}
 
 COMANDOS_SIMPLES={
 'saludo':"hoal",
@@ -30,15 +32,33 @@ COMANDOS_SIMPLES={
 'atiendo':"https://www.youtube.com/watch?v=i5Vdl_unhHQ",
 'arrepentir':"https://www.youtube.com/watch?v=RcAP6hl7T0g",
 'babadungo':"https://www.youtube.com/watch?v=y-BWKxp322w",
-'0.o':"o.0",
-'o.0':"0.o"
+'O.o':"o.O",
+'o.O':"O.o",
+'len':longitud,
 }
 
 PREFIJO="$"
 
+SWITCH_RIMAS=True
+
+
+#-------------------------------Funciones------------------------------------#
+
+def longitud(medible):
+    return len(medible)
+
+def analizar_contenido(msg,comando):
+    linea=msg.split(" ")
+    return linea[1] #retorna solo la primer palabra despues del comando
+
+
+#-------------------------------Al ejecutar-----------------------------------#
+
 @client.event
 async def on_ready():
     print('{0.user} se inicio correctamente.'.format(client))
+
+#-------------------------------On message------------------------------------#
 
 @client.event
 async def on_message(mensaje):
@@ -49,15 +69,21 @@ async def on_message(mensaje):
     
     for comando in COMANDOS_SIMPLES.keys():
         if msg.startswith(PREFIJO+comando):
-            mandar_comando=COMANDOS_SIMPLES[comando]
-            await mensaje.channel.send(mandar_comando)
+            if isinstance(COMANDOS_SIMPLES[comando], str):
+                await mensaje.channel.send(COMANDOS_SIMPLES[comando])
 
-    for numero in RIMAS.keys():
-        if msg.endswith(numero):
-            rima=RIMAS[numero]
-            await mensaje.channel.send(rima)
-            break
+            else:
+                await mensaje.channel.send(COMANDOS_SIMPLES[comando](analizar_contenido(msg,comando)))
+                
+                
+    if SWITCH_RIMAS:  
+        for numero in RIMAS.keys():
+            if msg.endswith(numero):
+                rima=RIMAS[numero]
+                await mensaje.channel.send(rima)
+                break
 
+#------------------------------Final------------------------------------------#
 
 keep_alive()
 client.run(os.getenv('TOKEN'))
