@@ -19,7 +19,7 @@ async def funcion_help(mensaje):
     embedh= discord.Embed(
         title = "Help",
         colour= discord.Colour.blue(),
-        description="tipos de $help: rimas, cs, sr"
+        description="Tipos de $help rimas, cs, sr"
         )
     
     
@@ -43,6 +43,7 @@ async def funcion_help(mensaje):
 
 #---------------------------------V. globales--------------------------------#
 
+#Responde con el valor cuando termina con la clave
 RIMAS={
 '20': 'Mi pene en tu mente',
 '15': 'No me la hagas un esguince',
@@ -61,6 +62,8 @@ RIMAS={
 '2': 'Esta es para vos',
 '1': 'Tu culo vacuno',
 '0': 'Te la meto en el trasero',
+'O.o':"o.O",
+'o.O':"O.o",
 'que': 'so'
 }
 
@@ -71,8 +74,6 @@ COMANDOS_SIMPLES={
 'atiendo':"https://www.youtube.com/watch?v=i5Vdl_unhHQ",
 'arrepentir':"https://www.youtube.com/watch?v=RcAP6hl7T0g",
 'babadungo':"https://www.youtube.com/watch?v=y-BWKxp322w",
-'O.o':"o.O",
-'o.O':"O.o",
 'len':longitud
 }
 
