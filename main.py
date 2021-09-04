@@ -15,14 +15,14 @@ def analizar_contenido(msg):
     linea=msg.split(" ")
     return linea[1]
 
-def funcion_help(msg):
-    if analizar_contenido(msg)=="rimas":
+async def funcion_help(mensaje):
+    if analizar_contenido(mensaje.content)=="rimas":
         for rimas in RIMAS.keys():
-            mensaje.channel.send(rimas+": "+RIMAS[rimas])
+            await mensaje.channel.send(rimas+": "+RIMAS[rimas])
             
-    if analizar_contenido(msg)=="cs":
+    if analizar_contenido(mensaje.content)=="cs":
         for comandos in COMANDOS_SIMPLES.keys():
-            mensaje.channel.send(comandos+": "+COMANDOS_SIMPLES[comandos])
+            await mensaje.channel.send(comandos+": "+COMANDOS_SIMPLES[comandos])
 
 #---------------------------------V. globales--------------------------------#
 
@@ -61,7 +61,7 @@ COMANDOS_SIMPLES={
 
 #Comandos que NO devuelven una string (Sin Return)
 COMANDOS_SR={
-"help", funcion_help
+"help": funcion_help
 }
 
 PREFIJO="$"
@@ -94,7 +94,7 @@ async def on_message(mensaje):
 
     for comando in COMANDOS_SR.keys():
         if msg.startswith(PREFIJO+comando):
-            comando(msg)
+            await COMANDOS_SR[comando](mensaje)
 
                 
     if SWITCH_RIMAS:  
