@@ -3,7 +3,7 @@ from keep_alive import keep_alive
 
 client= discord.Client()
 
-numeros_rimas={
+RIMAS={
 '20': 'Mi pene en tu mente',
 '15': 'No me la hagas un esguince',
 '14': 'Cuidado no la forces (malisima lol)',
@@ -39,9 +39,9 @@ async def on_message(mensaje):
   if msg.startswith('$saludo'):
     await mensaje.channel.send("hoal")
 	
-  for numero in numeros_rimas.keys():
+  for numero in RIMAS.keys():
       if msg.endswith(numero):
-          rima=numeros_rimas[numero]
+				rima=RIMAS[numero]
           await mensaje.channel.send(rima)
           break
 
