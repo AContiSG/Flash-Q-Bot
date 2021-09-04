@@ -22,24 +22,20 @@ async def funcion_help(mensaje):
         description="Tipos de $help rimas, cs, sr"
         )
     
-    
     if analizar_contenido(mensaje.content)=="rimas":
         for rimas in RIMAS.keys():
-            embedh.add_field(name= rimas,value= RIMAS[rimas])
+            embedh.add_field(name= rimas,value= RIMAS[rimas], inline=True)
         embedh.set_footer(text="rimas")
         await mensaje.channel.send(embed=embedh)
             
-    if analizar_contenido(mensaje.content)=="cs":
+    if analizar_contenido(mensaje.content)=="comandos":
         for comandos in COMANDOS_SIMPLES.keys():
-            embedh.add_field(name= comandos,value= COMANDOS_SIMPLES[comandos])
-        embedh.set_footer(text="Comandos simples")
-        await mensaje.channel.send(embed=embedh)
-    
-    if analizar_contenido(mensaje.content)=="sr":
+            embedh.add_field(name= comandos,value= COMANDOS_SIMPLES[comandos], inline=True)
         for comandos in COMANDOS_SR.keys():
-            embedh.add_field(name= comandos,value= COMANDOS_SR[comandos])
-        embedh.set_footer(text="Comandos SR")
+            embedh.add_field(name= comandos,value= COMANDOS_SR[comandos], inline=True)
+        embedh.set_footer(text="Comandos")
         await mensaje.channel.send(embed=embedh)
+
 
 #---------------------------------V. globales--------------------------------#
 
