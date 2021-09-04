@@ -24,26 +24,39 @@ RIMAS={
 'que': 'so',
 'Que': 'so'}
 
+COMANDOS_SIMPLES={
+'saludo':"hoal",
+'auris':"https://www.youtube.com/watch?v=ptJJG8ucn48",
+'atiendo':"https://www.youtube.com/watch?v=i5Vdl_unhHQ",
+'arrepentir':"https://www.youtube.com/watch?v=RcAP6hl7T0g",
+'babadungo':"https://www.youtube.com/watch?v=y-BWKxp322w",
+'0.o':"o.0",
+'o.0':"0.o"
+}
+
+PREFIJO="$"
 
 @client.event
 async def on_ready():
-  print('{0.user} se inicio correctamente.'.format(client))
+    print('{0.user} se inicio correctamente.'.format(client))
 
 @client.event
 async def on_message(mensaje):
-  if mensaje.author == client.user:
-    return
+    if mensaje.author == client.user:
+        return
 
-  msg = mensaje.content
+    msg = mensaje.content
+    
+    for comando in COMANDOS_SIMPLES.keys():
+        if msg.startswith(PREFIJO+comando):
+            mandar_comando=COMANDOS_SIMPLES[comando]
+            await mensaje.channel.send(mandar_comando)
 
-  if msg.startswith('$saludo'):
-    await mensaje.channel.send("hoal")
-	
-  for numero in RIMAS.keys():
-      if msg.endswith(numero):
-				rima=RIMAS[numero]
-          await mensaje.channel.send(rima)
-          break
+    for numero in RIMAS.keys():
+        if msg.endswith(numero):
+            rima=RIMAS[numero]
+            await mensaje.channel.send(rima)
+            break
 
 
 keep_alive()
