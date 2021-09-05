@@ -93,7 +93,7 @@ HELP_DICT={
 
 PREFIJO="$"
 
-SWITCH_RIMAS=True
+
 
 
 #-------------------------------Al ejecutar-----------------------------------#
@@ -106,6 +106,9 @@ async def on_ready():
 
 @client.event
 async def on_message(mensaje):
+    
+    SWITCH_RIMAS=True
+    
     if mensaje.author == client.user:
         return
 
