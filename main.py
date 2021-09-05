@@ -29,10 +29,8 @@ async def funcion_help(mensaje):
         await mensaje.channel.send(embed=embedh)
             
     if analizar_contenido(mensaje.content)=="comandos":
-        for comandos in COMANDOS_SIMPLES.keys():
-            embedh.add_field(name= comandos,value= COMANDOS_SIMPLES[comandos], inline=True)
-        for comandos in COMANDOS_SR.keys():
-            embedh.add_field(name= comandos,value= COMANDOS_SR[comandos], inline=True)
+        for comandos in HELP_DICT.keys():
+            embedh.add_field(name= comandos,value= HELP_DICT[comandos], inline=True)
         embedh.set_footer(text="Comandos")
         await mensaje.channel.send(embed=embedh)
 
@@ -78,6 +76,21 @@ COMANDOS_SR={
 "help": funcion_help
 }
 
+HELP_DICT={
+'saludo':"Saluda",
+'auris':"Y esos auris de virgo momo???? (video)",
+'atiendo':"Atendes boludos (video)",
+'arrepentir':"Samid vs Viale (qdep) (video)",
+'babadungo':"Legendaria cancion (video)",
+'len':"Devuelve la longitud de la palabra. Ej: $len hola =4",
+"help": "Usa $help rimas para ver la lista de posibles respuestas",
+'saludo':"Saluda",
+"modo sexo":"$modosexo on/off para activar o desactivar las rimas",
+'cerraelorto':"Desactiva las rimas con violencia"
+}
+
+
+
 PREFIJO="$"
 
 SWITCH_RIMAS=True
@@ -110,7 +123,12 @@ async def on_message(mensaje):
         if msg.startswith(PREFIJO+comando):
             await COMANDOS_SR[comando](mensaje)
 
-                
+    if msg.startswith(PREFIJO+"cerraelorto") or msg.startswith(PREFIJO+"modosexo off"):
+        SWITCH_RIMAS=False
+    
+    if msg.startswith(PREFIJO+"modosexo on"):
+        SWITCH_RIMAS=True
+    
     if SWITCH_RIMAS:  
         for numero in RIMAS.keys():
             if msg.endswith(numero):
