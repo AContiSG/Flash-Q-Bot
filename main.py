@@ -19,18 +19,18 @@ async def funcion_help(mensaje):
     embedh= discord.Embed(
         title = "Help",
         colour= discord.Colour.blue(),
-        description="Tipos de $help = rimas / comandos"
+        description="$help rimas / comandos"
         )
     
     if analizar_contenido(mensaje.content)=="rimas":
         for rimas in RIMAS.keys():
-            embedh.add_field(name= rimas,value= RIMAS[rimas], inline=True)
+            embedh.add_field(name= rimas,value= RIMAS[rimas], inline=False)
         embedh.set_footer(text="rimas")
         await mensaje.channel.send(embed=embedh)
             
     if analizar_contenido(mensaje.content)=="comandos":
         for comandos in HELP_DICT.keys():
-            embedh.add_field(name= comandos,value= HELP_DICT[comandos], inline=True)
+            embedh.add_field(name= comandos,value= HELP_DICT[comandos], inline=False)
         embedh.set_footer(text="Comandos")
         await mensaje.channel.send(embed=embedh)
 
