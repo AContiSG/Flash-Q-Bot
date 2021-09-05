@@ -84,17 +84,12 @@ HELP_DICT={
 'babadungo':"Legendaria cancion (video)",
 'len':"Devuelve la longitud de la palabra. Ej: $len hola =4",
 "help": "Usa $help rimas para ver la lista de posibles respuestas",
-'saludo':"Saluda",
-"modo sexo":"$modosexo on/off para activar o desactivar las rimas",
-'cerraelorto':"Desactiva las rimas con violencia"
+'saludo':"Saluda"
 }
-
-
 
 PREFIJO="$"
 
-
-
+SWITCH_RIMAS=True
 
 #-------------------------------Al ejecutar-----------------------------------#
 
@@ -106,8 +101,6 @@ async def on_ready():
 
 @client.event
 async def on_message(mensaje):
-    
-    SWITCH_RIMAS=True
     
     if mensaje.author == client.user:
         return
@@ -126,11 +119,6 @@ async def on_message(mensaje):
         if msg.startswith(PREFIJO+comando):
             await COMANDOS_SR[comando](mensaje)
 
-    if msg.startswith(PREFIJO+"cerraelorto") or msg.startswith(PREFIJO+"modosexo off"):
-        SWITCH_RIMAS=False
-    
-    if msg.startswith(PREFIJO+"modosexo on"):
-        SWITCH_RIMAS=True
     
     if SWITCH_RIMAS:  
         for numero in RIMAS.keys():
@@ -138,7 +126,7 @@ async def on_message(mensaje):
                 rima=RIMAS[numero]
                 await mensaje.channel.send(rima)
                 break
-
+    
 #------------------------------Final------------------------------------------#
 
 keep_alive()
