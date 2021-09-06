@@ -73,6 +73,9 @@ COMANDOS_SIMPLES={
 'arrepentir':"https://www.youtube.com/watch?v=RcAP6hl7T0g",
 'babadungo':"https://www.youtube.com/watch?v=y-BWKxp322w",
 'gatotruco':"https://www.youtube.com/watch?v=V08RzyPWurE",
+'pl tato':"https://www.youtube.com/playlist?list=PLFsa3redc-GX4A7yDx9ZjESAz8mt_wWJK",
+'pl busto':"https://www.youtube.com/playlist?list=PLz-W7ibs4AmjFzD3tO4o9DBtVMb-UgZ54",
+'pl yuyu':"https://www.youtube.com/playlist?list=PLXSQn9CA1N0j7Z_8iJLrPUTnl0zG5TpRN",
 'len':longitud
 }
 
@@ -82,14 +85,17 @@ COMANDOS_SR={
 }
 
 HELP_DICT={
-"$help": "Usa $help rimas para ver la lista de posibles respuestas",
-'$saludo':"Saluda",
+"$help": "Probá tambien $help rimas",
+'$saludo':"Un saludo",
 '$len':"Devuelve la longitud de la palabra. Ej: $len hola =4",
 '$auris':"Y esos auris de virgo momo???? (video)",
 '$atiendo':"Atendes boludos (video)",
 '$arrepentir':"Samid vs Viale (qdep) (video)",
 '$babadungo':"Legendaria cancion (video)",
-'$gatotruco':"Cat trick (video)"
+'$gatotruco':"Cat trick (video)",
+'$pl tato':"Musicarda dou (playlist)",
+'$pl busto':"asdfg op (playlist)",
+'$pl yuyu':"Anime Music (playlist)"
 }
 
 PREFIJO="$"
