@@ -13,7 +13,11 @@ def longitud(medible):
 def analizar_contenido(msg):
     #retorna solo la primer palabra despues del comando
     linea=msg.split(" ")
-    return linea[1]
+    linea.append(" ")
+    if linea[1] != " ":
+        return linea[1]
+    else:
+        return None
 
 async def funcion_help(mensaje):
     embedh= discord.Embed(
@@ -28,7 +32,7 @@ async def funcion_help(mensaje):
         embedh.set_footer(text="rimas")
         await mensaje.channel.send(embed=embedh)
             
-    if analizar_contenido(mensaje.content)=="comandos":
+    if analizar_contenido(mensaje.content)=="comandos" or analizar_contenido(mensaje.content) == None:
         for comandos in HELP_DICT.keys():
             embedh.add_field(name= comandos,value= HELP_DICT[comandos], inline=True)
         embedh.set_footer(text="Comandos")
@@ -68,6 +72,7 @@ COMANDOS_SIMPLES={
 'atiendo':"https://www.youtube.com/watch?v=i5Vdl_unhHQ",
 'arrepentir':"https://www.youtube.com/watch?v=RcAP6hl7T0g",
 'babadungo':"https://www.youtube.com/watch?v=y-BWKxp322w",
+'gatotruco':"https://www.youtube.com/watch?v=V08RzyPWurE",
 'len':longitud
 }
 
@@ -77,14 +82,14 @@ COMANDOS_SR={
 }
 
 HELP_DICT={
-'saludo':"Saluda",
-'auris':"Y esos auris de virgo momo???? (video)",
-'atiendo':"Atendes boludos (video)",
-'arrepentir':"Samid vs Viale (qdep) (video)",
-'babadungo':"Legendaria cancion (video)",
-'len':"Devuelve la longitud de la palabra. Ej: $len hola =4",
-"help": "Usa $help rimas para ver la lista de posibles respuestas",
-'saludo':"Saluda"
+"$help": "Usa $help rimas para ver la lista de posibles respuestas",
+'$saludo':"Saluda",
+'$len':"Devuelve la longitud de la palabra. Ej: $len hola =4",
+'$auris':"Y esos auris de virgo momo???? (video)",
+'$atiendo':"Atendes boludos (video)",
+'$arrepentir':"Samid vs Viale (qdep) (video)",
+'$babadungo':"Legendaria cancion (video)",
+'$gatotruco':"Cat trick (video)"
 }
 
 PREFIJO="$"
