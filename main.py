@@ -22,18 +22,18 @@ def analizar_contenido(msg):
 async def funcion_help(mensaje):
     embedh= discord.Embed(
         title = "Help",
-        colour= discord.Colour.white(),
+        colour= discord.Colour.dark_gray(),
         description="$help rimas / comandos"
         )
     
     if analizar_contenido(mensaje.content)=="rimas1":
-        for rimas in RIMAS.keys():
+        for rimas in RIMAS1.keys():
             embedh.add_field(name= rimas,value= RIMAS1[rimas], inline=False)
         embedh.set_footer(text="rimas 1")
         await mensaje.channel.send(embed=embedh)
 
     if analizar_contenido(mensaje.content)=="rimas2":
-        for rimas in RIMAS.keys():
+        for rimas in RIMAS2.keys():
             embedh.add_field(name= rimas,value= RIMAS2[rimas], inline=False)
         embedh.set_footer(text="rimas 2")
         await mensaje.channel.send(embed=embedh)
