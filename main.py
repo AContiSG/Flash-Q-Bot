@@ -22,14 +22,20 @@ def analizar_contenido(msg):
 async def funcion_help(mensaje):
     embedh= discord.Embed(
         title = "Help",
-        colour= discord.Colour.blue(),
+        colour= discord.Colour.grey(),
         description="$help rimas / comandos"
         )
     
-    if analizar_contenido(mensaje.content)=="rimas":
+    if analizar_contenido(mensaje.content)=="rimas1":
         for rimas in RIMAS.keys():
-            embedh.add_field(name= rimas,value= RIMAS[rimas], inline=False)
-        embedh.set_footer(text="rimas")
+            embedh.add_field(name= rimas,value= RIMAS1[rimas], inline=False)
+        embedh.set_footer(text="rimas 1")
+        await mensaje.channel.send(embed=embedh)
+
+    if analizar_contenido(mensaje.content)=="rimas2":
+        for rimas in RIMAS.keys():
+            embedh.add_field(name= rimas,value= RIMAS2[rimas], inline=False)
+        embedh.set_footer(text="rimas 2")
         await mensaje.channel.send(embed=embedh)
             
     if analizar_contenido(mensaje.content)=="comandos" or analizar_contenido(mensaje.content) == None:
@@ -95,7 +101,7 @@ COMANDOS_SR={
 }
 
 HELP_DICT={
-"$help": "Probá tambien $help rimas",
+"$help": "$help rimas1 o $help rimas2 para ver las posibles rimas",
 '$saludo':"Un saludo",
 '$len':"Devuelve la longitud de la palabra. Ej: $len hola =4",
 '$auris':"Y esos auris de virgo momo???? (video)",
@@ -106,6 +112,41 @@ HELP_DICT={
 '$pl tato':"Musicarda dou (playlist)",
 '$pl busto':"asdfg op (playlist)",
 '$pl yuyu':"Anime Music (playlist)"
+}
+
+RIMAS1={
+'000': 'Esto son puras rimas de albañil',
+'100': 'La tengo como un electrotrén',
+'00': 'Mis huevos somnolientos',
+'90': 'La mia desorienta',
+'80': 'La mia atormenta',
+'70': 'La mia reglamenta',
+'60': 'La mia representa',
+'50': 'La mia es suculenta',
+'40': 'La mia sabe a polenta',
+'30': 'La mia sabe a menta',
+'20': 'Mi pene en tu mente',
+'15': 'Tu culo +15 papu lince',
+'14': 'Cuidado no la forces',
+'13': 'En tu culo se me cuece',
+'12': 'Te la meto sin que roce',
+'11': 'la tengo de bronce'}
+
+RIMAS2={
+'10': 'En el culo te la ves',
+'9': 'En el culo se te mueve',
+'8': 'El culo te abrocho',
+'7': 'En el culo se te mete',
+'6': 'En el culo os la veis',
+'5': 'En el culo te la hinco',
+'4': 'En tu culo mi aparato',
+'3': 'En el culo te la ves',
+'2': 'Esta es para vos',
+'1': 'Tu culo vacuno',
+'0': 'Te la meto en el trasero',
+'O.o':"o.O",
+'o.O':"O.o",
+'que': 'so'
 }
 
 PREFIJO="$"
