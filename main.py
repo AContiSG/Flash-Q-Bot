@@ -184,7 +184,7 @@ async def on_message(mensaje):
     
     if SWITCH_RIMAS:  
         for numero in RIMAS.keys():
-            if msg.endswith(numero):
+            if msg.endswith(numero) and not msg.startswith(PREFIJO):
                 rima=RIMAS[numero]
                 await mensaje.channel.send(rima)
                 break
