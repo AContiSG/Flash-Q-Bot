@@ -43,9 +43,19 @@ async def funcion_help(mensaje):
 
 #Responde con el valor cuando termina con la clave
 RIMAS={
+'000': 'Esto son puras rimas de albañil',
+'100': 'La tengo como un electrotrén',
+'00': 'Mis huevos somnolientos',
+'90': 'La mia desorienta',
+'80': 'La mia atormenta',
+'70': 'La mia reglamenta',
+'60': 'La mia representa',
+'50': 'La mia es suculenta',
+'40': 'La mia sabe a polenta',
+'30': 'La mia sabe a menta',
 '20': 'Mi pene en tu mente',
-'15': 'No me la hagas un esguince',
-'14': 'Cuidado no la forces (malisima lol)',
+'15': 'Tu culo +15 papu lince',
+'14': 'Cuidado no la forces',
 '13': 'En tu culo se me cuece',
 '12': 'Te la meto sin que roce',
 '11': 'la tengo de bronce',
