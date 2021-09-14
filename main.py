@@ -22,11 +22,10 @@ def analizar_contenido(msg):
 async def funcion_help(mensaje):
     embedh= discord.Embed(
         title = "Help",
-        colour= discord.Colour.dark_gray(),
-        description="$help rimas / comandos"
+        colour= discord.Colour.light_gray()
         )
     
-    if analizar_contenido(mensaje.content)=="rimas1":
+    if analizar_contenido(mensaje.content)=="rimas1" or analizar_contenido(mensaje.content)=="rimas":
         for rimas in RIMAS1.keys():
             embedh.add_field(name= rimas,value= RIMAS1[rimas], inline=False)
         embedh.set_footer(text="rimas 1")
@@ -115,9 +114,9 @@ HELP_DICT={
 }
 
 RIMAS1={
-'000': 'Esto son puras rimas de albañil',
+'-000': 'Esto son puras rimas de albañil',
 '100': 'La tengo como un electrotrén',
-'00': 'Mis huevos somnolientos',
+'-00': 'Mis huevos somnolientos',
 '90': 'La mia desorienta',
 '80': 'La mia atormenta',
 '70': 'La mia reglamenta',
