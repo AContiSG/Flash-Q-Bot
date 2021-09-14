@@ -22,7 +22,7 @@ def analizar_contenido(msg):
 async def funcion_help(mensaje):
     embedh= discord.Embed(
         title = "Help",
-        colour= discord.Colour.grey(),
+        colour= discord.Colour.white(),
         description="$help rimas / comandos"
         )
     
