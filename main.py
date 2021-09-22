@@ -192,10 +192,13 @@ async def on_message(mensaje):
             if msg.startswith(PREFIJO+comando):
                 if isinstance(COMANDOS_SIMPLES[comando], str):
                     await mensaje.channel.send(COMANDOS_SIMPLES[comando])
+                    break
                 if isinstance(COMANDOS_SIMPLES[comando], list):
                     await mensaje.channel.send(random.choice(COMANDOS_SIMPLES[comando]))
+                    break
                 else:
                     await mensaje.channel.send(COMANDOS_SIMPLES[comando](analizar_contenido(msg)))
+                    break
 
         for comando in COMANDOS_SR.keys():
             if msg.startswith(PREFIJO+comando):
