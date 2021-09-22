@@ -1,4 +1,4 @@
-import discord, os
+import discord, os,random
 from keep_alive import keep_alive
 
 client= discord.Client()
@@ -72,7 +72,7 @@ RIMAS={
 '5': 'En el culo te la hinco',
 '4': 'En tu culo mi aparato',
 '3': 'En el culo te la ves',
-'2': 'Esta es para vos',
+'2': ['Te la meto y me da tos.', 'Esta es para vos'],
 '1': 'Tu culo vacuno',
 '0': 'Te la meto en el trasero',
 'O.o':"o.O",
@@ -174,26 +174,34 @@ async def on_message(mensaje):
 
     msg = mensaje.content
     
-    for comando in COMANDOS_SIMPLES.keys():
-        if msg.startswith(PREFIJO+comando):
-            if isinstance(COMANDOS_SIMPLES[comando], str):
-                await mensaje.channel.send(COMANDOS_SIMPLES[comando])
+    if msg.startswith(PREFIJO):
+    #Comandos
+        for comando in COMANDOS_SIMPLES.keys():
+            if msg.startswith(PREFIJO+comando):
+                if isinstance(COMANDOS_SIMPLES[comando], str):
+                    await mensaje.channel.send(COMANDOS_SIMPLES[comando])
+                if isinstance(COMANDOS_SIMPLES[comando], list):
+                    await mensaje.channel.send(random.choice(COMANDOS_SIMPLES[comando]))
+                else:
+                    await mensaje.channel.send(COMANDOS_SIMPLES[comando](analizar_contenido(msg)))
 
-            else:
-                await mensaje.channel.send(COMANDOS_SIMPLES[comando](analizar_contenido(msg)))
-
-    for comando in COMANDOS_SR.keys():
-        if msg.startswith(PREFIJO+comando):
-            await COMANDOS_SR[comando](mensaje)
+        for comando in COMANDOS_SR.keys():
+            if msg.startswith(PREFIJO+comando):
+                await COMANDOS_SR[comando](mensaje)
 
     
-    if SWITCH_RIMAS:  
+    if SWITCH_RIMAS:
+    #Si empieza con
         for numero in RIMAS.keys():
             if msg.endswith(numero) and not msg.startswith(PREFIJO):
-                rima=RIMAS[numero]
-                await mensaje.channel.send(rima)
-                break
-    
+                if isinstance(RIMAS[numero], str):
+                    rima=RIMAS[numero]
+                    await mensaje.channel.send(rima)
+                    break
+                if isinstance(RIMAS[numero], list):
+                    rima=random.choice(RIMAS[numero])
+                    await mensaje.channel.send(rima)
+                    break
 #------------------------------Final------------------------------------------#
 
 keep_alive()
