@@ -100,9 +100,9 @@ COMANDOS_SIMPLES={
 'frasedia':
 ["mmmmm yeah","La vida es dura pero mas dura es la vida de los niños sirios, tomá la sopa",
 "momento lol","like si te pasó","sisisi","nah","bueno pero solo a veces","KeyboardInterrupt",
-"jueguen al Rimworld!!","melocoton","¿Cómo motivar a una persona frases? Resultado de imagen para frases motivadoras 101 frases para inspirar y motivar líderes y empleados Algún día es una enfermedad que llevará tus sueños a la tumba contigo ﻿Clic para tuitear.Cuanto más hacemos, más podemo",
+"jueguen al Rimworld!!","melocoton","¿Cómo motivar a una persona frases? Resultado de imagen para frases motivadoras 101 frases para inspirar y motivar líderes y empleados Algún día es una enfermedad que llevará tus sueños a la tumba contigo Clic para tuitear.Cuanto más hacemos, más podemo",
  "Y", "Es muy divertido lograr lo imposible. (????????)"],
-'changelog':"Nuevas funciones: hola, hoal, frasedia y changelog \n Añadida una función que me permite que un numero pueda tener varias rimas (solo está en el 2 para probar) \n Mejoré algunas pavadas \n Le tengo que cambiar el formato a esto!!!",
+'changelog':"Nuevas funciones: hola, hoal, frasedia y changelog\n Añadida una función que me permite que un numero pueda tener varias rimas (solo está en el 2 para probar)\n Mejoré algunas pavadas\n Le tengo que cambiar el formato a esto!!!",
 'len':longitud
 }
 
@@ -123,11 +123,10 @@ HELP_DICT={
 '$pl tato':"Musicarda dou (playlist)",
 '$pl busto':"asdfg op (playlist)",
 '$pl yuyu':"Anime Music (playlist)",
-'hola':"unsaludo",
-'hola':"Mas saludos",
-'hoal':"Muchisimos saludos"
-'frasedia':"La frase del momento! (realmente no es una sola por dia lol!)",
-'changelog':"Importantísima funcion que te avisa de todos los muchísimos nuevos cambios de la ultima actualización!!(flashee programador)"
+'$hola':"Mas saludos",
+'$hoal':"Muchisimos saludos",
+'$frasedia':"La frase del momento! (realmente no es una sola por dia lol!)",
+'$changelog':"Importantísima funcion que te avisa de todos los muchísimos nuevos cambios de la ultima actualización!!(flashee programador)"
 }
 
 RIMAS1={
