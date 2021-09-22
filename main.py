@@ -77,7 +77,11 @@ RIMAS={
 '0': 'Te la meto en el trasero',
 'O.o':"o.O",
 'o.O':"O.o",
-'que': 'so'
+'que': 'so',
+'yeah': 'sex',
+'yea': 'sex',
+'yea sex': ':sunglasses:',
+'yeah sex': ':sunglasses:'
 }
 
 #Comandos que devuelven una string 
@@ -145,7 +149,9 @@ RIMAS2={
 '0': 'Te la meto en el trasero',
 'O.o':"o.O",
 'o.O':"O.o",
-'que': 'so'
+'que': 'so',
+'yeah': ':sunglasses: :sunglasses: :sunglasses: :sunglasses:',
+'yeah sex': ':cowboy:',
 }
 
 PREFIJO="$"
