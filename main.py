@@ -72,7 +72,7 @@ RIMAS={
 '5': 'En el culo te la hinco',
 '4': 'En tu culo mi aparato',
 '3': 'En el culo te la ves',
-'2': ['Te la meto y me da tos.', 'Esta es para vos'],
+'2': ['Te la meto y me da tos.', 'Esta es para vos', 'A vos te la metió Dross', 'Te culeo en Palamós', 'Fuiste tocado por Dios :yum:'],
 '1': 'Tu culo vacuno',
 '0': 'Te la meto en el trasero',
 'O.o':"o.O",
