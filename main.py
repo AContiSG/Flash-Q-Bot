@@ -49,7 +49,7 @@ async def changelog(mensaje):
         )
     
     em_changelog.add_field(name= "Cambios",inline=False, value= "-Cambios menores al código")
-    em_changelog.add_field(name= "Nuevo",inline=False, value= "-$poema, una increible rima sobre el numero trece que me motiva a vivir\n-Abajo de esto pone la versión del bot")
+    em_changelog.add_field(name= "Nuevo",inline=False, value= "-$poema, una increible rima sobre el numero trece que me motiva a vivir\n-Si arrobas al bot te dice respetuosamente como ver la lista de comandos\n-Abajo de esto pone la versión del bot")
 #     em_changelog.add_field(name= "Sacado",inline=False, value= "-Removed Herobrine")
     
     em_changelog.set_footer(text="v.1.3.2")
@@ -229,23 +229,29 @@ async def on_message(mensaje):
 
     msg = mensaje.content
     
+    if client.user.mentioned_in(message):
+    #Al mencionarlo
+        await message.channel.send("Atiendo boludos ($help para la lista de comandos)")
+        return
+    
     if msg.startswith(PREFIJO):
     #Comandos
         for comando in COMANDOS_SIMPLES.keys():
             if msg.startswith(PREFIJO+comando):
                 if isinstance(COMANDOS_SIMPLES[comando], str):
                     await mensaje.channel.send(COMANDOS_SIMPLES[comando])
-                    break
+                    return
                 if isinstance(COMANDOS_SIMPLES[comando], tuple):
                     await mensaje.channel.send(random.choice(COMANDOS_SIMPLES[comando]))
-                    break
+                    return
                 else:
                     await mensaje.channel.send(COMANDOS_SIMPLES[comando](analizar_contenido(msg)))
-                    break
+                    return
 
         for comando in COMANDOS_SR.keys():
             if msg.startswith(PREFIJO+comando):
                 await COMANDOS_SR[comando](mensaje)
+                return
 
     
     if SWITCH_RIMAS:
@@ -255,11 +261,11 @@ async def on_message(mensaje):
                 if isinstance(RIMAS[numero], str):
                     rima=RIMAS[numero]
                     await mensaje.channel.send(rima)
-                    break
+                    return
                 if isinstance(RIMAS[numero], tuple):
                     rima=random.choice(RIMAS[numero])
                     await mensaje.channel.send(rima)
-                    break
+                    return
 #------------------------------Final------------------------------------------#
 
 keep_alive()
