@@ -229,9 +229,9 @@ async def on_message(mensaje):
 
     msg = mensaje.content
     
-    if client.user.mentioned_in(message):
+    if client.user.mentioned_in(mensaje):
     #Al mencionarlo
-        await message.channel.send("Atiendo boludos ($help para la lista de comandos)")
+        await mensaje.channel.send("Atiendo boludos ($help para la lista de comandos)")
         return
     
     if msg.startswith(PREFIJO):
