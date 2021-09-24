@@ -6,11 +6,11 @@ client= discord.Client()
 #-------------------------------Funciones------------------------------------#
 
 def longitud(medible):
-    #mide los caracteres de la palabra ingresada
+    #Mide los caracteres de la palabra ingresada
     return len(medible)
 
 def analizar_contenido(msg):
-    #retorna solo la primer palabra despues del comando
+    #Retorna solo la primer palabra despues del comando
     linea=msg.split(" ")
     linea.append(" ")
     if linea[1] != " ":
@@ -56,7 +56,8 @@ async def changelog(mensaje):
 
 #---------------------------------V. globales--------------------------------#
 
-FRASEDIA_TUP=("mmmmm yeah",
+#Posibles frases motivadoras
+FRASEMOT_TUP=("mmmmm yeah",
 "La vida es dura pero mas dura es la vida de los niños sirios, tomá la sopa",
 "momento lol",
 "like si te pasó",
@@ -76,6 +77,8 @@ FRASEDIA_TUP=("mmmmm yeah",
 "Al que madruga bla bla bla..."              
 )
 
+#Lo encontré en un comentario de YT, simplemente arte
+POEMA_13="Dijo 13? Aquí tiene pa que me la bese, entre más me la beses más me crece, busca un cura pa que me la rece, y trae un martillo pa que me la endereces, por el chiquito se te aparece toas las veces y cuando te estreses aquí te tengo éste pa que te desestreses, con este tallo el jopo se te esflorece, se cumple el ciclo hasta que anochece, to los días y toas las veces, de tanto entablar la raja del jopo se te desaparece, porque este sable no se compadece, si pides ñapa se te ofrece, y si repites se te agradece, no te hace rico pero tampoco te empobrece, no te hace inteligente pero tampoco te embrutece, y no paro aquí compa que éste nuevamente se endurece, hasta que amanece, cambie esa cara que parece que se entristece, si te haces viejo éste te rejuvenece, no te hago bulla porque depronto te ensordece, y eso cuadro no te favorece, pero tranquilo que éste te abastece, porque allá abajo se te humedece, viendo como el que me cuelga resplandece, si a ti te da miedo a mí me enorgullece, y así toas las vece ¿que te parece?, y tranquilo mijo que aquí éste reaparece, no haga fuerza porque éste se sobrecrece, una fresadora te traigo pa que me la freses, así se fortalece y de nuevo la historia se establece, que no se te nuble la vista porque éste te la aclarece, y sino le entendiste nuevamente la explicación se te ofrece, pa que por el chiquito éste de nuevo te empiece... Aquí tienes para que me la beses, entre más me la beses más me crece, busca un cura para que me la rece, un martillo para que me la endereces, un chef para que me la aderece, 8000 mondas por el culo se te aparecen, si me la sobas haces que se me espese, si quieres la escaneas y te la llevas para que en tu hoja de vida la anexes, me culeo a tu maldita madre y qué te parece le meti la monda a tú mamá hace 9 meses y después la puse a escuchar René de Calle 13  Te la meto por debajo del agua como los peces, y aquella flor de monda que en tu culo crece, reposa sobre tus nalgas a veces y descansa en paz en tu chicorio cuando anochece Que te parece, te lo meti antes de los 9 meses te meto la verga pa que el tunel del orto se te enderece, de tanta monda hasta tu novia va a queda preña de mi por 9 meses, te la empujo y te la pongo pa que me la peses, y te meto la guamayeta un millon de veces que de tanta monda van a respirar hasta los peces.si te pareció poco... los dobladillos del culo al leer esto texto se te estremecen, esa raja seca una mondaquera se merece, tranquila que sigo como jeison en viernes 13, la cabeza de la mondá después se me adormece, pero tranquila que eso no te favorece, si se despierta te va regar de leche y después me agradeces, el chiquito se te esflorece, tranquila que de mondá en éste grupo no se carece y si te la meten por el oído te en ensordeces y si te la meten entre todos te desfortaleces y eso no te conviene porque te enflaqueces pero tranquila que esos pelos del culo vuelven y te crecen como campo te reflorece y a tu maldit4 madre se la empujo a veces, ya que el culo se le enmugrece y si me ve la mondá nuevamente se aloquece y eso no te conviene porque me vas hacer que de nuevo contigo empiece te lo meto desde que amanece hasta que anochece,  sin que se te humedece y como tabaco de marihuana te embobece,  y éste como bendición de Dios te abastece, se me endurece nuevamente y deja de hacerte la paja porque ésta enseguece."
 
 #Responde con el valor cuando termina con la clave
 RIMAS={
@@ -92,7 +95,7 @@ RIMAS={
 '20': 'Mi pene en tu mente',
 '15': 'Tu culo +15 papu lince',
 '14': 'Cuidado no la forces',
-'13': 'En tu culo se me cuece',
+'13': ('En tu culo se me cuece', POEMA_13),
 '12': 'Te la meto sin que roce',
 '11': 'la tengo de bronce',
 '10': 'En el culo te la ves',
@@ -129,7 +132,7 @@ COMANDOS_SIMPLES={
 'pl yuyu':"https://www.youtube.com/playlist?list=PLXSQn9CA1N0j7Z_8iJLrPUTnl0zG5TpRN",
 'hoal':"sisisaludo",
 'hola':"unsaludo",
-'frasedia':FRASEDIA_TUP,
+'frase':FRASEMOT_TUP,
 'len':longitud,
 'invite':"https://discord.com/api/oauth2/authorize?client_id=883480644053774337&permissions=34359856192&scope=bot",
 "git": "https://github.com/AContiSG/Flash-Q-Bot"
@@ -154,7 +157,7 @@ HELP_DICT={
 "git": "Repositorio del bot (para ver el código)",
 'hola':"Mas saludos",
 'hoal':"Muchisimos saludos",
-'frasedia':"La frase del momento! (realmente no es una sola por dia lol!)",
+'frase':"La frase del momento! (realmente no es una sola por dia lol!)",
 'changelog':"Importantísima funcion que te avisa de todos los muchísimos nuevos cambios de la ultima actualización!!(flashee programador)"
 }
 
