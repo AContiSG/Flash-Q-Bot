@@ -49,7 +49,7 @@ async def changelog(mensaje):
         )
     
     em_changelog.add_field(name= "Cambios",inline=False, value= "-Cambios menores al código\n-Estuve 2 horas probando cosas que despues borré\n-Esto ahora esta más lindo xd")
-    em_changelog.add_field(name= "Nuevo",inline=False, value= "-Nuevas frases del dia y rimas del 2\n-$invite para poder enviar el bot a otros server\n-$git para ver el código y putearme porque es un quilombo")
+    em_changelog.add_field(name= "Nuevo",inline=False, value= "-Nuevas frases del dia y rimas del 2\n-$invite para poder enviar el bot a otros servers\n-$git para ver el código y putearme porque es un quilombo")
     em_changelog.add_field(name= "Sacado",inline=False, value= "-Removed Herobrine")
     
     await mensaje.channel.send(embed=em_changelog)
