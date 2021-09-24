@@ -49,7 +49,7 @@ async def changelog(mensaje):
         )
     
     em_changelog.add_field(name= "Cambios",inline=False, value= "-Cambios menores al código")
-    em_changelog.add_field(name= "Nuevo",inline=False, value= "-$poema, una increible rima sobre el numero trece que me motiva a vivir")
+    em_changelog.add_field(name= "Nuevo",inline=False, value= "-$poema, una increible rima sobre el numero trece que me motiva a vivir\n-Abajo de esto pone la versión del bot")
 #     em_changelog.add_field(name= "Sacado",inline=False, value= "-Removed Herobrine")
     
     em_changelog.set_footer(text="v.1.3.2")
