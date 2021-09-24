@@ -48,9 +48,9 @@ async def changelog(mensaje):
         colour= discord.Colour.light_gray()
         )
     
-    em_changelog.add_field(name= "Cambios", value= "-Cambios menores al código\n-Estuve 2 horas probando cosas que despues borré\n-Esto ahora esta más lindo xd")
-    em_changelog.add_field(name= "Nuevo", value= "-Nuevas frases del dia y rimas del 2")
-    em_changelog.add_field(name= "Sacado", value= "-Removed Herobrine")
+    em_changelog.add_field(name= "Cambios",inline=False, value= "-Cambios menores al código\n-Estuve 2 horas probando cosas que despues borré\n-Esto ahora esta más lindo xd")
+    em_changelog.add_field(name= "Nuevo",inline=False, value= "-Nuevas frases del dia y rimas del 2\n-$invite para poder enviar el bot a otros server\n-$git para ver el código y putearme porque es un quilombo")
+    em_changelog.add_field(name= "Sacado",inline=False, value= "-Removed Herobrine")
     
     await mensaje.channel.send(embed=em_changelog)
 
@@ -131,7 +131,8 @@ COMANDOS_SIMPLES={
 'hola':"unsaludo",
 'frasedia':FRASEDIA_TUP,
 'len':longitud,
-'invite':"https://discord.com/api/oauth2/authorize?client_id=883480644053774337&permissions=34359856192&scope=bot"
+'invite':"https://discord.com/api/oauth2/authorize?client_id=883480644053774337&permissions=34359856192&scope=bot",
+"git": "https://github.com/AContiSG/Flash-Q-Bot"
 }
 
 #Comandos que NO devuelven una string (Sin Return)
@@ -149,9 +150,8 @@ HELP_DICT={
 'arrepentir':"Samid vs Viale (qdep) (video)",
 'babadungo':"Legendaria cancion (video)",
 'gatotruco':"Cat trick (video)",
-'pl tato':"Musicarda dou (playlist)",
-'pl busto':"asdfg op (playlist)",
-'pl yuyu':"Anime Music (playlist)",
+'invite':"Manda link con la invitacion del bot",
+"git": "Repositorio del bot (para ver el código)",
 'hola':"Mas saludos",
 'hoal':"Muchisimos saludos",
 'frasedia':"La frase del momento! (realmente no es una sola por dia lol!)",
