@@ -52,7 +52,7 @@ async def changelog(mensaje):
     em_changelog.add_field(name= "Nuevo",inline=False, value= "-$poema, una increible rima sobre el numero trece que me motiva a vivir")
 #     em_changelog.add_field(name= "Sacado",inline=False, value= "-Removed Herobrine")
     
-    em_help.set_footer(text="v.1.3.2")
+    em_changelog.set_footer(text="v.1.3.2")
     
     await mensaje.channel.send(embed=em_changelog)
     
