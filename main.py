@@ -170,7 +170,8 @@ HELP_DICT={
 'hoal':"Muchisimos saludos",
 'frase':"La frase del momento! (realmente no es una sola por dia lol!)",
 'changelog':"Importantísima funcion que te avisa de todos los muchísimos nuevos cambios de la ultima actualización!!(flashee programador)",
-"poema":"Los 3359 caracteres que me motivan a seguir viviendo"
+"poema":"Los 3359 caracteres que me motivan a seguir viviendo",
+'jf': "quien es"
 }
 
 RIMAS1={
