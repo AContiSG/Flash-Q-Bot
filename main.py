@@ -60,7 +60,7 @@ RIMAS={
 '30': 'La mia sabe a menta',
 '20': 'Mi pene en tu mente',
 '15': 'Tu culo +15 papu lince',
-'14': 'Cuidado no la forces',
+'14': ['Cuidado no la forces', 'A vos te la metió Jorge'],
 '13': 'En tu culo se me cuece',
 '12': 'Te la meto sin que roce',
 '11': 'la tengo de bronce',
