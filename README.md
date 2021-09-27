@@ -1,2 +1,3 @@
 # Python-Bot
-# Andá a leer a tu casa, bobo
+# " No sé programar, hago esto para no estudiar"
+#                        ~ Agustín Esteban Conti 
