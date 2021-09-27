@@ -146,8 +146,7 @@ COMANDOS_SIMPLES={
 'frase':FRASEMOT_TUP,
 'len':longitud,
 'invite':"https://discord.com/api/oauth2/authorize?client_id=883480644053774337&permissions=34359856192&scope=bot",
-"git": "https://github.com/AContiSG/Flash-Q-Bot",
-
+"git": "https://github.com/AContiSG/Flash-Q-Bot"
 }
 
 #Comandos que NO devuelven una string (Sin Return)
@@ -173,8 +172,7 @@ HELP_DICT={
 'hoal':"Muchisimos saludos",
 'frase':"La frase del momento! (realmente no es una sola por dia lol!)",
 'changelog':"Importantísima funcion que te avisa de todos los muchísimos nuevos cambios de la ultima actualización!!(flashee programador)",
-"poema":"Los 3359 caracteres que me motivan a seguir viviendo",
-'jf': "quien es"
+"poema":"Los 3359 caracteres que me motivan a seguir viviendo"
 }
 
 RIMAS1={
@@ -212,6 +210,8 @@ RIMAS2={
 'que': 'so',
 'yeah': ':sunglasses: :sunglasses: :sunglasses: :sunglasses:',
 'yeah sex': ':cowboy:',
+'jf': "sos vos capo",
+'busto': 'bobo'
 }
 
 PREFIJO="$"
