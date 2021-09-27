@@ -123,7 +123,10 @@ RIMAS={
 'yeah': 'sex',
 'yea': 'sex',
 'yea sex': ':sunglasses:',
-'yeah sex': ':sunglasses:'
+'yeah sex': ':sunglasses:',
+'jf': "sos vos capo",
+'vusto': 'bobo',
+'busto':'bobo'
 }
 
 
@@ -144,7 +147,7 @@ COMANDOS_SIMPLES={
 'len':longitud,
 'invite':"https://discord.com/api/oauth2/authorize?client_id=883480644053774337&permissions=34359856192&scope=bot",
 "git": "https://github.com/AContiSG/Flash-Q-Bot",
-'jf': "sos vos capo"
+
 }
 
 #Comandos que NO devuelven una string (Sin Return)
