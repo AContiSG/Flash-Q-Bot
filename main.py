@@ -265,4 +265,4 @@ async def on_message(mensaje):
 #------------------------------Final------------------------------------------#
 
 keep_alive()
-client.run('ODgzNDgwNjQ0MDUzNzc0MzM3.YTKjdw.c6RgqtFcdLsKqcBcVAWPzChYYrk')
+client.run(client.run(os.getenv('TOKEN')))
