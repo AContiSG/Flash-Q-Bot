@@ -7,16 +7,35 @@ client= discord.Client()
 
 def longitud(medible):
     #Mide los caracteres de la palabra ingresada
-    return len(medible)
+    return len(medible[5:])
 
-def analizar_contenido(msg):
-    #Retorna solo la primer palabra despues del comando
+def crear_TUPLA_RIMAS():
+    #Crea una tupla de listas de 14 items con las keys de RIMAS
+    lista=[[]]
+    contador=0
+    pagina=0
+    for rima in RIMAS.keys():
+        if contador==13:
+            lista[pagina].append(rima)
+            lista.append([])
+            contador=0
+            pagina+=1
+        else:
+            lista[pagina].append(rima)
+            contador+=1
+    return tuple(lista)
+
+def analizar_contenido(msg, numero):
+    #Retorna la palabra que especifica el numero o todas si este es "n"
     linea=msg.split(" ")
-    linea.append(" ")
-    if linea[1] != " ":
-        return linea[1]
+    if numero != "n":
+        try:
+            if linea[int(numero)]:
+                return linea[int(numero)]
+        except:
+            return None
     else:
-        return None
+        return linea
 
 async def funcion_help(mensaje):
     em_help= discord.Embed(
@@ -24,19 +43,28 @@ async def funcion_help(mensaje):
         colour= discord.Colour.light_gray()
         )
     
-    if analizar_contenido(mensaje.content)=="rimas1" or analizar_contenido(mensaje.content)=="rimas":
-        for rimas in RIMAS1.keys():
-            em_help.add_field(name= rimas,value= RIMAS1[rimas], inline=False)
-        em_help.set_footer(text="rimas 1")
+    contenido_analizado_1=analizar_contenido(mensaje.content, 1)
+    
+    if contenido_analizado_1=="rimas":
+        if analizar_contenido(mensaje.content, 2)!=None:
+            pagina_deseada=int(analizar_contenido(mensaje.content, 2))-1
+        else:
+            pagina_deseada=0
+        
+        for rimas in TUPLA_RIMAS[pagina_deseada]:
+            if isinstance(RIMAS[rimas], tuple):
+                suma_rimas=""
+                for item in RIMAS[rimas]:
+                    suma_rimas+= item +" / "
+                em_help.add_field(name= rimas,value= suma_rimas, inline=False)
+            if isinstance(RIMAS[rimas], str):
+                em_help.add_field(name= rimas,value= RIMAS[rimas], inline=False)
+            
+        em_help.set_footer(text=f"Rimas {pagina_deseada+1}")
         await mensaje.channel.send(embed=em_help)
 
-    if analizar_contenido(mensaje.content)=="rimas2":
-        for rimas in RIMAS2.keys():
-            em_help.add_field(name= rimas,value= RIMAS2[rimas], inline=False)
-        em_help.set_footer(text="rimas 2")
-        await mensaje.channel.send(embed=em_help)
             
-    if analizar_contenido(mensaje.content)=="comandos" or analizar_contenido(mensaje.content) == None:
+    if contenido_analizado_1=="comandos" or contenido_analizado_1 == None:
         for comandos in HELP_DICT.keys():
             em_help.add_field(name= PREFIJO+comandos,value= HELP_DICT[comandos], inline=False)
         em_help.set_footer(text="Comandos")
@@ -48,11 +76,10 @@ async def changelog(mensaje):
         colour= discord.Colour.light_gray()
         )
     
-    em_changelog.add_field(name= "Cambios",inline=False, value= "-Cambios menores al código")
-    em_changelog.add_field(name= "Nuevo",inline=False, value= "-$poema, una increible rima sobre el numero trece que me motiva a vivir\n-Si arrobas al bot te dice respetuosamente como ver la lista de comandos\n-Abajo de esto pone la versión del bot")
-#     em_changelog.add_field(name= "Sacado",inline=False, value= "-Removed Herobrine")
-    
-    em_changelog.set_footer(text="v.1.3.2")
+    em_changelog.add_field(name= "Ajustes",inline=False, value= "-Cambie un poco el comando $len, ahora te dice la longitud de todo lo que sigue al comando en vez de solo una palabra \n-Cambie la funcion $help rimas, ahora no es tan pedorra en el codigo, si una palabra tiene varias rimas te muestra todas las posibles y se elige la pagina que queres ver de otra manera, tenes que poner $help rimas *numero* para ver esa pagina. Ej: $help rimas 3 te muestra la tercera pagina de rimas")
+    em_changelog.add_field(name= "Nuevo",inline=False, value= "-Nada lol, tarde bastante con la huevada del $help rimas")
+    em_changelog.add_field(name= "Sacado",inline=False, value= "-Un par de cosas que quedaban feas en el codigo (no cambia nada en la practica)\n-Removed Herobrine")
+    em_changelog.set_footer(text="v.1.3.3")
     
     await mensaje.channel.send(embed=em_changelog)
     
@@ -79,7 +106,7 @@ FRASEMOT_TUP=("mmmmm yeah",
 "jueguen al Rimworld!!",
 "melocoton",
 "¿Cómo motivar a una persona frases? Resultado de imagen para frases motivadoras 101 frases para inspirar y motivar líderes y empleados Algún día es una enfermedad que llevará tus sueños a la tumba contigo Clic para tuitear.Cuanto más hacemos, más podemo",
-".play rickroll",
+"Una botella de queeeee!????",
 "Es muy divertido lograr lo imposible. (????????)",
 "Also try Terraria",
 "Ese no mejor el de la izquierda",
@@ -158,9 +185,9 @@ COMANDOS_SR={
 
 #Lo que imprime la funcion $help
 HELP_DICT={
-"help": "$help rimas1 o $help rimas2 para ver las posibles rimas",
+"help rimas": "$help rimas *numero de pagina* para ver las posibles rimas. Ej: $help rimas 2",
 'saludo':"Un saludo",
-'len':"Devuelve la longitud de la palabra. Ej: $len hola =4",
+'len':"Devuelve la longitud de lo que pongas despues del comando. Ej: $len hola = 4",
 'auris':"Y esos auris de virgo momo???? (video)",
 'atiendo':"Atendes boludos (video)",
 'arrepentir':"Samid vs Viale (qdep) (video)",
@@ -170,49 +197,13 @@ HELP_DICT={
 "git": "Repositorio del bot (para ver el código)",
 'hola':"Mas saludos",
 'hoal':"Muchisimos saludos",
-'frase':"La frase del momento! (realmente no es una sola por dia lol!)",
-'changelog':"Importantísima funcion que te avisa de todos los muchísimos nuevos cambios de la ultima actualización!!(flashee programador)",
+'frase':"La frase del momento!",
+'changelog':"Lista de los ultimos cambios",
 "poema":"Los 3359 caracteres que me motivan a seguir viviendo"
 }
 
-RIMAS1={
-'-000': 'Esto son puras rimas de albañil',
-'100': 'La tengo como un electrotrén',
-'-00': 'Mis huevos somnolientos',
-'90': 'La mia desorienta',
-'80': 'La mia atormenta',
-'70': 'La mia reglamenta',
-'60': 'La mia representa',
-'50': 'La mia es suculenta',
-'40': 'La mia sabe a polenta',
-'30': 'La mia sabe a menta',
-'20': 'Mi pene en tu mente',
-'15': 'Tu culo +15 papu lince',
-'14': 'Cuidado no la forces',
-'13': 'En tu culo se me cuece',
-'12': 'Te la meto sin que roce',
-'11': 'la tengo de bronce'}
-
-RIMAS2={
-'10': 'En el culo te la ves',
-'9': 'En el culo se te mueve',
-'8': 'El culo te abrocho',
-'7': 'En el culo se te mete',
-'6': 'En el culo os la veis',
-'5': 'En el culo te la hinco',
-'4': 'En tu culo mi aparato',
-'3': 'En el culo te la ves',
-'2': 'Esta es para vos',
-'1': 'Tu culo vacuno',
-'0': 'Te la meto en el trasero',
-'O.o':"o.O",
-'o.O':"O.o",
-'que': 'so',
-'yeah': ':sunglasses: :sunglasses: :sunglasses: :sunglasses:',
-'yeah sex': ':cowboy:',
-'jf': "sos vos capo",
-'busto': 'bobo'
-}
+#Tupla de listas con las keys de RIMAS
+TUPLA_RIMAS=crear_TUPLA_RIMAS()
 
 PREFIJO="$"
 
@@ -250,7 +241,7 @@ async def on_message(mensaje):
                     await mensaje.channel.send(random.choice(COMANDOS_SIMPLES[comando]))
                     return
                 else:
-                    await mensaje.channel.send(COMANDOS_SIMPLES[comando](analizar_contenido(msg)))
+                    await mensaje.channel.send(COMANDOS_SIMPLES[comando](msg))
                     return
 
         for comando in COMANDOS_SR.keys():
@@ -274,4 +265,4 @@ async def on_message(mensaje):
 #------------------------------Final------------------------------------------#
 
 keep_alive()
-client.run(os.getenv('TOKEN'))
+client.run('ODgzNDgwNjQ0MDUzNzc0MzM3.YTKjdw.c6RgqtFcdLsKqcBcVAWPzChYYrk')
