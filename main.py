@@ -112,6 +112,7 @@ FRASEMOT_TUP=("mmmmm yeah",
 "Ese no mejor el de la izquierda",
 "No lo tenés en rojo?",
 ":alien:",
+"asi :pinched_fingers:",
 "Al que madruga bla bla bla..."              
 )
 
