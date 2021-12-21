@@ -1,7 +1,7 @@
-import discord, os,random
+import discord, os, random
 from keep_alive import keep_alive
 
-client= discord.Client()
+client = discord.Client()
 
 #-------------------------------Funciones------------------------------------#
 
@@ -11,23 +11,23 @@ def longitud(medible):
 
 def crear_TUPLA_RIMAS():
     #Crea una tupla de listas de 14 items con las keys de RIMAS
-    lista=[[]]
-    contador=0
-    pagina=0
+    lista = [[]]
+    contador = 0
+    pagina = 0
     for rima in RIMAS.keys():
-        if contador==13:
+        if contador == 13:
             lista[pagina].append(rima)
             lista.append([])
-            contador=0
-            pagina+=1
+            contador = 0
+            pagina += 1
         else:
             lista[pagina].append(rima)
-            contador+=1
+            contador += 1
     return tuple(lista)
 
 def analizar_contenido(msg, numero):
     #Retorna la palabra que especifica el numero o todas si este es "n"
-    linea=msg.split(" ")
+    linea = msg.split(" ")
     if numero != "n":
         try:
             if linea[int(numero)]:
@@ -38,50 +38,50 @@ def analizar_contenido(msg, numero):
         return linea
 
 async def funcion_help(mensaje):
-    em_help= discord.Embed(
+    em_help = discord.Embed(
         title = "Help",
-        colour= discord.Colour.light_gray()
+        colour = discord.Colour.light_gray()
         )
     
-    contenido_analizado_1=analizar_contenido(mensaje.content, 1)
+    contenido_analizado_1 = analizar_contenido(mensaje.content, 1)
     
-    if contenido_analizado_1=="rimas":
-        if analizar_contenido(mensaje.content, 2)!=None:
-            pagina_deseada=int(analizar_contenido(mensaje.content, 2))-1
+    if contenido_analizado_1 == "rimas":
+        if analizar_contenido(mensaje.content, 2) != None:
+            pagina_deseada = int(analizar_contenido(mensaje.content, 2)) -1
         else:
-            pagina_deseada=0
+            pagina_deseada = 0
         
         for rimas in TUPLA_RIMAS[pagina_deseada]:
             if isinstance(RIMAS[rimas], tuple):
-                suma_rimas=""
+                suma_rimas = ""
                 for item in RIMAS[rimas]:
-                    suma_rimas+= item +" / "
-                em_help.add_field(name= rimas,value= suma_rimas, inline=False)
+                    suma_rimas += item + " / "
+                em_help.add_field(name = rimas, value = suma_rimas, inline = False)
             if isinstance(RIMAS[rimas], str):
-                em_help.add_field(name= rimas,value= RIMAS[rimas], inline=False)
+                em_help.add_field(name = rimas, value = RIMAS[rimas], inline = False)
             
-        em_help.set_footer(text=f"Rimas {pagina_deseada+1}")
-        await mensaje.channel.send(embed=em_help)
+        em_help.set_footer(text = f"Rimas {pagina_deseada + 1}")
+        await mensaje.channel.send(embed = em_help)
 
             
-    if contenido_analizado_1=="comandos" or contenido_analizado_1 == None:
+    if contenido_analizado_1 == "comandos" or contenido_analizado_1 == None:
         for comandos in HELP_DICT.keys():
-            em_help.add_field(name= PREFIJO+comandos,value= HELP_DICT[comandos], inline=False)
-        em_help.set_footer(text="Comandos")
-        await mensaje.channel.send(embed=em_help)
+            em_help.add_field(name = PREFIJO + comandos, value = HELP_DICT[comandos], inline = False)
+        em_help.set_footer(text = "Comandos")
+        await mensaje.channel.send(embed = em_help)
 
 async def changelog(mensaje):
-    em_changelog= discord.Embed(
+    em_changelog = discord.Embed(
         title = "Changelog",
-        colour= discord.Colour.light_gray()
+        colour = discord.Colour.light_gray()
         )
     
-    em_changelog.add_field(name= "Ajustes",inline=False, value= "-Cambie un poco el comando $len, ahora te dice la longitud de todo lo que sigue al comando en vez de solo una palabra \n-Cambie la funcion $help rimas, ahora no es tan pedorra en el codigo, si una palabra tiene varias rimas te muestra todas las posibles y se elige la pagina que queres ver de otra manera, tenes que poner $help rimas *numero* para ver esa pagina. Ej: $help rimas 3 te muestra la tercera pagina de rimas")
-    em_changelog.add_field(name= "Nuevo",inline=False, value= "-Nada lol, tarde bastante con la huevada del $help rimas")
-    em_changelog.add_field(name= "Sacado",inline=False, value= "-Un par de cosas que quedaban feas en el codigo (no cambia nada en la practica)\n-Removed Herobrine")
-    em_changelog.set_footer(text="v.1.3.3")
+    em_changelog.add_field(name = "Ajustes",inline=False, value = "-Cambie un poco el comando $len, ahora te dice la longitud de todo lo que sigue al comando en vez de solo una palabra \n-Cambie la funcion $help rimas, ahora no es tan pedorra en el codigo, si una palabra tiene varias rimas te muestra todas las posibles y se elige la pagina que queres ver de otra manera, tenes que poner $help rimas *numero* para ver esa pagina. Ej: $help rimas 3 te muestra la tercera pagina de rimas")
+    em_changelog.add_field(name = "Nuevo",inline=False, value = "-Nada lol, tarde bastante con la huevada del $help rimas")
+    em_changelog.add_field(name = "Sacado",inline=False, value = "-Un par de cosas que quedaban feas en el codigo (no cambia nada en la practica)\n-Removed Herobrine")
+    em_changelog.set_footer(text = "v.1.3.3")
     
-    await mensaje.channel.send(embed=em_changelog)
+    await mensaje.channel.send(embed = em_changelog)
     
 async def poema(mensaje):
     #Lo encontré en un comentario de YT, simplemente arte
@@ -95,7 +95,7 @@ async def poema(mensaje):
 #---------------------------------V. globales--------------------------------#
 
 #Posibles frases motivadoras
-FRASEMOT_TUP=("mmmmm yeah",
+FRASEMOT_TUP = ("mmmmm yeah",
 "La vida es dura pero mas dura es la vida de los niños sirios, tomá la sopa",
 "momento lol",
 "like si te pasó",
@@ -117,7 +117,7 @@ FRASEMOT_TUP=("mmmmm yeah",
 )
 
 #Responde con el valor cuando termina con la clave
-RIMAS={
+RIMAS = {
 '000': 'Esto son puras rimas de albañil',
 '100': 'La tengo como un electrotrén',
 '00': 'Mis huevos somnolientos',
@@ -159,7 +159,7 @@ RIMAS={
 
 
 #Comandos que devuelven una string 
-COMANDOS_SIMPLES={
+COMANDOS_SIMPLES = {
 'saludo':"hoal",
 'auris':"https://www.youtube.com/watch?v=ptJJG8ucn48",
 'atiendo':"https://www.youtube.com/watch?v=i5Vdl_unhHQ",
@@ -178,14 +178,14 @@ COMANDOS_SIMPLES={
 }
 
 #Comandos que NO devuelven una string (Sin Return)
-COMANDOS_SR={
+COMANDOS_SR = {
 "help": funcion_help,
 'changelog': changelog,
 "poema":poema
 }
 
 #Lo que imprime la funcion $help
-HELP_DICT={
+HELP_DICT = {
 "help rimas": "$help rimas *numero de pagina* para ver las posibles rimas. Ej: $help rimas 2",
 'saludo':"Un saludo",
 'len':"Devuelve la longitud de lo que pongas despues del comando. Ej: $len hola = 4",
@@ -204,11 +204,11 @@ HELP_DICT={
 }
 
 #Tupla de listas con las keys de RIMAS
-TUPLA_RIMAS=crear_TUPLA_RIMAS()
+TUPLA_RIMAS = crear_TUPLA_RIMAS()
 
-PREFIJO="$"
+PREFIJO = "$"
 
-SWITCH_RIMAS=True
+SWITCH_RIMAS = True
 
 #-------------------------------Al ejecutar-----------------------------------#
 
@@ -234,7 +234,7 @@ async def on_message(mensaje):
     if msg.startswith(PREFIJO):
     #Comandos
         for comando in COMANDOS_SIMPLES.keys():
-            if msg.startswith(PREFIJO+comando):
+            if msg.startswith(PREFIJO + comando):
                 if isinstance(COMANDOS_SIMPLES[comando], str):
                     await mensaje.channel.send(COMANDOS_SIMPLES[comando])
                     return
@@ -246,7 +246,7 @@ async def on_message(mensaje):
                     return
 
         for comando in COMANDOS_SR.keys():
-            if msg.startswith(PREFIJO+comando):
+            if msg.startswith(PREFIJO + comando):
                 await COMANDOS_SR[comando](mensaje)
                 return
 
@@ -256,7 +256,7 @@ async def on_message(mensaje):
         for numero in RIMAS.keys():
             if msg.endswith(numero) and not msg.startswith(PREFIJO):
                 if isinstance(RIMAS[numero], str):
-                    rima=RIMAS[numero]
+                    rima = RIMAS[numero]
                     await mensaje.channel.send(rima)
                     return
                 if isinstance(RIMAS[numero], tuple):
