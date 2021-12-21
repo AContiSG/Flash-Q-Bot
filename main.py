@@ -225,11 +225,13 @@ async def on_message(mensaje):
     if mensaje.author == client.user:
         return
     
+
     elif client.user.mentioned_in(mensaje):
     #Al mencionarlo
         await mensaje.channel.send("Atiendo boludos ($help para la lista de comandos)")
         return
     
+
     elif msg.startswith(PREFIJO):
     #Comandos
         for comando in COMANDOS_SIMPLES.keys():
@@ -259,7 +261,7 @@ async def on_message(mensaje):
                     await mensaje.channel.send(rima)
                     return
                 elif isinstance(RIMAS[numero], tuple):
-                    rima=random.choice(RIMAS[numero])
+                    rima = random.choice(RIMAS[numero])
                     await mensaje.channel.send(rima)
                     return
 #------------------------------Final------------------------------------------#
