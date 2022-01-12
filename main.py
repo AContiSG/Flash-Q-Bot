@@ -1,4 +1,3 @@
-from _typeshed import NoneType
 import discord, os, random
 import requests
 from bs4 import BeautifulSoup
@@ -41,11 +40,18 @@ def analizar_contenido(msg, numero):
         return linea
 
 def sacarTituloRandom():
-    #Da el titulo de una pagina aleatoria de Wikipedia
-    urlRandom=requests.get(url="https://es.wikipedia.org/wiki/Especial:Aleatoria")
+    # Da el titulo de una pagina aleatoria de Wikipedia 
+    # by yuyu
+    urlRandom = requests.get(url= "https://es.wikipedia.org/wiki/Especial:Aleatoria")
     soup = BeautifulSoup(urlRandom.content, 'html.parser')
-    titulo = soup.find(id="firstHeading").string
+    titulo = soup.find(id= "firstHeading").string
     return titulo
+
+def activar_desactivar_rimas():
+    if SWITCH_RIMAS:
+        SWITCH_RIMAS.clear()
+    else:
+        SWITCH_RIMAS.append(1)
 
 async def funcion_help(mensaje):
     em_help = discord.Embed(
@@ -124,14 +130,14 @@ async def lista_mejores(mensaje):
 
 #Posibles frases motivadoras
 FRASEMOT_TUP = ("mmmmm yeah",
-"La vida es dura pero mas dura es la vida de los niños sirios, tomá la sopa",
+"Tomá la sopa",
 "momento lol",
 "like si te pasó",
 "sisisi",
 "nah",
 "bueno pero solo a veces",
 "KeyboardInterrupt",
-"jueguen al Rimworld!!",
+"jueguen Rimworld!!",
 "melocoton",
 "¿Cómo motivar a una persona frases? Resultado de imagen para frases motivadoras 101 frases para inspirar y motivar líderes y empleados Algún día es una enfermedad que llevará tus sueños a la tumba contigo Clic para tuitear.Cuanto más hacemos, más podemo",
 "Una botella de queeeee!????",
@@ -141,7 +147,21 @@ FRASEMOT_TUP = ("mmmmm yeah",
 "No lo tenés en rojo?",
 ":alien:",
 "asi :pinched_fingers:",
-"Al que madruga bla bla bla..."              
+"Al que madruga bla bla bla...",
+"179.235.61.185",
+"Sabalero",
+"Toot toot",
+"¡Un revolver puede decir ¡BANG!, ¡PANG! e inclusive, ¡PUNG! pero nunca Y!",
+"El famoso trompetista de color",
+"ajajajje",
+"Me pasó",
+"Buenísimo",
+"minceraft",
+"meningococo",
+"hue hue hue hue",
+" ",
+"un saludo a la flia",
+"chaucha"
 )
 
 #Responde con el valor cuando termina con la clave
@@ -210,7 +230,8 @@ COMANDOS_SR = {
 "help": funcion_help,
 'changelog': changelog,
 "poema":poema,
-"mejores": lista_mejores
+"mejores": lista_mejores,
+"switch":activar_desactivar_rimas
 }
 
 #Lo que imprime la funcion $help
@@ -230,7 +251,8 @@ HELP_DICT = {
 'frase':"La frase del momento!",
 'changelog':"Lista de los ultimos cambios",
 "poema":"Los 3359 caracteres que me motivan a seguir viviendo",
-"mejores": "Lista de la cosas mas buenísimas"
+"mejores": "Top cualquier numero de las cosas más buenisimas del mundo. Ej: $mejores 7",
+"switch":"activa o desactiva las rimas"
 }
 
 #Tupla de listas con las keys de RIMAS
@@ -238,7 +260,7 @@ TUPLA_RIMAS = crear_TUPLA_RIMAS()
 
 PREFIJO = "$"
 
-SWITCH_RIMAS = True
+SWITCH_RIMAS = [True]
 
 #-------------------------------Al ejecutar-----------------------------------#
 
