@@ -50,8 +50,10 @@ def sacarTituloRandom():
 def activar_desactivar_rimas(mensaje):
     if SWITCH_RIMAS:
         SWITCH_RIMAS.clear()
+        return "Rimas desactivadas"
     else:
         SWITCH_RIMAS.append(1)
+        return "Rimas activadas"
 
 async def funcion_help(mensaje):
     em_help = discord.Embed(
@@ -222,7 +224,8 @@ COMANDOS_SIMPLES = {
 'frase':FRASEMOT_TUP,
 'len':longitud,
 'invite':"https://discord.com/api/oauth2/authorize?client_id=883480644053774337&permissions=34359856192&scope=bot",
-"git": "https://github.com/AContiSG/Flash-Q-Bot"
+"git": "https://github.com/AContiSG/Flash-Q-Bot",
+"switch":activar_desactivar_rimas
 }
 
 #Comandos que NO devuelven una string (Sin Return)
@@ -230,8 +233,7 @@ COMANDOS_SR = {
 "help": funcion_help,
 'changelog': changelog,
 "poema":poema,
-"mejores": lista_mejores,
-"switch":activar_desactivar_rimas
+"mejores": lista_mejores
 }
 
 #Lo que imprime la funcion $help
@@ -252,7 +254,7 @@ HELP_DICT = {
 'changelog':"Lista de los ultimos cambios",
 "poema":"Los 3359 caracteres que me motivan a seguir viviendo",
 "mejores": "Top cualquier numero de las cosas más buenisimas del mundo. Ej: $mejores 7",
-"switch":"activa o desactiva las rimas"
+"switch":"Activa o desactiva las rimas"
 }
 
 #Tupla de listas con las keys de RIMAS
