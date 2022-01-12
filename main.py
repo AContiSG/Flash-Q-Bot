@@ -94,10 +94,19 @@ async def changelog(mensaje):
         colour = discord.Colour.light_gray()
         )
     
-    em_changelog.add_field(name = "Ajustes",inline=False, value = "-Cambie un poco el comando $len, ahora te dice la longitud de todo lo que sigue al comando en vez de solo una palabra \n-Cambie la funcion $help rimas, ahora no es tan pedorra en el codigo, si una palabra tiene varias rimas te muestra todas las posibles y se elige la pagina que queres ver de otra manera, tenes que poner $help rimas *numero* para ver esa pagina. Ej: $help rimas 3 te muestra la tercera pagina de rimas")
-    em_changelog.add_field(name = "Nuevo",inline=False, value = "-Nada lol, tarde bastante con la huevada del $help rimas")
-    em_changelog.add_field(name = "Sacado",inline=False, value = "-Un par de cosas que quedaban feas en el codigo (no cambia nada en la practica)\n-Removed Herobrine")
-    em_changelog.set_footer(text = "v.1.3.3")
+    em_changelog.add_field(name = "Ajustes",inline=False, value = f"""
+    - Pavadas\n
+    - Preparacion para una futura forma de cambiar el prefijo con el que llamar a los comandos (actualmente {PREFIJO})
+    """)
+    em_changelog.add_field(name = "Nuevo",inline=False, value = f"""
+    - Conseguí que se puedan desactivar las rimas del orto!!!! {PREFIJO}switch\n
+    - Función de lista de las cosas más buenisimas (sacadas aleatoriamente de wikipedia) {PREFIJO}buenisimas\n
+    - Nuevas frases en {PREFIJO}frase
+    """)
+    em_changelog.add_field(name = "Sacado",inline=False, value = """
+    - creo q nada pero no me acuerdo 
+    """)
+    em_changelog.set_footer(text = "v.1.4")
     
     await mensaje.channel.send(embed = em_changelog)
     
@@ -109,26 +118,29 @@ async def poema(mensaje):
     await mensaje.channel.send(POEMA_trece1)
     await mensaje.channel.send(POEMA_trece2)    
 
-async def lista_mejores(mensaje):
+async def lista_buenisimas(mensaje):
     if analizar_contenido(mensaje.content, 1) == None:
         limite_top = 10
+    elif int(analizar_contenido(mensaje.content, 1)) > 25:
+        limite_top = 25
     else:
         limite_top = int(analizar_contenido(mensaje.content, 1))
 
-    em_mejores = discord.Embed(
+    em_buenisimas = discord.Embed(
         title = f"Top {limite_top} cosas más buenisimas",
         colour = discord.Colour.light_gray()
         )
-    em_mejores.add_field(name = 1, value = "Matar gente", inline = False)
+    em_buenisimas.add_field(name = 1, value = "Matar gente", inline = False)
 
     for x in range(2, limite_top + 1):
-        em_mejores.add_field(name = x, value = sacarTituloRandom(), inline = False)
+        em_buenisimas.add_field(name = x, value = sacarTituloRandom(), inline = False)
     
-    em_mejores.set_footer(text = "Ta wenísimo")
-    await mensaje.channel.send(embed = em_mejores)
+    em_buenisimas.set_footer(text = "Ta wenísimo")
+    await mensaje.channel.send(embed = em_buenisimas)
 
 
 #---------------------------------V. globales--------------------------------#
+PREFIJO = "$"
 
 #Posibles frases motivadoras
 FRASEMOT_TUP = ("mmmmm yeah",
@@ -161,7 +173,7 @@ FRASEMOT_TUP = ("mmmmm yeah",
 "minceraft",
 "meningococo",
 "hue hue hue hue",
-" ",
+"?",
 "un saludo a la flia",
 "chaucha"
 )
@@ -207,7 +219,6 @@ RIMAS = {
 'busto':'bobo'
 }
 
-
 #Comandos que devuelven una string 
 COMANDOS_SIMPLES = {
 'saludo':"hoal",
@@ -233,14 +244,14 @@ COMANDOS_SR = {
 "help": funcion_help,
 'changelog': changelog,
 "poema":poema,
-"mejores": lista_mejores
+"buenisimas": lista_buenisimas
 }
 
 #Lo que imprime la funcion $help
 HELP_DICT = {
-"help rimas": "$help rimas *numero de pagina* para ver las posibles rimas. Ej: $help rimas 2",
+"help rimas": f"{PREFIJO}help rimas *numero de pagina* para ver las posibles rimas. Ej: {PREFIJO}help rimas 2",
 'saludo':"Un saludo",
-'len':"Devuelve la longitud de lo que pongas despues del comando. Ej: $len hola = 4",
+'len':f"Devuelve la longitud de lo que pongas despues del comando. Ej: {PREFIJO}len hola = 4",
 'auris':"Y esos auris de virgo momo???? (video)",
 'atiendo':"Atendes boludos (video)",
 'arrepentir':"Samid vs Viale (qdep) (video)",
@@ -253,14 +264,12 @@ HELP_DICT = {
 'frase':"La frase del momento!",
 'changelog':"Lista de los ultimos cambios",
 "poema":"Los 3359 caracteres que me motivan a seguir viviendo",
-"mejores": "Top cualquier numero de las cosas más buenisimas del mundo. Ej: $mejores 7",
+"buenisimas": f"Top cualquier numero (max 25) de las cosas más buenisimas del mundo. Ej: {PREFIJO}buenisimas 7",
 "switch":"Activa o desactiva las rimas"
 }
 
 #Tupla de listas con las keys de RIMAS
 TUPLA_RIMAS = crear_TUPLA_RIMAS()
-
-PREFIJO = "$"
 
 SWITCH_RIMAS = [True]
 
@@ -282,7 +291,7 @@ async def on_message(mensaje):
 
     elif client.user.mentioned_in(mensaje):
     #Al mencionarlo
-        await mensaje.channel.send("Atiendo boludos ($help para la lista de comandos)")
+        await mensaje.channel.send(f"Atiendo boludos ({PREFIJO}help para la lista de comandos)")
         return
     
 
