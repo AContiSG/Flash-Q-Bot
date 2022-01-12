@@ -47,7 +47,7 @@ def sacarTituloRandom():
     titulo = soup.find(id= "firstHeading").string
     return titulo
 
-def activar_desactivar_rimas():
+def activar_desactivar_rimas(mensaje):
     if SWITCH_RIMAS:
         SWITCH_RIMAS.clear()
     else:
