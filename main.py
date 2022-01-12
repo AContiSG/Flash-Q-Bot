@@ -1,4 +1,6 @@
 import discord, os, random
+import requests
+from bs4 import BeautifulSoup
 from keep_alive import keep_alive
 
 client = discord.Client()
@@ -90,6 +92,14 @@ async def poema(mensaje):
     
     await mensaje.channel.send(POEMA_trece1)
     await mensaje.channel.send(POEMA_trece2)
+
+
+def sacarTituloRandom():
+    #Da el titulo de una pagina aleatoria de Wikipedia
+    urlRandom=requests.get(url="https://es.wikipedia.org/wiki/Especial:Aleatoria")
+    soup = BeautifulSoup(urlRandom.content, 'html.parser')
+    titulo = soup.find(id="firstHeading").string
+    return titulo
     
 
 #---------------------------------V. globales--------------------------------#
