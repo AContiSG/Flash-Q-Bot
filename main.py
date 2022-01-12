@@ -202,7 +202,8 @@ COMANDOS_SIMPLES = {
 COMANDOS_SR = {
 "help": funcion_help,
 'changelog': changelog,
-"poema":poema
+"poema":poema,
+"mejores": lista_mejores
 }
 
 #Lo que imprime la funcion $help
@@ -221,7 +222,8 @@ HELP_DICT = {
 'hoal':"Muchisimos saludos",
 'frase':"La frase del momento!",
 'changelog':"Lista de los ultimos cambios",
-"poema":"Los 3359 caracteres que me motivan a seguir viviendo"
+"poema":"Los 3359 caracteres que me motivan a seguir viviendo",
+"mejores": "Lista de la cosas mas buenísimas"
 }
 
 #Tupla de listas con las keys de RIMAS
