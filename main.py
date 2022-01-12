@@ -1,3 +1,4 @@
+from _typeshed import NoneType
 import discord, os, random
 import requests
 from bs4 import BeautifulSoup
@@ -101,12 +102,18 @@ async def poema(mensaje):
     await mensaje.channel.send(POEMA_trece2)    
 
 async def lista_mejores(mensaje):
+    if isinstance(analizar_contenido(mensaje.content, 1), NoneType):
+        limite_top = 10
+    else:
+        limite_top = int(analizar_contenido(mensaje.content, 1))
+
     em_mejores = discord.Embed(
-        title = f"Top {analizar_contenido(mensaje.content, 1)} cosas más buenisimas",
+        title = f"Top {limite_top} cosas más buenisimas",
         colour = discord.Colour.light_gray()
         )
     em_mejores.add_field(name = 1, value = "Matar gente", inline = False)
-    for x in range(2, int(analizar_contenido(mensaje.content, 1))):
+
+    for x in range(2, limite_top + 1):
         em_mejores.add_field(name = x, value = sacarTituloRandom(), inline = False)
     
     em_mejores.set_footer(text = "Ta wenísimo")
