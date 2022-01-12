@@ -39,6 +39,13 @@ def analizar_contenido(msg, numero):
     else:
         return linea
 
+def sacarTituloRandom():
+    #Da el titulo de una pagina aleatoria de Wikipedia
+    urlRandom=requests.get(url="https://es.wikipedia.org/wiki/Especial:Aleatoria")
+    soup = BeautifulSoup(urlRandom.content, 'html.parser')
+    titulo = soup.find(id="firstHeading").string
+    return titulo
+
 async def funcion_help(mensaje):
     em_help = discord.Embed(
         title = "Help",
@@ -91,16 +98,20 @@ async def poema(mensaje):
     POEMA_trece2="Aquí tienes para que me la beses, entre más me la beses más me crece, busca un cura para que me la rece, un martillo para que me la endereces, un chef para que me la aderece, 8000 mondas por el culo se te aparecen, si me la sobas haces que se me espese, si quieres la escaneas y te la llevas para que en tu hoja de vida la anexes, me culeo a tu maldita madre y qué te parece le meti la monda a tú mamá hace 9 meses y después la puse a escuchar René de Calle 13  Te la meto por debajo del agua como los peces, y aquella flor de monda que en tu culo crece, reposa sobre tus nalgas a veces y descansa en paz en tu chicorio cuando anochece Que te parece, te lo meti antes de los 9 meses te meto la verga pa que el tunel del orto se te enderece, de tanta monda hasta tu novia va a queda preña de mi por 9 meses, te la empujo y te la pongo pa que me la peses, y te meto la guamayeta un millon de veces que de tanta monda van a respirar hasta los peces.si te pareció poco... los dobladillos del culo al leer esto texto se te estremecen, esa raja seca una mondaquera se merece, tranquila que sigo como jeison en viernes 13, la cabeza de la mondá después se me adormece, pero tranquila que eso no te favorece, si se despierta te va regar de leche y después me agradeces, el chiquito se te esflorece, tranquila que de mondá en éste grupo no se carece y si te la meten por el oído te en ensordeces y si te la meten entre todos te desfortaleces y eso no te conviene porque te enflaqueces pero tranquila que esos pelos del culo vuelven y te crecen como campo te reflorece y a tu maldit4 madre se la empujo a veces, ya que el culo se le enmugrece y si me ve la mondá nuevamente se aloquece y eso no te conviene porque me vas hacer que de nuevo contigo empiece te lo meto desde que amanece hasta que anochece,  sin que se te humedece y como tabaco de marihuana te embobece,  y éste como bendición de Dios te abastece, se me endurece nuevamente y deja de hacerte la paja porque ésta enseguece."
     
     await mensaje.channel.send(POEMA_trece1)
-    await mensaje.channel.send(POEMA_trece2)
+    await mensaje.channel.send(POEMA_trece2)    
 
-
-def sacarTituloRandom():
-    #Da el titulo de una pagina aleatoria de Wikipedia
-    urlRandom=requests.get(url="https://es.wikipedia.org/wiki/Especial:Aleatoria")
-    soup = BeautifulSoup(urlRandom.content, 'html.parser')
-    titulo = soup.find(id="firstHeading").string
-    return titulo
+async def lista_mejores(mensaje):
+    em_mejores = discord.Embed(
+        title = f"Top {analizar_contenido(mensaje.content, 1)} cosas más buenisimas",
+        colour = discord.Colour.light_gray()
+        )
+    em_mejores.add_field(name = 1, value = "Matar gente", inline = False)
+    for x in range(2, int(analizar_contenido(mensaje.content, 1))):
+        em_mejores.add_field(name = x, value = sacarTituloRandom(), inline = False)
     
+    em_mejores.set_footer(text = "Ta wenísimo")
+    await mensaje.channel.send(embed = em_mejores)
+
 
 #---------------------------------V. globales--------------------------------#
 
