@@ -99,8 +99,8 @@ async def changelog(mensaje):
     - Preparacion para una futura forma de cambiar el prefijo con el que llamar a los comandos (actualmente {PREFIJO})
     """)
     em_changelog.add_field(name = "Nuevo",inline=False, value = f"""
-    - Conseguí que se puedan desactivar las rimas del orto!!!! {PREFIJO}switch\n
-    - Función de lista de las cosas más buenisimas (sacadas aleatoriamente de wikipedia) {PREFIJO}buenisimas\n
+    - Conseguí que se puedan desactivar las rimas del orto!!!! {PREFIJO}switch
+    - Función de lista de las cosas más buenisimas (sacadas aleatoriamente de wikipedia) {PREFIJO}buenisimas
     - Nuevas frases en {PREFIJO}frase
     """)
     em_changelog.add_field(name = "Sacado",inline=False, value = """
@@ -125,6 +125,8 @@ async def lista_buenisimas(mensaje):
         limite_top = 25
     else:
         limite_top = int(analizar_contenido(mensaje.content, 1))
+
+    mensaje.channel.send("La lista tarda un poco en crearse, espera un cacho")
 
     em_buenisimas = discord.Embed(
         title = f"Top {limite_top} cosas más buenisimas",
@@ -175,7 +177,20 @@ FRASEMOT_TUP = ("mmmmm yeah",
 "hue hue hue hue",
 "?",
 "un saludo a la flia",
-"chaucha"
+"chaucha",
+"ramparte",
+"""
+Lactuca sativa, conocida comúnmente como *lechuga*, es una planta herbácea propia de las regiones semitempladas que se cultiva como alimento. Debido a las muchas variedades que existen y a su cultivo cada vez mayor en invernaderos, se puede consumir durante todo el año.
+
+Descripción
+Plantas anuales o bienales que pueden llegar a medir 1 m de altura. La raíz es pivotante y se ramifica unos 25 cm.
+Desarrolla una roseta basal de hojas obovadas —en ocasiones dispuestas apretadamente como los repollos— con márgenes dentado-crenados o según las variedades, lisos, ondulados o aserrados. Cuando llega a la etapa reproductiva de la roseta surge el tallo floral con hojas pequeñas aovadas, que se ramifica a cierta altura, para producir las inflorescencias terminales, formadas por capítulos en panículas o corimbos de color amarillo (parecidos al diente de león). Las flores, de unos 10-15 mm, son liguladas con involucros de brácteas escamosas, tienen 5 estambres. El fruto es un aquenio de 6-8 mm, obovado y comprimido. Las diminutas semillas tienen un vilano plumoso.
+""",
+"tom hola",
+"martar gente",
+"harry styles",
+"*ruido de mate *",
+"created by obez~"
 )
 
 #Responde con el valor cuando termina con la clave
