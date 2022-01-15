@@ -95,7 +95,7 @@ async def changelog(mensaje):
         )
     
     em_changelog.add_field(name = "Ajustes",inline=False, value = f"""
-    - Pavadas\n
+    - Pavadas
     - Preparacion para una futura forma de cambiar el prefijo con el que llamar a los comandos (actualmente {PREFIJO})
     """)
     em_changelog.add_field(name = "Nuevo",inline=False, value = f"""
@@ -126,7 +126,7 @@ async def lista_buenisimas(mensaje):
     else:
         limite_top = int(analizar_contenido(mensaje.content, 1))
 
-    mensaje.channel.send("La lista tarda un poco en crearse, espera un cacho")
+    await mensaje.channel.send("La lista tarda un poco en crearse, espera un cacho")
 
     em_buenisimas = discord.Embed(
         title = f"Top {limite_top} cosas más buenisimas",
