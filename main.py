@@ -1,5 +1,4 @@
-import discord, os, random
-import requests
+import discord, os, random, requests
 from bs4 import BeautifulSoup
 from keep_alive import keep_alive
 
@@ -126,7 +125,7 @@ async def lista_buenisimas(mensaje):
     else:
         limite_top = int(analizar_contenido(mensaje.content, 1))
 
-    await mensaje.channel.send("La lista tarda un poco en crearse, espera un cacho")
+    aviso = await mensaje.channel.send("La lista tarda un poco en crearse, espera un cacho")
 
     em_buenisimas = discord.Embed(
         title = f"Top {limite_top} cosas más buenisimas",
@@ -138,6 +137,8 @@ async def lista_buenisimas(mensaje):
         em_buenisimas.add_field(name = x, value = sacarTituloRandom(), inline = False)
     
     em_buenisimas.set_footer(text = "Ta wenísimo")
+    
+    await aviso.delete()
     await mensaje.channel.send(embed = em_buenisimas)
 
 
