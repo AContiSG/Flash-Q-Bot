@@ -119,7 +119,7 @@ async def poema(mensaje):
     await mensaje.channel.send(POEMA_trece2)    
 
 async def lista_buenisimas(mensaje):
-    if analizar_contenido(mensaje.content, 1) == None:
+    if analizar_contenido(mensaje.content, 1) == None or int(analizar_contenido(mensaje.content, 1)) < 1:
         limite_top = 10
     elif int(analizar_contenido(mensaje.content, 1)) > 25:
         limite_top = 25
