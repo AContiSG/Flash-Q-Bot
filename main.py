@@ -43,13 +43,13 @@ async def traducir_mal(mensaje):
     palabras_traducir = analizar_contenido(mensaje.content, "n")[1:]
 
     if palabras_traducir and len(palabras_traducir) < 16:
-        traductor = Translator(to_lang="en", from_lang= "es", provider = "MyMemory", email = "meyom30301@altcen.com")
+        traductor = Translator(to_lang="en", from_lang= "es", provider = "mymemory", email = "meyom30301@altcen.com")
         traduccion = ""
 
         for palabra in palabras_traducir:
             traduccion += traductor.translate(palabra) + " "
         await mensaje.channel.send(traduccion)
-    elif palabras_traducir > 16:
+    elif int(palabras_traducir) > 16:
         await mensaje.channel.send("Menos de 15 palabras o me explota el bot")
 
 def sacarTituloRandom():
