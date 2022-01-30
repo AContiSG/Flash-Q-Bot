@@ -40,11 +40,15 @@ def analizar_contenido(msg, numero):
         return linea
 
 async def traducir_mal(mensaje):
-    traductor = Translator(to_lang="en", from_lang= "es")
-    traduccion = ""
-    for palabra in analizar_contenido(mensaje.content, "n")[1:]:
-        traduccion += traductor.translate(palabra) + " "
-    await mensaje.channel.send(traduccion)
+    palabras_traducir = analizar_contenido(mensaje.content, "n")[1:]
+
+    if palabras_traducir: #para q no de error si no pones nada para traducir
+        traductor = Translator(to_lang="en", from_lang= "es")
+        traduccion = ""
+
+        for palabra in palabras_traducir:
+            traduccion += traductor.translate(palabra) + " "
+        await mensaje.channel.send(traduccion)
 
 def sacarTituloRandom():
     # Da el titulo de una pagina aleatoria de Wikipedia 
@@ -101,19 +105,17 @@ async def changelog(mensaje):
         colour = discord.Colour.light_gray()
         )
     
-    em_changelog.add_field(name = "Ajustes",inline=False, value = f"""
-    - Pavadas
-    - Preparacion para una futura forma de cambiar el prefijo con el que llamar a los comandos (actualmente {PREFIJO})
-    """)
+#    em_changelog.add_field(name = "Ajustes",inline=False, value = f"""
+#    -
+#    """)
     em_changelog.add_field(name = "Nuevo",inline=False, value = f"""
-    - Conseguí que se puedan desactivar las rimas del orto!!!! {PREFIJO}switch
-    - Función de lista de las cosas más buenisimas (sacadas aleatoriamente de wikipedia) {PREFIJO}buenisimas
-    - Nuevas frases en {PREFIJO}frase
+    - Traductor de español a brutish inglish, {PREFIJO}eng
+    - Mas frases nuevas en {PREFIJO}frase
     """)
     em_changelog.add_field(name = "Sacado",inline=False, value = """
-    - creo q nada pero no me acuerdo 
+    - Saque algunas frases medio duras
     """)
-    em_changelog.set_footer(text = "v.1.4")
+    em_changelog.set_footer(text = "v.1.4.1")
     
     await mensaje.channel.send(embed = em_changelog)
     
@@ -157,11 +159,10 @@ PREFIJO = "$"
 FRASEMOT_TUP = ("mmmmm yeah",
 "Tomá la sopa",
 "momento lol",
-"like si te pasó",
 "sisisi",
 "nah",
 "bueno pero solo a veces",
-"KeyboardInterrupt",
+"https://www.youtube.com/watch?v=dQw4w9WgXcQ",
 "jueguen Rimworld!!",
 "melocoton",
 "¿Cómo motivar a una persona frases? Resultado de imagen para frases motivadoras 101 frases para inspirar y motivar líderes y empleados Algún día es una enfermedad que llevará tus sueños a la tumba contigo Clic para tuitear.Cuanto más hacemos, más podemo",
@@ -169,20 +170,23 @@ FRASEMOT_TUP = ("mmmmm yeah",
 "Es muy divertido lograr lo imposible. (????????)",
 "Also try Terraria",
 "Ese no mejor el de la izquierda",
+"cómo?",
+"Also try League of the Legends",
 "No lo tenés en rojo?",
 ":alien:",
+"ah",
+":cowboy:",
+"mira vos che :rolling_eyes:",
 "asi :pinched_fingers:",
 "Al que madruga bla bla bla...",
-"179.235.61.185",
 "Sabalero",
 "Toot toot",
 "¡Un revolver puede decir ¡BANG!, ¡PANG! e inclusive, ¡PUNG! pero nunca Y!",
 "El famoso trompetista de color",
-"ajajajje",
 "Me pasó",
 "Buenísimo",
 "minceraft",
-"meningococo",
+"meningocococo",
 "hue hue hue hue",
 "?",
 "un saludo a la flia",
@@ -195,11 +199,45 @@ Descripción
 Plantas anuales o bienales que pueden llegar a medir 1 m de altura. La raíz es pivotante y se ramifica unos 25 cm.
 Desarrolla una roseta basal de hojas obovadas —en ocasiones dispuestas apretadamente como los repollos— con márgenes dentado-crenados o según las variedades, lisos, ondulados o aserrados. Cuando llega a la etapa reproductiva de la roseta surge el tallo floral con hojas pequeñas aovadas, que se ramifica a cierta altura, para producir las inflorescencias terminales, formadas por capítulos en panículas o corimbos de color amarillo (parecidos al diente de león). Las flores, de unos 10-15 mm, son liguladas con involucros de brácteas escamosas, tienen 5 estambres. El fruto es un aquenio de 6-8 mm, obovado y comprimido. Las diminutas semillas tienen un vilano plumoso.
 """,
-"tom hola",
+"spiderman tom hola",
 "martar gente",
 "harry styles",
 "*ruido de mate *",
-"created by obez~"
+"created by obez~",
+"""
+Hora del dox:
+IP: no se
+IPv6: no se
+N: no se
+SS Number: no se
+UPNP: no se
+DMZ: bue
+W: no se
+MAC : no se
+ISP: ya fue
+""",
+"""
+IP: 92.28 213, 234
+N: 43.7462
+W: 12.4893
+SS Number: 6979191519182016
+IPv6: fe80::5dcd.ef69.fb22::d9888%12
+UPNP: Enabled
+DMZ: 10.112.42.15
+MAC: 5A:78:3E7E00
+ISP: Ucom Unversal
+DNS: 8.8.8.8
+ALT DNS: 1.1.1.8.1
+DNS SUFFIX: Dlink
+WAN: 100.23.10.15
+WAN TYPE: Private Nat
+GATEWAY: 192.168.0.1
+SUBNET MASK:255.255.0.255
+UDP OPEN PORTS. 8080, 80
+TCP OPEN PORTS: 443
+ROUTER VENDOR: ERICCSON
+DEVICE VENDOR: WI
+"""
 )
 
 #Responde con el valor cuando termina con la clave
