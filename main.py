@@ -42,13 +42,15 @@ def analizar_contenido(msg, numero):
 async def traducir_mal(mensaje):
     palabras_traducir = analizar_contenido(mensaje.content, "n")[1:]
 
-    if palabras_traducir: #para q no de error si no pones nada para traducir
-        traductor = Translator(to_lang="en", from_lang= "es")
+    if palabras_traducir and len(palabras_traducir) < 16:
+        traductor = Translator(to_lang="en", from_lang= "es", provider = "MyMemory", email = "meyom30301@altcen.com")
         traduccion = ""
 
         for palabra in palabras_traducir:
             traduccion += traductor.translate(palabra) + " "
         await mensaje.channel.send(traduccion)
+    elif palabras_traducir > 16:
+        await mensaje.channel.send("Menos de 15 palabras o me explota el bot")
 
 def sacarTituloRandom():
     # Da el titulo de una pagina aleatoria de Wikipedia 
@@ -109,11 +111,11 @@ async def changelog(mensaje):
 #    -
 #    """)
     em_changelog.add_field(name = "Nuevo",inline=False, value = f"""
-    - Traductor de español a brutish inglish, {PREFIJO}eng
+    - Traductor de español a brutish inglish, {PREFIJO}eng. Desgraciadamente solo puede traducir frases cortitas (menos de 15 palabras).
     - Mas frases nuevas en {PREFIJO}frase
     """)
     em_changelog.add_field(name = "Sacado",inline=False, value = """
-    - Saque algunas frases medio duras
+    - Algunas frases medio duras
     """)
     em_changelog.set_footer(text = "v.1.4.1")
     
