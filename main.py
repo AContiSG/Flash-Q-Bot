@@ -7,9 +7,13 @@ client = discord.Client()
 
 #-------------------------------Funciones------------------------------------#
 
-def longitud(medible):
+def longitud(msg):
     #Mide los caracteres de la palabra ingresada
-    return len(medible[5:])
+    return len(msg[5:])
+
+def longitud_palabras(msg):
+    #Mide la cantidad de palabras ingresadas
+    return len(analizar_contenido(msg,"n")[1:])
 
 def crear_TUPLA_RIMAS():
     #Crea una tupla de listas de 14 items con las keys de RIMAS
@@ -43,7 +47,7 @@ async def traducir_mal(mensaje):
     palabras_traducir = analizar_contenido(mensaje.content, "n")[1:]
 
     if palabras_traducir and len(palabras_traducir) < 16:
-        traductor = Translator(to_lang="en", from_lang= "es", provider = "mymemory", email = "meyom30301@altcen.com")
+        traductor = Translator(from_lang= "es", to_lang="en", provider = "mymemory", email = "meyom30301@altcen.com")
         traduccion = ""
 
         for palabra in palabras_traducir:
@@ -56,7 +60,7 @@ def sacarTituloRandom():
     # Da el titulo de una pagina aleatoria de Wikipedia 
     # by yuyu
     urlRandom = requests.get(url= "https://es.wikipedia.org/wiki/Especial:Aleatoria")
-    soup = BeautifulSoup(urlRandom.content, 'html.parser')
+    soup = BeautifulSoup(urlRandom.content, "html.parser")
     titulo = soup.find(id= "firstHeading").string
     return titulo
 
@@ -112,10 +116,11 @@ async def changelog(mensaje):
 #    """)
     em_changelog.add_field(name = "Nuevo",inline=False, value = f"""
     - Traductor de español a brutish inglish, {PREFIJO}eng. Desgraciadamente solo puede traducir frases cortitas (menos de 15 palabras).
-    - Mas frases nuevas en {PREFIJO}frase
+    - Mas frases nuevas en {PREFIJO}frase.
+    - Medidor de palabras, {PREFIJO}lenp.
     """)
     em_changelog.add_field(name = "Sacado",inline=False, value = """
-    - Algunas frases medio duras
+    - Algunas frases medio duras.
     """)
     em_changelog.set_footer(text = "v.1.4.1")
     
@@ -244,69 +249,70 @@ DEVICE VENDOR: WI
 
 #Responde con el valor cuando termina con la clave
 RIMAS = {
-'000': 'Esto son puras rimas de albañil',
-'100': 'La tengo como un electrotrén',
-'00': 'Mis huevos somnolientos',
-'90': 'La mia desorienta',
-'80': 'La mia atormenta',
-'70': 'La mia reglamenta',
-'60': 'La mia representa',
-'50': 'La mia es suculenta',
-'40': 'La mia sabe a polenta',
-'30': 'La mia sabe a menta',
-'20': 'Mi pene en tu mente',
-'15': 'Tu culo +15 papu lince',
-'14': ('Cuidado no la forces', 'A vos te la metió Jorge', 'jaja Alexelcapo'),
-'13': 'En tu culo se me cuece',
-'12': 'Te la meto sin que roce',
-'11': 'la tengo de bronce',
-'10': 'En el culo te la ves',
-'9': 'En el culo se te mueve',
-'8': 'El culo te abrocho',
-'7': 'En el culo se te mete',
-'6': 'En el culo os la veis',
-'5': 'En el culo te la hinco',
-'4': 'En tu culo mi aparato',
-'3': 'En el culo te la ves',
-'2': ('Te la meto y me da tos.', 'Esta es para vos', 'A vos te la metió Dross', 'Te culeo en Palamós', 'Fuiste tocado por Dios','Me rasco un huevo y tengo dos'),
-'1': 'Tu culo vacuno',
-'0': 'Te la meto en el trasero',
-'O.o':"o.O",
-'o.O':"O.o",
-'que': 'so',
-'yeah': 'sex',
-'yea': 'sex',
-'yea sex': ':sunglasses:',
-'yeah sex': ':sunglasses:',
-'jf': "sos vos capo",
-'vusto': 'bobo',
-'busto':'bobo'
+"000": "Esto son puras rimas de albañil",
+"100": "La tengo como un electrotrén",
+"00": "Mis huevos somnolientos",
+"90": "La mia desorienta",
+"80": "La mia atormenta",
+"70": "La mia reglamenta",
+"60": "La mia representa",
+"50": "La mia es suculenta",
+"40": "La mia sabe a polenta",
+"30": "La mia sabe a menta",
+"20": "Mi pene en tu mente",
+"15": "Tu culo +15 papu lince",
+"14": ("Cuidado no la forces", "A vos te la metió Jorge", "jaja Alexelcapo"),
+"13": "En tu culo se me cuece",
+"12": "Te la meto sin que roce",
+"11": "la tengo de bronce",
+"10": "En el culo te la ves",
+"9": "En el culo se te mueve",
+"8": "El culo te abrocho",
+"7": "En el culo se te mete",
+"6": "En el culo os la veis",
+"5": "En el culo te la hinco",
+"4": "En tu culo mi aparato",
+"3": "En el culo te la ves",
+"2": ("Te la meto y me da tos.", "Esta es para vos", "A vos te la metió Dross", "Te culeo en Palamós", "Fuiste tocado por Dios","Me rasco un huevo y tengo dos"),
+"1": "Tu culo vacuno",
+"0": "Te la meto en el trasero",
+"O.o":"o.O",
+"o.O":"O.o",
+"que": "so",
+"yeah": "sex",
+"yea": "sex",
+"yea sex": ":sunglasses:",
+"yeah sex": ":sunglasses:",
+"jf": "sos vos capo",
+"vusto": "bobo",
+"busto":"bobo"
 }
 
 #Comandos que devuelven una string 
 COMANDOS_SIMPLES = {
-'saludo':"hoal",
-'auris':"https://www.youtube.com/watch?v=ptJJG8ucn48",
-'atiendo':"https://www.youtube.com/watch?v=i5Vdl_unhHQ",
-'arrepentir':"https://www.youtube.com/watch?v=RcAP6hl7T0g",
-'babadungo':"https://www.youtube.com/watch?v=y-BWKxp322w",
-'gatotruco':"https://www.youtube.com/watch?v=V08RzyPWurE",
-'pl tato':"https://www.youtube.com/playlist?list=PLFsa3redc-GX4A7yDx9ZjESAz8mt_wWJK",
-'pl busto':"https://www.youtube.com/playlist?list=PLz-W7ibs4AmjFzD3tO4o9DBtVMb-UgZ54",
-'pl yuyu':"https://www.youtube.com/playlist?list=PLXSQn9CA1N0j7Z_8iJLrPUTnl0zG5TpRN",
-'hoal':"sisisaludo",
-'hola':"unsaludo",
-'frase':FRASEMOT_TUP,
-'len':longitud,
-'invite':"https://discord.com/api/oauth2/authorize?client_id=883480644053774337&permissions=34359856192&scope=bot",
+"saludo": "hoal",
+"auris": "https://www.youtube.com/watch?v=ptJJG8ucn48",
+"atiendo": "https://www.youtube.com/watch?v=i5Vdl_unhHQ",
+"arrepentir": "https://www.youtube.com/watch?v=RcAP6hl7T0g",
+"babadungo": "https://www.youtube.com/watch?v=y-BWKxp322w",
+"gatotruco": "https://www.youtube.com/watch?v=V08RzyPWurE",
+"pl tato": "https://www.youtube.com/playlist?list=PLFsa3redc-GX4A7yDx9ZjESAz8mt_wWJK",
+"pl busto": "https://www.youtube.com/playlist?list=PLz-W7ibs4AmjFzD3tO4o9DBtVMb-UgZ54",
+"pl yuyu": "https://www.youtube.com/playlist?list=PLXSQn9CA1N0j7Z_8iJLrPUTnl0zG5TpRN",
+"hoal": "sisisaludo",
+"hola": "unsaludo",
+"frase": FRASEMOT_TUP,
+"len": longitud,
+"lenp": longitud_palabras,
+"invite": "https://discord.com/api/oauth2/authorize?client_id=883480644053774337&permissions=34359856192&scope=bot",
 "git": "https://github.com/AContiSG/Flash-Q-Bot",
-"switch":activar_desactivar_rimas
+"switch": activar_desactivar_rimas
 }
 
 #Comandos que NO devuelven una string (Sin Return)
 COMANDOS_SR = {
 "help": funcion_help,
-'changelog': changelog,
+"changelog": changelog,
 "poema":poema,
 "buenisimas": lista_buenisimas,
 "eng": traducir_mal
@@ -315,19 +321,19 @@ COMANDOS_SR = {
 #Lo que imprime la funcion $help
 HELP_DICT = {
 "help rimas": f"{PREFIJO}help rimas *numero de pagina* para ver las posibles rimas. Ej: {PREFIJO}help rimas 2",
-'saludo':"Un saludo",
-'len':f"Devuelve la longitud de lo que pongas despues del comando. Ej: {PREFIJO}len hola = 4",
-'auris':"Y esos auris de virgo momo???? (video)",
-'atiendo':"Atendes boludos (video)",
-'arrepentir':"Samid vs Viale (qdep) (video)",
-'babadungo':"Legendaria cancion (video)",
-'gatotruco':"Cat trick (video)",
-'invite':"Manda link con la invitacion del bot",
+"saludo":"Un saludo",
+"len":f"Devuelve la longitud de lo que pongas despues del comando. Ej: {PREFIJO}len hola = 4",
+"auris":"Y esos auris de virgo momo???? (video)",
+"atiendo":"Atendes boludos (video)",
+"arrepentir":"Samid vs Viale (qdep) (video)",
+"babadungo":"Legendaria cancion (video)",
+"gatotruco":"Cat trick (video)",
+"invite":"Manda link con la invitacion del bot",
 "git": "Repositorio del bot (para ver el código)",
-'hola':"Mas saludos",
-'hoal':"Muchisimos saludos",
-'frase':"La frase del momento!",
-'changelog':"Lista de los ultimos cambios",
+"hola":"Mas saludos",
+"hoal":"Muchisimos saludos",
+"frase":"La frase del momento!",
+"changelog":"Lista de los ultimos cambios",
 "poema":"Los 3359 caracteres que me motivan a seguir viviendo",
 "buenisimas": f"Top cualquier numero (max 25) de las cosas más buenisimas del mundo. Ej: {PREFIJO}buenisimas 7",
 "switch":"Activa o desactiva las rimas"
@@ -342,7 +348,7 @@ SWITCH_RIMAS = [True]
 
 @client.event
 async def on_ready():
-    print('{0.user} se inicio correctamente.'.format(client))
+    print("{0.user} se inicio correctamente.".format(client))
 
 #-------------------------------On message------------------------------------#
 
@@ -395,4 +401,4 @@ async def on_message(mensaje):
 #------------------------------Final------------------------------------------#
 
 keep_alive()
-client.run(client.run(os.getenv('TOKEN')))
+client.run(client.run(os.getenv("TOKEN")))
