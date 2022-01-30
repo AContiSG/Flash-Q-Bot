@@ -285,7 +285,9 @@ RIMAS = {
 "yeah sex": ":sunglasses:",
 "jf": "sos vos capo",
 "vusto": "bobo",
-"busto":"bobo"
+"busto":"bobo",
+"hoal": "sisisaludo",
+"hola": "unsaludo",
 }
 
 #Comandos que devuelven una string 
@@ -299,8 +301,6 @@ COMANDOS_SIMPLES = {
 "pl tato": "https://www.youtube.com/playlist?list=PLFsa3redc-GX4A7yDx9ZjESAz8mt_wWJK",
 "pl busto": "https://www.youtube.com/playlist?list=PLz-W7ibs4AmjFzD3tO4o9DBtVMb-UgZ54",
 "pl yuyu": "https://www.youtube.com/playlist?list=PLXSQn9CA1N0j7Z_8iJLrPUTnl0zG5TpRN",
-"hoal": "sisisaludo",
-"hola": "unsaludo",
 "frase": FRASEMOT_TUP,
 "lenp": longitud_palabras,
 "len": longitud,
@@ -331,8 +331,6 @@ HELP_DICT = {
 "gatotruco":"Cat trick (video)",
 "invite":"Manda link con la invitacion del bot",
 "git": "Repositorio del bot (para ver el código)",
-"hola":"Mas saludos",
-"hoal":"Muchisimos saludos",
 "frase":"La frase del momento!",
 "changelog":"Lista de los ultimos cambios",
 "poema":"Los 3359 caracteres que me motivan a seguir viviendo",
