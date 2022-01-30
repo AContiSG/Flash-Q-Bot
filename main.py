@@ -1,6 +1,7 @@
 import discord, os, random, requests
 from bs4 import BeautifulSoup
 from keep_alive import keep_alive
+from translate import Translator
 
 client = discord.Client()
 
@@ -37,6 +38,13 @@ def analizar_contenido(msg, numero):
             return None
     else:
         return linea
+
+async def traducir_mal(mensaje):
+    traductor = Translator(to_lang="en", from_lang= "es")
+    traduccion = ""
+    for palabra in analizar_contenido(mensaje.content, "n")[1:]:
+        traduccion += traductor.translate(palabra) + " "
+    await mensaje.channel.send(traduccion)
 
 def sacarTituloRandom():
     # Da el titulo de una pagina aleatoria de Wikipedia 
@@ -260,7 +268,8 @@ COMANDOS_SR = {
 "help": funcion_help,
 'changelog': changelog,
 "poema":poema,
-"buenisimas": lista_buenisimas
+"buenisimas": lista_buenisimas,
+"eng": traducir_mal
 }
 
 #Lo que imprime la funcion $help
