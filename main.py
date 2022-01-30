@@ -53,7 +53,7 @@ async def traducir_mal(mensaje):
         for palabra in palabras_traducir:
             traduccion += traductor.translate(palabra) + " "
         await mensaje.channel.send(traduccion)
-    elif int(palabras_traducir) > 16:
+    elif len(palabras_traducir) > 16:
         await mensaje.channel.send("Menos de 15 palabras o me explota el bot")
 
 def sacarTituloRandom():
@@ -302,8 +302,8 @@ COMANDOS_SIMPLES = {
 "hoal": "sisisaludo",
 "hola": "unsaludo",
 "frase": FRASEMOT_TUP,
-"len": longitud,
 "lenp": longitud_palabras,
+"len": longitud,
 "invite": "https://discord.com/api/oauth2/authorize?client_id=883480644053774337&permissions=34359856192&scope=bot",
 "git": "https://github.com/AContiSG/Flash-Q-Bot",
 "switch": activar_desactivar_rimas
@@ -323,6 +323,7 @@ HELP_DICT = {
 "help rimas": f"{PREFIJO}help rimas *numero de pagina* para ver las posibles rimas. Ej: {PREFIJO}help rimas 2",
 "saludo":"Un saludo",
 "len":f"Devuelve la longitud de lo que pongas despues del comando. Ej: {PREFIJO}len hola = 4",
+"lenp":f"Te da la cantidad de palabras en una frase. Ej: {PREFIJO}lenp hola y chau = 3",
 "auris":"Y esos auris de virgo momo???? (video)",
 "atiendo":"Atendes boludos (video)",
 "arrepentir":"Samid vs Viale (qdep) (video)",
@@ -336,7 +337,8 @@ HELP_DICT = {
 "changelog":"Lista de los ultimos cambios",
 "poema":"Los 3359 caracteres que me motivan a seguir viviendo",
 "buenisimas": f"Top cualquier numero (max 25) de las cosas más buenisimas del mundo. Ej: {PREFIJO}buenisimas 7",
-"switch":"Activa o desactiva las rimas"
+"switch":"Activa o desactiva las rimas",
+"eng": "Traduce (mal) la frase que pongas (solo menos de 15 palabras)"
 }
 
 #Tupla de listas con las keys de RIMAS
