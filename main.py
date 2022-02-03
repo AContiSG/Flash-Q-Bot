@@ -31,9 +31,6 @@ def crear_TUPLA_RIMAS():
             contador += 1
     return tuple(lista)
 
-async def reference_test(mensaje):
-    await mensaje.channel.send((await mensaje.channel.fetch_message( mensaje.reference.message_id)).content)
-
 def analizar_contenido(msg, numero):
     #Retorna la palabra que especifica el numero o todas si este es "n"
     linea = msg.split(" ")
@@ -47,6 +44,11 @@ def analizar_contenido(msg, numero):
         return linea
 
 async def traducir_mal(mensaje):
+    try:
+        mensaje = await mensaje.channel.fetch_message(mensaje.reference.message_id)
+    except:
+        pass
+
     palabras_traducir = analizar_contenido(mensaje.content, "n")[1:]
 
     if palabras_traducir and len(palabras_traducir) < 16:
@@ -318,8 +320,7 @@ COMANDOS_SR = {
 "changelog": changelog,
 "poema":poema,
 "buenisimas": lista_buenisimas,
-"eng": traducir_mal,
-"lol": reference_test
+"eng": traducir_mal
 }
 
 #Lo que imprime la funcion $help
