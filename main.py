@@ -31,6 +31,9 @@ def crear_TUPLA_RIMAS():
             contador += 1
     return tuple(lista)
 
+def reference_test(mensaje):
+    print(mensaje.reference)
+
 def analizar_contenido(msg, numero):
     #Retorna la palabra que especifica el numero o todas si este es "n"
     linea = msg.split(" ")
@@ -315,7 +318,8 @@ COMANDOS_SR = {
 "changelog": changelog,
 "poema":poema,
 "buenisimas": lista_buenisimas,
-"eng": traducir_mal
+"eng": traducir_mal,
+"test": reference_test
 }
 
 #Lo que imprime la funcion $help
