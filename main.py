@@ -50,13 +50,16 @@ async def traducir_mal(mensaje):
         pass
 
     palabras_traducir = analizar_contenido(mensaje.content, "n")[1:]
-
+    
     if palabras_traducir and len(palabras_traducir) < 16:
         traductor = Translator(from_lang= "es", to_lang="en", provider = "mymemory", email = "meyom30301@altcen.com")
         traduccion = ""
 
+        aviso = await mensaje.channel.send("Tarda un poco en traducir, don´t worry")
+
         for palabra in palabras_traducir:
             traduccion += traductor.translate(palabra) + " "
+        await aviso.delete()
         await mensaje.channel.send(traduccion)
     elif len(palabras_traducir) > 16:
         await mensaje.channel.send("Menos de 15 palabras o me explota el bot")
@@ -116,18 +119,11 @@ async def changelog(mensaje):
         colour = discord.Colour.light_gray()
         )
     
-#    em_changelog.add_field(name = "Ajustes",inline=False, value = f"""
-#    -
-#    """)
-    em_changelog.add_field(name = "Nuevo",inline=False, value = f"""
-    - Traductor de español a brutish inglish, {PREFIJO}eng. Desgraciadamente solo puede traducir frases cortitas (menos de 15 palabras).
-    - Mas frases nuevas en {PREFIJO}frase.
-    - Medidor de palabras, {PREFIJO}lenp.
+    em_changelog.add_field(name = "Ajustes",inline=False, value = f"""
+    - Ahora si le respondes a un mensaje y en la respuesta pones {PREFIJO}eng te traduce el mensaje al que le respondiste.
+    - El comando {PREFIJO}eng te avisa q tarda un cacho.
     """)
-    em_changelog.add_field(name = "Sacado",inline=False, value = """
-    - Algunas frases medio duras.
-    """)
-    em_changelog.set_footer(text = "v.1.4.1")
+    em_changelog.set_footer(text = "v.1.4.2")
     
     await mensaje.channel.send(embed = em_changelog)
     
@@ -341,7 +337,7 @@ HELP_DICT = {
 "poema":"Los 3359 caracteres que me motivan a seguir viviendo",
 "buenisimas": f"Top cualquier numero (max 25) de las cosas más buenisimas del mundo. Ej: {PREFIJO}buenisimas 7",
 "switch":"Activa o desactiva las rimas",
-"eng": "Traduce (mal) la frase que pongas (solo menos de 15 palabras)"
+"eng": "Traduce (mal) la frase que pongas (solo menos de 15 palabras). Tambien podes responder a un mensaje con el comando y traducir ese mensaje."
 }
 
 #Tupla de listas con las keys de RIMAS
