@@ -31,8 +31,8 @@ def crear_TUPLA_RIMAS():
             contador += 1
     return tuple(lista)
 
-def reference_test(mensaje):
-    print(mensaje.reference)
+async def reference_test(mensaje):
+    await mensaje.channel.send((await mensaje.channel.fetch_message( mensaje.reference.message_id)).content)
 
 def analizar_contenido(msg, numero):
     #Retorna la palabra que especifica el numero o todas si este es "n"
@@ -319,7 +319,7 @@ COMANDOS_SR = {
 "poema":poema,
 "buenisimas": lista_buenisimas,
 "eng": traducir_mal,
-"test": reference_test
+"lol": reference_test
 }
 
 #Lo que imprime la funcion $help
