@@ -50,7 +50,7 @@ async def agregar_reaccion(mensaje):
         mensaje_reaccionable = mensaje
 
     emoji = analizar_contenido(mensaje.content, 1)
-    if emoji[0] == ":" and emoji[-1] == ":":
+    if emoji:
         await mensaje_reaccionable.add_reaction(emoji)
 
 async def traducir_mal(mensaje):
