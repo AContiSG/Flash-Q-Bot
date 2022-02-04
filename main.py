@@ -42,20 +42,31 @@ def analizar_contenido(msg, numero):
             return None
     else:
         return linea
+    
+async def agregar_reaccion(mensaje):
+    try:
+        mensaje_reaccionable = await mensaje.channel.fetch_message(mensaje.reference.message_id)
+    except:
+        mensaje_reaccionable = mensaje
+
+    emoji = analizar_contenido(mensaje.content, 1)
+    if emoji:
+        await mensaje_reaccionable.add_reaction(emoji)
 
 async def traducir_mal(mensaje):
     try:
         mensaje = await mensaje.channel.fetch_message(mensaje.reference.message_id)
+        empezar = 1
     except:
-        pass
+        empezar = 0
 
-    palabras_traducir = analizar_contenido(mensaje.content, "n")[1:]
+    palabras_traducir = analizar_contenido(mensaje.content, "n")[empezar:]
     
     if palabras_traducir and len(palabras_traducir) < 16:
         traductor = Translator(from_lang= "es", to_lang="en", provider = "mymemory", email = "meyom30301@altcen.com")
         traduccion = ""
 
-        aviso = await mensaje.channel.send("Tarda un poco en traducir, don´t worry")
+        aviso = await mensaje.channel.send("Tarda un poco en traducir")
 
         for palabra in palabras_traducir:
             traduccion += traductor.translate(palabra) + " "
@@ -120,10 +131,12 @@ async def changelog(mensaje):
         )
     
     em_changelog.add_field(name = "Ajustes",inline=False, value = f"""
-    - Ahora si le respondes a un mensaje y en la respuesta pones {PREFIJO}eng te traduce el mensaje al que le respondiste.
-    - El comando {PREFIJO}eng te avisa q tarda un cacho.
+    - Arregle un bug de {PREFIJO}eng xd.
     """)
-    em_changelog.set_footer(text = "v.1.4.2")
+    em_changelog.add_field(name = "Nuevo",inline=False, value = f"""
+    - Comando {PREFIJO}react que reacciona con el emoji que quieras (muy tonto, denme ideas de cosas q hacer con los emojis)
+    """)
+    em_changelog.set_footer(text = "v.1.4.3")
     
     await mensaje.channel.send(embed = em_changelog)
     
@@ -316,7 +329,8 @@ COMANDOS_SR = {
 "changelog": changelog,
 "poema":poema,
 "buenisimas": lista_buenisimas,
-"eng": traducir_mal
+"eng": traducir_mal,
+"react": agregar_reaccion
 }
 
 #Lo que imprime la funcion $help
@@ -337,7 +351,8 @@ HELP_DICT = {
 "poema":"Los 3359 caracteres que me motivan a seguir viviendo",
 "buenisimas": f"Top cualquier numero (max 25) de las cosas más buenisimas del mundo. Ej: {PREFIJO}buenisimas 7",
 "switch":"Activa o desactiva las rimas",
-"eng": "Traduce (mal) la frase que pongas (solo menos de 15 palabras). Tambien podes responder a un mensaje con el comando y traducir ese mensaje."
+"eng": "Traduce (mal) la frase que pongas (solo menos de 15 palabras). Tambien podes responder a un mensaje con el comando y traducir ese mensaje.",
+"react": "Reacciona al mensaje que respondes con el emoji que le pasas"
 }
 
 #Tupla de listas con las keys de RIMAS
