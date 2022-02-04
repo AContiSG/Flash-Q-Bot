@@ -50,15 +50,15 @@ async def agregar_reaccion(mensaje):
         mensaje_reaccionable = mensaje
 
     emoji = analizar_contenido(mensaje.content, 1)
-    if emoji:
+    if emoji[0] == ":" and emoji[-1] == ":":
         await mensaje_reaccionable.add_reaction(emoji)
 
 async def traducir_mal(mensaje):
     try:
         mensaje = await mensaje.channel.fetch_message(mensaje.reference.message_id)
-        empezar = 1
-    except:
         empezar = 0
+    except:
+        empezar = 1
 
     palabras_traducir = analizar_contenido(mensaje.content, "n")[empezar:]
     
