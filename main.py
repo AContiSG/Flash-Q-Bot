@@ -174,6 +174,11 @@ async def lista_buenisimas(mensaje):
     
     await aviso.delete()
     await mensaje.channel.send(embed = em_buenisimas)
+    
+async def botarate(mensaje):
+    audio= "Archivos/botarate.wav"
+    
+    await mensaje.channel.send(audio)
 
 
 #---------------------------------V. globales--------------------------------#
@@ -333,7 +338,9 @@ COMANDOS_SR = {
 "poema":poema,
 "buenisimas": lista_buenisimas,
 "eng": traducir_mal,
-"react": agregar_reaccion
+"react": agregar_reaccion,
+"Como te llamas?": botarate,
+"como te llamas?": botarate
 }
 
 #Lo que imprime la funcion $help
