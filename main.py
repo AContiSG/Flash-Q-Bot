@@ -180,10 +180,10 @@ async def botarate(mensaje):
     voice_channel = mensaje.author.voice.channel
     if voice_channel != None:
         vc = await voice_channel.connect()
-        vc.play(discord.FFmpegPCMAudio(executable="ffmpeg-5.0-essentials_build/bin/ffmpeg.exe", source="Archivos\Botarate.wav"))
+        vc.play(discord.FFmpegPCMAudio( source="Archivos/Botarate.wav"))
         # Sleep while audio is playing.
         while vc.is_playing():
-            time.sleep(0.2)
+            time.sleep(0.1)
         await vc.disconnect()
     else:
         await mensaje.send(str(mensaje.author.name) + "is not in a channel.")
