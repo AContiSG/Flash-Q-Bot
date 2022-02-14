@@ -1,4 +1,4 @@
-import discord, os, random, requests
+import discord, os, random, requests, time
 from bs4 import BeautifulSoup
 from keep_alive import keep_alive
 from translate import Translator
@@ -178,14 +178,13 @@ async def lista_buenisimas(mensaje):
 async def botarate(mensaje):
     # Gets voice channel of message author
     voice_channel = mensaje.author.channel
-    channel = None
     if voice_channel != None:
         channel = voice_channel.name
         vc = await voice_channel.connect()
-        vc.play(discord.FFmpegPCMAudio(executable="Archivos/botarate.wav", source="C:<path_to_file>"))
+        vc.play(discord.FFmpegPCMAudio(executable="ffmpeg-5.0-essentials_build\bin\ffmpeg.exe", source="Archivos\Botarate.wav"))
         # Sleep while audio is playing.
         while vc.is_playing():
-            sleep(.1)
+            time.sleep(0.2)
         await vc.disconnect()
     else:
         await mensaje.send(str(mensaje.author.name) + "is not in a channel.")
