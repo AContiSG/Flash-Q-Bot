@@ -177,11 +177,10 @@ async def lista_buenisimas(mensaje):
     
 async def botarate(mensaje):
     # Gets voice channel of message author
-    voice_channel = mensaje.author.channel
+    voice_channel = mensaje.author.voice.channel
     if voice_channel != None:
-        channel = voice_channel.name
         vc = await voice_channel.connect()
-        vc.play(discord.FFmpegPCMAudio(executable="ffmpeg-5.0-essentials_build\bin\ffmpeg.exe", source="Archivos\Botarate.wav"))
+        vc.play(discord.FFmpegPCMAudio(executable="ffmpeg-5.0-essentials_build/bin/ffmpeg.exe", source="Archivos\Botarate.wav"))
         # Sleep while audio is playing.
         while vc.is_playing():
             time.sleep(0.2)
@@ -350,8 +349,8 @@ COMANDOS_SR = {
 "buenisimas": lista_buenisimas,
 "eng": traducir_mal,
 "react": agregar_reaccion,
-"Como te llamas?": botarate,
-"como te llamas?": botarate
+"voz": botarate
+
 }
 
 #Lo que imprime la funcion $help
