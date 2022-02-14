@@ -176,9 +176,21 @@ async def lista_buenisimas(mensaje):
     await mensaje.channel.send(embed = em_buenisimas)
     
 async def botarate(mensaje):
-    audio= "Archivos/botarate.wav"
-    
-    await mensaje.channel.send(audio)
+    # Gets voice channel of message author
+    voice_channel = mensaje.author.channel
+    channel = None
+    if voice_channel != None:
+        channel = voice_channel.name
+        vc = await voice_channel.connect()
+        vc.play(discord.FFmpegPCMAudio(executable="Archivos/botarate.wav", source="C:<path_to_file>"))
+        # Sleep while audio is playing.
+        while vc.is_playing():
+            sleep(.1)
+        await vc.disconnect()
+    else:
+        await mensaje.send(str(mensaje.author.name) + "is not in a channel.")
+    # Delete command after the audio is done playing.
+    await mensaje.message.delete()
 
 
 #---------------------------------V. globales--------------------------------#
