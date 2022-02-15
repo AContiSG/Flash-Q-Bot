@@ -1,7 +1,10 @@
+from itertools import Predicate
 import discord, os, random, requests, time
+from jinja2 import PrefixLoader
 from bs4 import BeautifulSoup
 from keep_alive import keep_alive
 from translate import Translator
+from Variables import PREFIJO, FRASEMOT_TUP, HELP_DICT, RIMAS
 
 client = discord.Client()
 
@@ -30,6 +33,15 @@ def crear_TUPLA_RIMAS():
             lista[pagina].append(rima)
             contador += 1
     return tuple(lista)
+
+def sacar_despues_puntito(punteado):
+    despunteado = ""
+    for letra in punteado:
+        if letra ==".":
+            return despunteado
+        despunteado += letra
+        
+    return despunteado
 
 def analizar_contenido(msg, numero):
     #Retorna la palabra que especifica el numero o todas si este es "n"
@@ -63,10 +75,18 @@ async def traducir_mal(mensaje):
     except:
         empezar = 1
 
+    from_lan = "es"
+    to_lan = "en"
+
     palabras_traducir = analizar_contenido(mensaje.content, "n")[empezar:]
+    if palabras_traducir[0] == "esp":
+        from_lan = "en"
+        to_lan = "es"
+        palabras_traducir = palabras_traducir[1:]
+
     
     if palabras_traducir and len(palabras_traducir) < 16:
-        traductor = Translator(from_lang= "es", to_lang="en", provider = "mymemory", email = "meyom30301@altcen.com")
+        traductor = Translator(from_lang= from_lan, to_lang= to_lan, provider = "mymemory", email = "meyom30301@altcen.com")
         traduccion = ""
 
         aviso = await mensaje.channel.send("Tarda un poco en traducir")
@@ -133,13 +153,15 @@ async def changelog(mensaje):
         colour = discord.Colour.light_gray()
         )
     
-    em_changelog.add_field(name = "Ajustes",inline=False, value = f"""
-    - Arregle un bug de {PREFIJO}eng xd.
+    em_changelog.add_field(name = "Ajustes", inline = False, value = f"""
+    - Intento de optimizar webadas.
+    - Ahora el traductor puede traducir de ingles a español, pero es medio tosco. {PREFIJO}eng es *lo que queres traducir *.
     """)
-    em_changelog.add_field(name = "Nuevo",inline=False, value = f"""
-    - Comando {PREFIJO}react que reacciona con el emoji que quieras (muy tonto, denme ideas de cosas q hacer con los emojis)
+    em_changelog.add_field(name = "Nuevo", inline = False, value = f"""
+    - Comando {PREFIJO}p que reproduce audios!!! (garcias cabote por la ayuda e idea)(me costo un webo hacerlo)(pasen audios pa meterle).
+    - Comando {PREFIJO}sonidos que te dice la lista de sonidos posibles.
     """)
-    em_changelog.set_footer(text = "v.1.4.3")
+    em_changelog.set_footer(text = "v.1.5")
     
     await mensaje.channel.send(embed = em_changelog)
     
@@ -174,151 +196,38 @@ async def lista_buenisimas(mensaje):
     
     await aviso.delete()
     await mensaje.channel.send(embed = em_buenisimas)
-    
-async def botarate(mensaje):
+
+async def sonidos_posibles(mensaje):
+    em_sonidos = discord.Embed(
+        title = "Sonidos posibles",
+        colour = discord.Colour.light_gray()
+        )
+    em_sonidos.set_footer(text = ":notes:")
+
+    directory = 'Python-Bot\Sonidos'
+    for filename in os.scandir(directory):
+        if filename.is_file():
+            em_sonidos.add_field(name = "Ajustes",inline=False, value = sacar_despues_puntito(filename.name))
+
+    await mensaje.channel.send(embed = em_sonidos)
+
+
+async def play_sonido(mensaje):
     # Gets voice channel of message author
     voice_channel = mensaje.author.voice.channel
+    nombre_archivo = sacar_despues_puntito(analizar_contenido(mensaje.content, 1))
     if voice_channel != None:
         vc = await voice_channel.connect()
-        vc.play(discord.FFmpegPCMAudio( source="Archivos/Botarate.wav"))
+        vc.play(discord.FFmpegPCMAudio( source= f"Sonidos/{nombre_archivo}.wav"))
         # Sleep while audio is playing.
         while vc.is_playing():
-            time.sleep(0.1)
+            time.sleep(0.2)
         await vc.disconnect()
     else:
         await mensaje.send(str(mensaje.author.name) + "is not in a channel.")
 
 
 #---------------------------------V. globales--------------------------------#
-PREFIJO = "$"
-
-#Posibles frases motivadoras
-FRASEMOT_TUP = ("mmmmm yeah",
-"Tomá la sopa",
-"momento lol",
-"sisisi",
-"nah",
-"bueno pero solo a veces",
-"https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-"jueguen Rimworld!!",
-"melocoton",
-"¿Cómo motivar a una persona frases? Resultado de imagen para frases motivadoras 101 frases para inspirar y motivar líderes y empleados Algún día es una enfermedad que llevará tus sueños a la tumba contigo Clic para tuitear.Cuanto más hacemos, más podemo",
-"Una botella de queeeee!????",
-"Es muy divertido lograr lo imposible. (????????)",
-"Also try Terraria",
-"Ese no mejor el de la izquierda",
-"cómo?",
-"Also try League of the Legends",
-"No lo tenés en rojo?",
-":alien:",
-"ah",
-":cowboy:",
-"mira vos che :rolling_eyes:",
-"asi :pinched_fingers:",
-"Al que madruga bla bla bla...",
-"Sabalero",
-"Toot toot",
-"¡Un revolver puede decir ¡BANG!, ¡PANG! e inclusive, ¡PUNG! pero nunca Y!",
-"El famoso trompetista de color",
-"Me pasó",
-"Buenísimo",
-"minceraft",
-"meningocococo",
-"hue hue hue hue",
-"?",
-"un saludo a la flia",
-"chaucha",
-"ramparte",
-"""
-Lactuca sativa, conocida comúnmente como *lechuga*, es una planta herbácea propia de las regiones semitempladas que se cultiva como alimento. Debido a las muchas variedades que existen y a su cultivo cada vez mayor en invernaderos, se puede consumir durante todo el año.
-
-Descripción
-Plantas anuales o bienales que pueden llegar a medir 1 m de altura. La raíz es pivotante y se ramifica unos 25 cm.
-Desarrolla una roseta basal de hojas obovadas —en ocasiones dispuestas apretadamente como los repollos— con márgenes dentado-crenados o según las variedades, lisos, ondulados o aserrados. Cuando llega a la etapa reproductiva de la roseta surge el tallo floral con hojas pequeñas aovadas, que se ramifica a cierta altura, para producir las inflorescencias terminales, formadas por capítulos en panículas o corimbos de color amarillo (parecidos al diente de león). Las flores, de unos 10-15 mm, son liguladas con involucros de brácteas escamosas, tienen 5 estambres. El fruto es un aquenio de 6-8 mm, obovado y comprimido. Las diminutas semillas tienen un vilano plumoso.
-""",
-"spiderman tom hola",
-"martar gente",
-"harry styles",
-"*ruido de mate *",
-"created by obez~",
-"""
-Hora del dox:
-IP: no se
-IPv6: no se
-N: no se
-SS Number: no se
-UPNP: no se
-DMZ: bue
-W: no se
-MAC : no se
-ISP: ya fue
-""",
-"""
-IP: 92.28 213, 234
-N: 43.7462
-W: 12.4893
-SS Number: 6979191519182016
-IPv6: fe80::5dcd.ef69.fb22::d9888%12
-UPNP: Enabled
-DMZ: 10.112.42.15
-MAC: 5A:78:3E7E00
-ISP: Ucom Unversal
-DNS: 8.8.8.8
-ALT DNS: 1.1.1.8.1
-DNS SUFFIX: Dlink
-WAN: 100.23.10.15
-WAN TYPE: Private Nat
-GATEWAY: 192.168.0.1
-SUBNET MASK:255.255.0.255
-UDP OPEN PORTS. 8080, 80
-TCP OPEN PORTS: 443
-ROUTER VENDOR: ERICCSON
-DEVICE VENDOR: WI
-"""
-)
-
-#Responde con el valor cuando termina con la clave
-RIMAS = {
-"000": "Esto son puras rimas de albañil",
-"100": "La tengo como un electrotrén",
-"00": "Mis huevos somnolientos",
-"90": "La mia desorienta",
-"80": "La mia atormenta",
-"70": "La mia reglamenta",
-"60": "La mia representa",
-"50": "La mia es suculenta",
-"40": "La mia sabe a polenta",
-"30": "La mia sabe a menta",
-"20": "Mi pene en tu mente",
-"15": "Tu culo +15 papu lince",
-"14": ("Cuidado no la forces", "A vos te la metió Jorge", "jaja Alexelcapo"),
-"13": "En tu culo se me cuece",
-"12": "Te la meto sin que roce",
-"11": "la tengo de bronce",
-"10": "En el culo te la ves",
-"9": "En el culo se te mueve",
-"8": "El culo te abrocho",
-"7": "En el culo se te mete",
-"6": "En el culo os la veis",
-"5": "En el culo te la hinco",
-"4": "En tu culo mi aparato",
-"3": "En el culo te la ves",
-"2": ("Te la meto y me da tos.", "Esta es para vos", "A vos te la metió Dross", "Te culeo en Palamós", "Fuiste tocado por Dios","Me rasco un huevo y tengo dos"),
-"1": "Tu culo vacuno",
-"0": "Te la meto en el trasero",
-"O.o":"o.O",
-"o.O":"O.o",
-"que": "so",
-"yeah": "sex",
-"yea": "sex",
-"yea sex": ":sunglasses:",
-"yeah sex": ":sunglasses:",
-"jf": "sos vos capo",
-"vusto": "bobo",
-"busto":"bobo",
-"hoal": "sisisaludo",
-"hola": "unsaludo",
-}
 
 #Comandos que devuelven una string 
 COMANDOS_SIMPLES = {
@@ -347,30 +256,8 @@ COMANDOS_SR = {
 "buenisimas": lista_buenisimas,
 "eng": traducir_mal,
 "react": agregar_reaccion,
-"voz": botarate
-
-}
-
-#Lo que imprime la funcion $help
-HELP_DICT = {
-"help rimas": f"{PREFIJO}help rimas *numero de pagina* para ver las posibles rimas. Ej: {PREFIJO}help rimas 2",
-"saludo":"Un saludo",
-"len":f"Devuelve la longitud de lo que pongas despues del comando. Ej: {PREFIJO}len hola = 4",
-"lenp":f"Te da la cantidad de palabras en una frase. Ej: {PREFIJO}lenp hola y chau = 3",
-"auris":"Y esos auris de virgo momo???? (video)",
-"atiendo":"Atendes boludos (video)",
-"arrepentir":"Samid vs Viale (qdep) (video)",
-"babadungo":"Legendaria cancion (video)",
-"gatotruco":"Cat trick (video)",
-"invite":"Manda link con la invitacion del bot",
-"git": "Repositorio del bot (para ver el código)",
-"frase":"La frase del momento!",
-"changelog":"Lista de los ultimos cambios",
-"poema":"Los 3359 caracteres que me motivan a seguir viviendo",
-"buenisimas": f"Top cualquier numero (max 25) de las cosas más buenisimas del mundo. Ej: {PREFIJO}buenisimas 7",
-"switch":"Activa o desactiva las rimas",
-"eng": "Traduce (mal) la frase que pongas (solo menos de 15 palabras). Tambien podes responder a un mensaje con el comando y traducir ese mensaje.",
-"react": "Reacciona al mensaje que respondes con el emoji que le pasas"
+"p": play_sonido,
+"sonidos":sonidos_posibles
 }
 
 #Tupla de listas con las keys de RIMAS
@@ -392,13 +279,6 @@ async def on_message(mensaje):
 
     if mensaje.author == client.user:
         return
-    
-
-    elif client.user.mentioned_in(mensaje):
-    #Al mencionarlo
-        await mensaje.channel.send(f"Atiendo boludos ({PREFIJO}help para la lista de comandos)")
-        return
-    
 
     elif msg.startswith(PREFIJO):
     #Comandos
@@ -432,6 +312,11 @@ async def on_message(mensaje):
                     rima = random.choice(RIMAS[numero])
                     await mensaje.channel.send(rima)
                     return
+    
+    elif client.user.mentioned_in(mensaje):
+    #Al mencionarlo
+        await mensaje.channel.send(f"Atiendo boludos ({PREFIJO}help para la lista de comandos)")
+        return
 #------------------------------Final------------------------------------------#
 
 keep_alive()
