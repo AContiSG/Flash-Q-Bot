@@ -1,6 +1,4 @@
-from itertools import Predicate
 import discord, os, random, requests, time
-from jinja2 import PrefixLoader
 from bs4 import BeautifulSoup
 from keep_alive import keep_alive
 from translate import Translator
@@ -204,10 +202,10 @@ async def sonidos_posibles(mensaje):
         )
     em_sonidos.set_footer(text = ":notes:")
 
-    directory = 'Python-Bot\Sonidos'
+    directory = 'Sonidos'
     for filename in os.scandir(directory):
         if filename.is_file():
-            em_sonidos.add_field(name = "Ajustes",inline=False, value = sacar_despues_puntito(filename.name))
+            em_sonidos.add_field(name = sacar_despues_puntito(filename.name),inline=False, value= f"{PREFIJO}p {sacar_despues_puntito(filename.name)}")
 
     await mensaje.channel.send(embed = em_sonidos)
 
@@ -215,10 +213,19 @@ async def sonidos_posibles(mensaje):
 async def play_sonido(mensaje):
     # Gets voice channel of message author
     voice_channel = mensaje.author.voice.channel
-    nombre_archivo = sacar_despues_puntito(analizar_contenido(mensaje.content, 1))
+    contenido = analizar_contenido(mensaje.content, 1)
+    if not contenido:
+        return
+    nombre_archivo = sacar_despues_puntito(contenido)
     if voice_channel != None:
-        vc = await voice_channel.connect()
-        vc.play(discord.FFmpegPCMAudio( source= f"Sonidos/{nombre_archivo}.wav"))
+        try:
+            vc = await voice_channel.connect()
+        except: 
+            return
+        try:
+            vc.play(discord.FFmpegPCMAudio( source= f"Sonidos/{nombre_archivo}.wav"))
+        except:
+            await vc.disconnect()
         # Sleep while audio is playing.
         while vc.is_playing():
             time.sleep(0.2)
