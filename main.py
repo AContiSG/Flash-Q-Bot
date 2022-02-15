@@ -77,7 +77,7 @@ async def traducir_mal(mensaje):
     to_lan = "en"
 
     palabras_traducir = analizar_contenido(mensaje.content, "n")[empezar:]
-    if palabras_traducir[0] == "esp":
+    if palabras_traducir[0] == "es":
         from_lan = "en"
         to_lan = "es"
         palabras_traducir = palabras_traducir[1:]
@@ -239,8 +239,6 @@ async def play_sonido(mensaje):
 #Comandos que devuelven una string 
 COMANDOS_SIMPLES = {
 "saludo": "hoal",
-"auris": "https://www.youtube.com/watch?v=ptJJG8ucn48",
-"atiendo": "https://www.youtube.com/watch?v=i5Vdl_unhHQ",
 "arrepentir": "https://www.youtube.com/watch?v=RcAP6hl7T0g",
 "babadungo": "https://www.youtube.com/watch?v=y-BWKxp322w",
 "gatotruco": "https://www.youtube.com/watch?v=V08RzyPWurE",
