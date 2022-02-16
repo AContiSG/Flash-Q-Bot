@@ -210,7 +210,7 @@ async def sonidos_posibles(mensaje):
     await mensaje.channel.send(embed = em_sonidos)
 
 
-async def play_sonido(mensaje):
+async def play_sonido(mensaje): #TODO Arreglar el bug de $p no me interesa
     # Gets voice channel of message author
     voice_channel = mensaje.author.voice.channel
     contenido = analizar_contenido(mensaje.content, 1)
