@@ -71,17 +71,20 @@ async def agregar_reaccion(mensaje):
 async def traducir_mal(mensaje):
     # Tambien se puede usar con respuestas
     try:
+        from_lan = "es"
+        to_lan = "en"
+        if analizar_contenido(mensaje.content, 1) == "es":
+            from_lan = "en"
+            to_lan = "es"
         mensaje = await mensaje.channel.fetch_message(mensaje.reference.message_id)
         empezar = 0
-        empezar2= 1
     except:
         empezar = 1
-
-    from_lan = "es"
-    to_lan = "en"
+        from_lan = "es"
+        to_lan = "en"
 
     palabras_traducir = analizar_contenido(mensaje.content, "n")[empezar:]
-    if palabras_traducir[empezar2] == "es":
+    if palabras_traducir[0] == "es":
         from_lan = "en"
         to_lan = "es"
         palabras_traducir = palabras_traducir[1:]
@@ -230,7 +233,7 @@ async def play_sonido(mensaje):
         try:
             vc = await voice_channel.connect()
         except: 
-            await mensaje.send("Baja un cambio ya esta sonando algo.")
+            await mensaje.channel.send("Baja un cambio ya esta sonando algo.")
             return
         try:
             vc.play(discord.FFmpegPCMAudio( source= f"Sonidos/{nombre_archivo}.wav"))
@@ -241,7 +244,7 @@ async def play_sonido(mensaje):
             time.sleep(0.2)
         await vc.disconnect()
     else:
-        await mensaje.send(str(mensaje.author.name) + "no estas en un canal pelandrún (no se que es pelandrún).")
+        await mensaje.channel.send(str(mensaje.author.name) + "no estas en un canal pelandrún (no se que es pelandrún).")
 
 
 #---------------------------------V. globales--------------------------------#
