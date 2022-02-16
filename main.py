@@ -33,6 +33,7 @@ def crear_TUPLA_RIMAS():
     return tuple(lista)
 
 def sacar_despues_puntito(punteado):
+    # La mejor funcion(saca puntitos)coincido
     despunteado = ""
     for letra in punteado:
         if letra ==".":
@@ -54,6 +55,7 @@ def analizar_contenido(msg, numero):
         return linea
     
 async def agregar_reaccion(mensaje):
+    #FIXME Tengo que hacer algo mejor, esto es solo un test
     try:
         mensaje_reaccionable = await mensaje.channel.fetch_message(mensaje.reference.message_id)
     except:
@@ -67,9 +69,11 @@ async def agregar_reaccion(mensaje):
         return
 
 async def traducir_mal(mensaje):
+    # Tambien se puede usar con respuestas
     try:
         mensaje = await mensaje.channel.fetch_message(mensaje.reference.message_id)
         empezar = 0
+        empezar2= 1
     except:
         empezar = 1
 
@@ -77,7 +81,7 @@ async def traducir_mal(mensaje):
     to_lan = "en"
 
     palabras_traducir = analizar_contenido(mensaje.content, "n")[empezar:]
-    if palabras_traducir[0] == "es":
+    if palabras_traducir[empezar2] == "es":
         from_lan = "en"
         to_lan = "es"
         palabras_traducir = palabras_traducir[1:]
@@ -93,6 +97,7 @@ async def traducir_mal(mensaje):
             traduccion += traductor.translate(palabra) + " "
         await aviso.delete()
         await mensaje.channel.send(traduccion)
+        
     elif len(palabras_traducir) > 16:
         await mensaje.channel.send("Menos de 15 palabras o me explota el bot")
 
@@ -172,6 +177,7 @@ async def poema(mensaje):
     await mensaje.channel.send(POEMA_trece2)    
 
 async def lista_buenisimas(mensaje):
+    # Imprime por pantalla una lista de cosas buenisimas
     if analizar_contenido(mensaje.content, 1) == None or int(analizar_contenido(mensaje.content, 1)) < 1:
         limite_top = 10
     elif int(analizar_contenido(mensaje.content, 1)) > 25:
@@ -196,6 +202,7 @@ async def lista_buenisimas(mensaje):
     await mensaje.channel.send(embed = em_buenisimas)
 
 async def sonidos_posibles(mensaje):
+    # Imprime por pantalla una lista con los sonidos posibles
     em_sonidos = discord.Embed(
         title = "Sonidos posibles",
         colour = discord.Colour.light_gray()
@@ -210,28 +217,31 @@ async def sonidos_posibles(mensaje):
     await mensaje.channel.send(embed = em_sonidos)
 
 
-async def play_sonido(mensaje): #TODO Arreglar el bug de $p no me interesa
-    # Gets voice channel of message author
+async def play_sonido(mensaje): 
+    # Reproduce audios de la carpeta Sonidos.
     voice_channel = mensaje.author.voice.channel
     contenido = analizar_contenido(mensaje.content, 1)
+
     if not contenido:
         return
     nombre_archivo = sacar_despues_puntito(contenido)
+
     if voice_channel != None:
         try:
             vc = await voice_channel.connect()
         except: 
+            await mensaje.send("Baja un cambio ya esta sonando algo.")
             return
         try:
             vc.play(discord.FFmpegPCMAudio( source= f"Sonidos/{nombre_archivo}.wav"))
         except:
             await vc.disconnect()
-        # Sleep while audio is playing.
+        # zzz mientras esta andando
         while vc.is_playing():
             time.sleep(0.2)
         await vc.disconnect()
     else:
-        await mensaje.send(str(mensaje.author.name) + "is not in a channel.")
+        await mensaje.send(str(mensaje.author.name) + "no estas en un canal pelandrún (no se que es pelandrún).")
 
 
 #---------------------------------V. globales--------------------------------#
@@ -301,7 +311,11 @@ async def on_message(mensaje):
                 await COMANDOS_SR[comando](mensaje)
                 return
 
-
+    elif client.user.mentioned_in(mensaje):
+    #Al mencionarlo
+        await mensaje.channel.send(f"Atiendo boludos ({PREFIJO}help para la lista de comandos)")
+        return
+    
     elif SWITCH_RIMAS:
     #Si empieza con
         for numero in RIMAS.keys():
@@ -315,10 +329,7 @@ async def on_message(mensaje):
                     await mensaje.channel.send(rima)
                     return
     
-    elif client.user.mentioned_in(mensaje):
-    #Al mencionarlo
-        await mensaje.channel.send(f"Atiendo boludos ({PREFIJO}help para la lista de comandos)")
-        return
+    
 #------------------------------Final------------------------------------------#
 
 keep_alive()
