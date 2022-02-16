@@ -1,3 +1,4 @@
+from ensurepip import version
 import discord, os, random, requests, time
 from bs4 import BeautifulSoup
 from keep_alive import keep_alive
@@ -154,20 +155,28 @@ async def funcion_help(mensaje):
         await mensaje.channel.send(embed = em_help)
 
 async def changelog(mensaje):
+    version = "v1.5.1"
     em_changelog = discord.Embed(
         title = "Changelog",
+        description=f"{version} Arreglando bugs de la anterior version xd",
         colour = discord.Colour.light_gray()
         )
     
-    em_changelog.add_field(name = "Ajustes", inline = False, value = f"""
-    - Intento de optimizar webadas.
-    - Ahora el traductor puede traducir de ingles a español, pero es medio tosco. {PREFIJO}eng es *lo que queres traducir *.
-    """)
     em_changelog.add_field(name = "Nuevo", inline = False, value = f"""
-    - Comando {PREFIJO}p que reproduce audios!!! (garcias cabote por la ayuda e idea)(me costo un webo hacerlo)(pasen audios pa meterle).
-    - Comando {PREFIJO}sonidos que te dice la lista de sonidos posibles.
+    - Un par de audios (yesyesyesyesyesyessssss)(busquenlos ustedes, pajeros)
     """)
-    em_changelog.set_footer(text = "v.1.5")
+    em_changelog.add_field(name = "Sacado", inline = False, value = f"""
+    - La mayoria de funciones que te devolvian videos, ahora que esta {PREFIJO}p es al pepe.
+    """)
+    em_changelog.add_field(name = "Arreglos", inline = False, value = f"""
+    - Bug al responder con {PREFIJO}eng es, solo traducia al ingles.
+    - Footer de sonidos taba lol, además ahora se ve diferente (mas feo pero xd).
+    - Arreglado que te diga que atiende boludos cuando se lo menciona en otro comando (sigue atendiendo boludos, no se preocupen)
+    - No andaba {PREFIJO}p no me interesa, le cambie el nombre y ahora anda(🪄🪄🪄(magia)/sex).
+    - Ahora cuando intentas llamar al bot sin estar en un canal de voz o cuando ya esta reproduciendo algo te dice que so bobi.
+    """)
+
+    em_changelog.set_footer(text = f"{version}")
     
     await mensaje.channel.send(embed = em_changelog)
     
