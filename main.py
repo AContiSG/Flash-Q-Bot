@@ -222,29 +222,30 @@ async def sonidos_posibles(mensaje):
 
 async def play_sonido(mensaje): 
     # Reproduce audios de la carpeta Sonidos.
-    voice_channel = mensaje.author.voice.channel
+    try: 
+        voice_channel = mensaje.author.voice.channel
+    except:
+        await mensaje.channel.send(str(mensaje.author.name) + "no estas en un canal pelandrún (no se que es pelandrún).")
+
     contenido = analizar_contenido(mensaje.content, 1)
 
     if not contenido:
         return
     nombre_archivo = sacar_despues_puntito(contenido)
 
-    if voice_channel != None:
-        try:
-            vc = await voice_channel.connect()
-        except: 
-            await mensaje.channel.send("Baja un cambio ya esta sonando algo.")
-            return
-        try:
-            vc.play(discord.FFmpegPCMAudio( source= f"Sonidos/{nombre_archivo}.wav"))
-        except:
-            await vc.disconnect()
-        # zzz mientras esta andando
-        while vc.is_playing():
-            time.sleep(0.2)
+    try:
+        vc = await voice_channel.connect()
+    except: 
+        await mensaje.channel.send("Baja un cambio ya esta sonando algo.")
+        return
+    try:
+        vc.play(discord.FFmpegPCMAudio( source= f"Sonidos/{nombre_archivo}.wav"))
+    except:
         await vc.disconnect()
-    else:
-        await mensaje.channel.send(str(mensaje.author.name) + "no estas en un canal pelandrún (no se que es pelandrún).")
+    # zzz mientras esta andando
+    while vc.is_playing():
+        time.sleep(0.2)
+    await vc.disconnect() 
 
 
 #---------------------------------V. globales--------------------------------#
