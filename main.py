@@ -200,12 +200,12 @@ async def sonidos_posibles(mensaje):
         title = "Sonidos posibles",
         colour = discord.Colour.light_gray()
         )
-    em_sonidos.set_footer(text = ":notes:")
+    em_sonidos.set_footer(text = "Pasenme audios en formato .wav y los pongo")
 
     directory = 'Sonidos'
     for filename in os.scandir(directory):
         if filename.is_file():
-            em_sonidos.add_field(name = sacar_despues_puntito(filename.name),inline=False, value= f"{PREFIJO}p {sacar_despues_puntito(filename.name)}")
+            em_sonidos.add_field(name = sacar_despues_puntito(filename.name),inline=True, value= f"{PREFIJO}p {sacar_despues_puntito(filename.name)}")
 
     await mensaje.channel.send(embed = em_sonidos)
 
@@ -239,9 +239,6 @@ async def play_sonido(mensaje): #TODO Arreglar el bug de $p no me interesa
 #Comandos que devuelven una string 
 COMANDOS_SIMPLES = {
 "saludo": "hoal",
-"arrepentir": "https://www.youtube.com/watch?v=RcAP6hl7T0g",
-"babadungo": "https://www.youtube.com/watch?v=y-BWKxp322w",
-"gatotruco": "https://www.youtube.com/watch?v=V08RzyPWurE",
 "pl tato": "https://www.youtube.com/playlist?list=PLFsa3redc-GX4A7yDx9ZjESAz8mt_wWJK",
 "pl busto": "https://www.youtube.com/playlist?list=PLz-W7ibs4AmjFzD3tO4o9DBtVMb-UgZ54",
 "pl yuyu": "https://www.youtube.com/playlist?list=PLXSQn9CA1N0j7Z_8iJLrPUTnl0zG5TpRN",
