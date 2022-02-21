@@ -1,3 +1,4 @@
+from ssl import CHANNEL_BINDING_TYPES
 import discord, os, random, requests, time
 from bs4 import BeautifulSoup
 from keep_alive import keep_alive
@@ -154,25 +155,24 @@ async def funcion_help(mensaje):
         await mensaje.channel.send(embed = em_help)
 
 async def changelog(mensaje):
-    version = "v1.5.1"
+    version = "v1.5.2"
     em_changelog = discord.Embed(
-        title = "Changelog",
-        description=f"{version} Arreglando bugs de la anterior version xd",
+        title = f"{version}: changelog",
+        description="Libro 5: el maestro del audio",
         colour = discord.Colour.light_gray()
         )
     
     em_changelog.add_field(name = "Nuevo", inline = False, value = f"""
-    - Un par de audios (yesyesyesyesyesyessssss)(busquenlos ustedes, pajeros)
+    - Audios nuevos! (banalloros, lidersupremo, colombiano, etc).
+    - Soy god y conseguí que se normalice el volumen de los audios (no te quedás sordo) (realmente solo copie una cosa de google y anduvo).
     """)
     em_changelog.add_field(name = "Sacado", inline = False, value = f"""
-    - La mayoria de funciones que te devolvian videos, ahora que esta {PREFIJO}p es al pepe.
+    - Nada, peeeero en algun momento deberia hacer limpieza.
     """)
     em_changelog.add_field(name = "Arreglos", inline = False, value = f"""
-    - Bug al responder con {PREFIJO}eng es, solo traducia al ingles.
-    - Footer de sonidos taba lol, además ahora se ve diferente (mas feo pero xd).
-    - Arreglado que te diga que atiende boludos cuando se lo menciona en otro comando (sigue atendiendo boludos, no se preocupen)
-    - No andaba {PREFIJO}p no me interesa, le cambie el nombre y ahora anda(🪄🪄🪄(magia)/sex).
-    - Ahora cuando intentas llamar al bot sin estar en un canal de voz o cuando ya esta reproduciendo algo te dice que so bobi.
+    - Recorte un par de audios largos (yafue y skull)
+    - Ningun bug porque anda todo god y soy god y los bugs zzz.
+    - Vengan a jugar bugs.
     """)
 
     em_changelog.set_footer(text = f"{version}")
@@ -248,7 +248,7 @@ async def play_sonido(mensaje):
         await mensaje.channel.send("Baja un cambio ya esta sonando algo.")
         return
     try:
-        vc.play(discord.FFmpegPCMAudio( source= f"Sonidos/{nombre_archivo}.wav", options="-filter:a loudnorm -filter:a loudnorm"))
+        vc.play(discord.FFmpegPCMAudio( source= f"Sonidos/{nombre_archivo}.wav", options="-filter:a loudnorm"))
     except:
         await vc.disconnect()
     # zzz mientras esta andando
