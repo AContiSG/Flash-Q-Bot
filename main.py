@@ -1,4 +1,3 @@
-from ssl import CHANNEL_BINDING_TYPES
 import discord, os, random, requests, time
 from bs4 import BeautifulSoup
 from keep_alive import keep_alive
