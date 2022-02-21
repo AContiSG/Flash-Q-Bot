@@ -248,7 +248,7 @@ async def play_sonido(mensaje):
         await mensaje.channel.send("Baja un cambio ya esta sonando algo.")
         return
     try:
-        vc.play(discord.FFmpegPCMAudio( source= f"Sonidos/{nombre_archivo}.wav", options="-filter:a loudnorm"))
+        vc.play(discord.FFmpegPCMAudio( source= f"Sonidos/{nombre_archivo}.wav", options="-filter:a loudnorm -filter:a loudnorm"))
     except:
         await vc.disconnect()
     # zzz mientras esta andando
