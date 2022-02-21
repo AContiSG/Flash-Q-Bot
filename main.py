@@ -233,7 +233,7 @@ async def play_sonido(mensaje):
     try: 
         voice_channel = mensaje.author.voice.channel
     except:
-        await mensaje.channel.send(str(mensaje.author.name) + "no estas en un canal pelandrún (no se que es pelandrún).")
+        await mensaje.channel.send(str(mensaje.author.name) + " no estas en un canal pelandrún (no se que es pelandrún).")
         return
 
     contenido = analizar_contenido(mensaje.content, 1)
