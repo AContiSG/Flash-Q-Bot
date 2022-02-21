@@ -1,4 +1,3 @@
-from ensurepip import version
 import discord, os, random, requests, time
 from bs4 import BeautifulSoup
 from keep_alive import keep_alive
