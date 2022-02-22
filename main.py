@@ -226,16 +226,6 @@ async def sonidos_posibles(mensaje):
 
     await mensaje.channel.send(embed = em_sonidos)
 	
-async def disconnect(mensaje):
-    try: 
-        voice_channel = mensaje.author.voice.channel
-    except:
-        await mensaje.channel.send(str(mensaje.author.name) + " no estas en un canal pelandrún (no se que es pelandrún).")
-        return
-    
-    vc = await voice_channel.connect()
-    await vc.disconnect() 
-
 async def play_sonido(mensaje): 
     # Reproduce audios de la carpeta Sonidos.
     try: 
@@ -290,8 +280,7 @@ COMANDOS_SR = {
 "eng": traducir_mal,
 "react": agregar_reaccion,
 "p": play_sonido,
-"sonidos":sonidos_posibles,
-"disconnect":disconnect
+"sonidos":sonidos_posibles
 }
 #Tupla de listas con las keys de RIMAS
 TUPLA_RIMAS = crear_TUPLA_RIMAS()
