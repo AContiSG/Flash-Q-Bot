@@ -261,7 +261,7 @@ async def play_sonido(mensaje):
         await vc.disconnect()
     # zzz mientras esta andando
     while vc.is_playing():
-        time.sleep(0.2)
+        time.sleep(0.3)
     await vc.disconnect() 
 
 
@@ -278,9 +278,10 @@ COMANDOS_SIMPLES = {
 "len": longitud,
 "invite": "https://discord.com/api/oauth2/authorize?client_id=883480644053774337&permissions=34359856192&scope=bot",
 "git": "https://github.com/AContiSG/Flash-Q-Bot",
-"sw"switch": activar_desactivar_rimas
+"switch": activar_desactivar_rimas
 }
-omandos que NO devuelven una string (Sin Return)
+
+# Comandos que NO devuelven una string (Sin Return)
 COMANDOS_SR = {
 "help": funcion_help,
 "changelog": changelog,
@@ -289,11 +290,9 @@ COMANDOS_SR = {
 "eng": traducir_mal,
 "react": agregar_reaccion,
 "p": play_sonido,
-"sonidos":sonidos_posibles
+"sonidos":sonidos_posibles,
+"disconnect":disconnect
 }
-,
-"switch": activar_desactivar_rimas,
-"disconnect": disconnect
 #Tupla de listas con las keys de RIMAS
 TUPLA_RIMAS = crear_TUPLA_RIMAS()
 
