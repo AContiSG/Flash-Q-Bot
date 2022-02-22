@@ -225,7 +225,16 @@ async def sonidos_posibles(mensaje):
             em_sonidos.add_field(name = sacar_despues_puntito(filename.name),inline=True, value= f"{PREFIJO}p {sacar_despues_puntito(filename.name)}")
 
     await mensaje.channel.send(embed = em_sonidos)
-
+	
+async def disconnect(mensaje):
+    try: 
+        voice_channel = mensaje.author.voice.channel
+    except:
+        await mensaje.channel.send(str(mensaje.author.name) + " no estas en un canal pelandrún (no se que es pelandrún).")
+        return
+    
+    vc = await voice_channel.connect()
+    await vc.disconnect() 
 
 async def play_sonido(mensaje): 
     # Reproduce audios de la carpeta Sonidos.
@@ -269,10 +278,9 @@ COMANDOS_SIMPLES = {
 "len": longitud,
 "invite": "https://discord.com/api/oauth2/authorize?client_id=883480644053774337&permissions=34359856192&scope=bot",
 "git": "https://github.com/AContiSG/Flash-Q-Bot",
-"switch": activar_desactivar_rimas
+"sw"switch": activar_desactivar_rimas
 }
-
-#Comandos que NO devuelven una string (Sin Return)
+omandos que NO devuelven una string (Sin Return)
 COMANDOS_SR = {
 "help": funcion_help,
 "changelog": changelog,
@@ -283,7 +291,9 @@ COMANDOS_SR = {
 "p": play_sonido,
 "sonidos":sonidos_posibles
 }
-
+,
+"switch": activar_desactivar_rimas,
+"disconnect": disconnect
 #Tupla de listas con las keys de RIMAS
 TUPLA_RIMAS = crear_TUPLA_RIMAS()
 
