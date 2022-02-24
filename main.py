@@ -136,7 +136,7 @@ async def funcion_help(mensaje):
         numero_pag = analizar_contenido(mensaje.content, 2)
 
         
-        if  not numero_pag:
+        if  numero_pag:
             pagina_deseada = int(numero_pag) -1
         else:
             numero_pag = 1
@@ -241,14 +241,12 @@ async def sonidos(mensaje):
 
 
 
-    if  not numero_pag:
-        
+    if  numero_pag:
         pagina_deseada = int(numero_pag) -1
-    
     else:
         numero_pag = 1
         pagina_deseada = 0
-        
+
     if int(numero_pag) > len(TUPLA_RIMAS) or int(numero_pag) < 1:
         await mensaje.channel.send("Esa pagina no existe")
         return
