@@ -137,13 +137,14 @@ async def funcion_help(mensaje):
 
         
         if  not numero_pag:
-            numero_pag = 1
             pagina_deseada = int(numero_pag) -1
+        else:
+            numero_pag = 1
+            pagina_deseada = 0
+
         if int(numero_pag) > len(TUPLA_RIMAS) or int(numero_pag) < 1:
             await mensaje.channel.send("Esa pagina no existe")
             return
-        else:
-            pagina_deseada = 0
         
         for rimas in TUPLA_RIMAS[pagina_deseada]:
             if isinstance(RIMAS[rimas], tuple):
@@ -241,13 +242,16 @@ async def sonidos(mensaje):
 
 
     if  not numero_pag:
-        numero_pag = 1
+        
         pagina_deseada = int(numero_pag) -1
+    
+    else:
+        numero_pag = 1
+        pagina_deseada = 0
+        
     if int(numero_pag) > len(TUPLA_RIMAS) or int(numero_pag) < 1:
         await mensaje.channel.send("Esa pagina no existe")
         return
-    else:
-        pagina_deseada = 0
     
     for sonido in TUPLA_SONIDOS[pagina_deseada]:
         em_sonidos.add_field(name = sonido, value= f"{PREFIJO}p {sonido}")
