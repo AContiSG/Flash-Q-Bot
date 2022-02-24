@@ -133,9 +133,11 @@ async def funcion_help(mensaje):
     contenido_analizado_1 = analizar_contenido(mensaje.content, 1)
     
     if contenido_analizado_1 == "rimas":
-        contenido_analizado_2 = analizar_contenido(mensaje.content, 2)
-        if  contenido_analizado_2 != None:
-            pagina_deseada = int(contenido_analizado_2) -1
+        numero_pag = analizar_contenido(mensaje.content, 2)
+        if int(numero_pag) > len(TUPLA_RIMAS) or int(numero_pag) < 1:
+            await mensaje.channel.send("Esa pagina no existe")
+        if  numero_pag != None:
+            pagina_deseada = int(numero_pag) -1
         else:
             pagina_deseada = 0
         
@@ -230,10 +232,13 @@ async def sonidos(mensaje):
         colour = discord.Colour.light_gray()
         )
     
-    contenido_analizado_1 = analizar_contenido(mensaje.content, 1)
+    numero_pag = analizar_contenido(mensaje.content, 1)
 
-    if  contenido_analizado_1 != None:
-        pagina_deseada = int(contenido_analizado_1) -1
+    if int(numero_pag) > len(TUPLA_RIMAS) or int(numero_pag) < 1:
+        await mensaje.channel.send("Esa pagina no existe")
+
+    if  numero_pag != None:
+        pagina_deseada = int(numero_pag) -1
     else:
         pagina_deseada = 0
     
@@ -255,7 +260,7 @@ async def play_sonido(mensaje):
 
     if not contenido or not contenido in LISTA_SONIDOS:
         return
-        
+
     nombre_archivo = sacar_despues_puntito(contenido)
 
     try:
