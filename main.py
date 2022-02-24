@@ -276,11 +276,6 @@ async def play_sonido(mensaje):
         time.sleep(0.3)
     await vc.disconnect() 
 
-
-def cambiar_prefijo(nuevoPrefijo): #no se si asi funciona bien, no esta testeado
-    PREFIJO=nuevoPrefijo
-    mensaje.channel.send("El nuevo prefijo es ",nuevoPrefijo)
-
 #---------------------------------V. globales--------------------------------#
 
 #Comandos que devuelven una string 
@@ -306,8 +301,7 @@ COMANDOS_SR = {
 "eng": traducir_mal,
 "react": agregar_reaccion,
 "p": play_sonido,
-"sonidos":sonidos,
-"prefijo":cambiar_prefijo
+"sonidos":sonidos
 }
 
 LISTA_SONIDOS = lista_sonidos()
@@ -374,4 +368,4 @@ async def on_message(mensaje):
 #------------------------------Final------------------------------------------#
 
 keep_alive()
-client.run(client.run(os.getenv("TOKEN")))
+client.run(os.getenv("TOKEN"))
