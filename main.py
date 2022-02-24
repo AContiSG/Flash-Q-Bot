@@ -21,7 +21,7 @@ def dividir_listas(lista_dividible,tipo):
     if tipo == "rimas":
         tamaño_pag = 13
     elif tipo == "sonidos":
-        tamaño_pag = 21
+        tamaño_pag = 20
     lista = [[]]
     contador = 0
     pagina = 0
@@ -230,8 +230,6 @@ async def sonidos(mensaje):
         )
     
     numero_pag = analizar_contenido(mensaje.content, 1)
-
-
 
     if  numero_pag:
         pagina_deseada = int(numero_pag) -1
