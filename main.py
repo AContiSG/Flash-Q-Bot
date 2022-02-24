@@ -16,13 +16,17 @@ def longitud_palabras(msg):
     #Mide la cantidad de palabras ingresadas
     return len(analizar_contenido(msg,"n")[1:])
 
-def crear_TUPLA_RIMAS():
-    #Crea una tupla de listas de 14 items con las keys de RIMAS
+def dividir_listas(lista_dividible,tipo):
+    # Divide una lista grande en una tupla de listas
+    if tipo == "rimas":
+        tamaño_pag = 13
+    elif tipo == "sonidos":
+        tamaño_pag = 21
     lista = [[]]
     contador = 0
     pagina = 0
-    for rima in RIMAS.keys():
-        if contador == 13:
+    for rima in lista_dividible:
+        if contador == tamaño_pag:
             lista[pagina].append(rima)
             lista.append([])
             contador = 0
@@ -129,8 +133,9 @@ async def funcion_help(mensaje):
     contenido_analizado_1 = analizar_contenido(mensaje.content, 1)
     
     if contenido_analizado_1 == "rimas":
-        if analizar_contenido(mensaje.content, 2) != None:
-            pagina_deseada = int(analizar_contenido(mensaje.content, 2)) -1
+        contenido_analizado_2 = analizar_contenido(mensaje.content, 2)
+        if  contenido_analizado_2 != None:
+            pagina_deseada = int(contenido_analizado_2) -1
         else:
             pagina_deseada = 0
         
@@ -147,7 +152,7 @@ async def funcion_help(mensaje):
         await mensaje.channel.send(embed = em_help)
 
             
-    if contenido_analizado_1 == "comandos" or contenido_analizado_1 == None:
+    elif contenido_analizado_1 == "comandos" or contenido_analizado_1 == None:
         for comandos in HELP_DICT.keys():
             em_help.add_field(name = PREFIJO + comandos, value = HELP_DICT[comandos], inline = False)
         em_help.set_footer(text = "Comandos")
@@ -211,19 +216,31 @@ async def lista_buenisimas(mensaje):
     await aviso.delete()
     await mensaje.channel.send(embed = em_buenisimas)
 
-async def sonidos_posibles(mensaje):
-    # Imprime por pantalla una lista con los sonidos posibles
+def lista_sonidos():
+    directory = 'Sonidos'
+    lista = []
+    for filename in os.scandir(directory):
+        if filename.is_file():
+            lista.append(sacar_despues_puntito(filename.name))
+    return lista
+
+async def sonidos(mensaje):
     em_sonidos = discord.Embed(
         title = "Sonidos posibles",
         colour = discord.Colour.light_gray()
         )
-    em_sonidos.set_footer(text = "Pasenme audios en formato .wav y los pongo")
+    
+    contenido_analizado_1 = analizar_contenido(mensaje.content, 1)
 
-    directory = 'Sonidos'
-    for filename in os.scandir(directory):
-        if filename.is_file():
-            em_sonidos.add_field(name = sacar_despues_puntito(filename.name),inline=True, value= f"{PREFIJO}p {sacar_despues_puntito(filename.name)}")
-
+    if  contenido_analizado_1 != None:
+        pagina_deseada = int(contenido_analizado_1) -1
+    else:
+        pagina_deseada = 0
+    
+    for sonido in TUPLA_SONIDOS[pagina_deseada]:
+        em_sonidos.add_field(name = sonido, value= f"{PREFIJO}p {sonido}")
+        
+    em_sonidos.set_footer(text = f"Sonidos {pagina_deseada + 1}")
     await mensaje.channel.send(embed = em_sonidos)
 	
 async def play_sonido(mensaje): 
@@ -236,8 +253,9 @@ async def play_sonido(mensaje):
 
     contenido = analizar_contenido(mensaje.content, 1)
 
-    if not contenido:
+    if not contenido or not contenido in LISTA_SONIDOS:
         return
+        
     nombre_archivo = sacar_despues_puntito(contenido)
 
     try:
@@ -280,10 +298,14 @@ COMANDOS_SR = {
 "eng": traducir_mal,
 "react": agregar_reaccion,
 "p": play_sonido,
-"sonidos":sonidos_posibles
+"sonidos":sonidos
 }
-#Tupla de listas con las keys de RIMAS
-TUPLA_RIMAS = crear_TUPLA_RIMAS()
+
+LISTA_SONIDOS = lista_sonidos()
+
+#Tuplas de listas
+TUPLA_RIMAS = dividir_listas(RIMAS.keys(),"rimas")
+TUPLA_SONIDOS = dividir_listas(LISTA_SONIDOS,"sonidos")
 
 SWITCH_RIMAS = [True]
 
