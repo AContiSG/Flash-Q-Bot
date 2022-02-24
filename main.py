@@ -166,24 +166,16 @@ async def funcion_help(mensaje):
         await mensaje.channel.send(embed = em_help)
 
 async def changelog(mensaje):
-    version = "v1.5.2"
+    version = "v1.5.3"
     em_changelog = discord.Embed(
         title = f"{version}: changelog",
-        description="Libro 5: el maestro del audio",
+        description=f"Arregle el {PREFIJO}sonidos :)",
         colour = discord.Colour.light_gray()
         )
     
-    em_changelog.add_field(name = "Nuevo", inline = False, value = f"""
-    - Audios nuevos! (banalloros, lidersupremo, colombiano, etc).
-    - Soy god y conseguí que se normalice el volumen de los audios (no te quedás sordo) (realmente solo copie una cosa de google y anduvo).
-    """)
-    em_changelog.add_field(name = "Sacado", inline = False, value = f"""
-    - Nada, peeeero en algun momento deberia hacer limpieza.
-    """)
     em_changelog.add_field(name = "Arreglos", inline = False, value = f"""
-    - Recorte un par de audios largos (yafue y skull)
-    - Ningun bug porque anda todo god y soy god y los bugs zzz.
-    - Vengan a jugar bugs.
+    - Ahora {PREFIJO}sonidos anda.
+    - Si pones una pagina que no existe en {PREFIJO}sonidos o {PREFIJO}help rimas te dice que no existe.
     """)
 
     em_changelog.set_footer(text = f"{version}")
@@ -247,7 +239,7 @@ async def sonidos(mensaje):
         numero_pag = 1
         pagina_deseada = 0
 
-    if int(numero_pag) > len(TUPLA_RIMAS) or int(numero_pag) < 1:
+    if int(numero_pag) > len(TUPLA_SONIDOS) or int(numero_pag) < 1:
         await mensaje.channel.send("Esa pagina no existe")
         return
     
