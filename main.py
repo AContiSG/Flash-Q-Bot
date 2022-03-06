@@ -274,7 +274,16 @@ async def play_sonido(mensaje):
     # zzz mientras esta andando
     while vc.is_playing():
         time.sleep(0.3)
-    await vc.disconnect() 
+    await vc.disconnect()
+
+async def buscar_anime(anime):
+    busqueda = requests.get(url= "https://myanimelist.net/anime.php?q="+ anime + "&cat=anime")
+    urlParseada = BeautifulSoup(busqueda.content, "html.parser")
+    link = soup.find(_class= "hoverinfo_trigger fw-b fl-l").string
+    return link
+
+async def buscar_manga(manga):
+    pass
 
 #---------------------------------V. globales--------------------------------#
 
