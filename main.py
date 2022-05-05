@@ -278,6 +278,7 @@ async def play_random(mensaje):
 
     nombre_archivo = sacar_despues_puntito(random.choice(LISTA_SONIDOS))
 
+
     try:
         vc = await voice_channel.connect()
     except:
@@ -288,11 +289,15 @@ async def play_random(mensaje):
             source=f"Sonidos/{nombre_archivo}.wav", options="-filter:a loudnorm"))
     except:
         await vc.disconnect()
+        return
     # zzz mientras esta andando
+    aviso = await mensaje.channel.send(f"Está sonando: {nombre_archivo} :sunglasses:")
+
     while vc.is_playing():
         time.sleep(0.3)
     await vc.disconnect()
-
+    await aviso.delete()
+    return
 
 async def play_sonido(mensaje):
     # Reproduce audios de la carpeta Sonidos.
@@ -348,8 +353,8 @@ COMANDOS_SR = {
     "buenisimas": lista_buenisimas,
     "eng": traducir_mal,
     "react": agregar_reaccion,
+	"pr": play_random,
     "p": play_sonido,
-    "pr": play_random,
     "sonidos": sonidos
 }
 
