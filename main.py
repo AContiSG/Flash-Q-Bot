@@ -278,7 +278,6 @@ async def play_random(mensaje):
 
     nombre_archivo = sacar_despues_puntito(random.choice(LISTA_SONIDOS))
 
-
     try:
         vc = await voice_channel.connect()
     except:
@@ -298,6 +297,7 @@ async def play_random(mensaje):
     await vc.disconnect()
     await aviso.delete()
     return
+
 
 async def play_sonido(mensaje):
     # Reproduce audios de la carpeta Sonidos.
@@ -353,7 +353,7 @@ COMANDOS_SR = {
     "buenisimas": lista_buenisimas,
     "eng": traducir_mal,
     "react": agregar_reaccion,
-	"pr": play_random,
+    "pr": play_random,
     "p": play_sonido,
     "sonidos": sonidos
 }
