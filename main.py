@@ -291,7 +291,7 @@ async def play_random(mensaje):
         await vc.disconnect()
         return
     # zzz mientras esta andando
-    aviso = await mensaje.channel.send(f"Está sonando: {nombre_archivo} :sunglasses:")
+    aviso = await mensaje.channel.send(f"Está sonando: {PREFIJO}p {nombre_archivo}")
 
     while vc.is_playing():
         time.sleep(0.3)
