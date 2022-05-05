@@ -276,7 +276,7 @@ async def play_random(mensaje):
         await mensaje.channel.send(str(mensaje.author.name) + " no estas en un canal pelandrún (no se que es pelandrún).")
         return
 
-    nombre_archivo = random.choice(LISTA_SONIDOS)
+    nombre_archivo = sacar_despues_puntito(random.choice(LISTA_SONIDOS))
 
     try:
         vc = await voice_channel.connect()
