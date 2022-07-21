@@ -1,4 +1,5 @@
 import nextcord
+from  nextcord import Interaction, SlashOption
 from nextcord.ext import commands
 import os
 from keep_alive import keep_alive
@@ -11,19 +12,12 @@ bot = commands.Bot(command_prefix=PREFIJO, intents=intents)
 
 #-------------------------------Funciones------------------------------------#
 
-
-@bot.command(description="Devuelve la cantidad de caracteres de lo que pongas")
-async def len(ctx, *, arg):
-    await ctx.send(len(arg))
-
-
-@bot.slash_command(description="saludante", guild_ids=GUILDS)
-async def hello(interaction: nextcord.Interaction):
-    await interaction.send("Hello!")
-
-# def longitud_palabras(msg):
-#     # Mide la cantidad de palabras ingresadas
-#     return len(analizar_contenido(msg, "n")[1:])
+@bot.slash_command(guild_ids=GUILDS, description="Devuelve la cantidad de caracteres de lo que pongas")
+async def longitud(
+    interaction: Interaction,
+    frase: str = SlashOption(description="Ingrese lo que quiere medir", required=True),
+):
+    await interaction.response.send_message(f"Cantidad de caracteres: {len(frase)}")
 
 
 # def dividir_listas(lista_dividible, tipo):
