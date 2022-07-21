@@ -4,13 +4,16 @@ import os
 from keep_alive import keep_alive
 from Variables import PREFIJO, FRASEMOT_TUP, HELP_DICT, RIMAS
 
-bot = commands.Bot(command_prefix=PREFIJO)
+intents = nextcord.Intents.default()
+intents.message_content = True
+
+bot = commands.Bot(command_prefix=PREFIJO,intents=intents)
+
 #-------------------------------Funciones------------------------------------#
 
-
-@bot.command(description=f"Devuelve la longitud de lo que pongas despues del comando. Ej: {PREFIJO}len hola = 4")
-async def longitud(ctx, *, string):
-    await ctx.sent(len(string))
+@bot.command()
+async def test(ctx, *, arg):
+    await ctx.send(arg)
 
 
 # def longitud_palabras(msg):
