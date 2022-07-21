@@ -1,12 +1,7 @@
 import nextcord
 from nextcord.ext import commands
 import os
-import random
-import requests
-import time
-from bs4 import BeautifulSoup
 from keep_alive import keep_alive
-from translate import Translator
 from Variables import PREFIJO, FRASEMOT_TUP, HELP_DICT, RIMAS
 
 bot = commands.Bot(command_prefix=PREFIJO)
