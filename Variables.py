@@ -1,5 +1,7 @@
 PREFIJO = "$"
 
+GUILDS = [643940257879949322, 358991360529006592, 922646454944808981]
+
 # Posibles frases motivadoras
 FRASEMOT_TUP = ("mmmmm yeah",
                 "Tomá la sopa",

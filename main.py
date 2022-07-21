@@ -2,19 +2,24 @@ import nextcord
 from nextcord.ext import commands
 import os
 from keep_alive import keep_alive
-from Variables import PREFIJO, FRASEMOT_TUP, HELP_DICT, RIMAS
+from Variables import PREFIJO, FRASEMOT_TUP, HELP_DICT, RIMAS, GUILDS
 
 intents = nextcord.Intents.default()
 intents.message_content = True
 
-bot = commands.Bot(command_prefix=PREFIJO,intents=intents)
+bot = commands.Bot(command_prefix=PREFIJO, intents=intents)
 
 #-------------------------------Funciones------------------------------------#
 
-@bot.command()
-async def test(ctx, *, arg):
-    await ctx.send(arg)
 
+@bot.command(description="Devuelve la cantidad de caracteres de lo que pongas")
+async def len(ctx, *, arg):
+    await ctx.send(len(arg))
+
+
+@bot.slash_command(description="saludante", guild_ids=GUILDS)
+async def hello(interaction: nextcord.Interaction):
+    await interaction.send("Hello!")
 
 # def longitud_palabras(msg):
 #     # Mide la cantidad de palabras ingresadas
