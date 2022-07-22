@@ -1,7 +1,8 @@
 import nextcord
-from  nextcord import Interaction, SlashOption
+from nextcord import Interaction, SlashOption
 from nextcord.ext import commands
 import os
+import random
 from keep_alive import keep_alive
 from Variables import PREFIJO, FRASEMOT_TUP, HELP_DICT, RIMAS, GUILDS
 
@@ -12,10 +13,12 @@ bot = commands.Bot(command_prefix=PREFIJO, intents=intents)
 
 #-------------------------------Funciones------------------------------------#
 
+
 @bot.slash_command(guild_ids=GUILDS, description="Devuelve la cantidad de caracteres de lo que pongas")
 async def longitud(
     interaction: Interaction,
-    frase: str = SlashOption(description="Ingrese lo que quiere medir", required=True),
+    frase: str = SlashOption(
+        description="Ingrese lo que quiere medir", required=True),
 ):
     await interaction.response.send_message(f"Cantidad de caracteres: {len(frase)}")
 
@@ -365,13 +368,26 @@ async def longitud(
 
 #-------------------------------Al ejecutar-----------------------------------#
 
+@bot.listen('on_message')
+async def rimas(msg):
+    if msg.author == bot.user:
+        return
+
+    for numero in RIMAS:
+        if msg.endswith(numero):
+            if isinstance(RIMAS[numero], str):
+                rima = RIMAS[numero]
+                await msg.channel.send(rima)
+                return
+            if isinstance(RIMAS[numero], tuple):
+                rima = random.choice(RIMAS[numero])
+                await msg.channel.send(rima)
+                return
+
 
 @bot.event
 async def on_ready():
     print(f"{bot.user} se inicio correctamente.")
-
-
-#------------------------------Final------------------------------------------#
 
 keep_alive()
 bot.run(os.getenv("TOKEN"))
