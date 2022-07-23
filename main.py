@@ -40,15 +40,19 @@ async def rimas(
     embed_rimas.set_author(name=interaction.user.name,
                            icon_url=interaction.user.display_avatar.url)
 
+    b = True
     for rima in list(RIMAS)[(pagina-1)*TAMAÑO_EMBED:(pagina-1)*TAMAÑO_EMBED+TAMAÑO_EMBED]:
         valor = RIMAS[rima]
 
         if isinstance(valor, tuple):
             valor = ""
-            for item in RIMAS[rimas]:
+            for item in RIMAS[rima][:-1]:
                 valor += item + " / "
+            valor += RIMAS[rima][-1]
 
-        embed_rimas.add_field(name=rima, value=valor)
+        embed_rimas.add_field(name=rima, value=valor, inline=b)
+
+        b = False if b else True
 
     await interaction.response.send_message(embed=embed_rimas)
 
