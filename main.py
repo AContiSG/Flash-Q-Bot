@@ -24,15 +24,6 @@ async def longitud(
     await interaction.response.send_message(f"Cantidad de caracteres: {len(frase)}")
 
 
-@bot.slash_command(guild_ids=GUILDS, description="Devuelve la cantidad de caracteres de lo que pongas")
-async def longitud(
-    interaction: Interaction,
-    frase: str = SlashOption(
-        description="Ingrese lo que quiere medir", required=True),
-):
-    await interaction.response.send_message(f"Cantidad de caracteres: {len(frase)}")
-
-
 @bot.slash_command(guild_ids=GUILDS, description="Lista de rimas")
 async def rimas(
     interaction: Interaction,
@@ -43,9 +34,9 @@ async def rimas(
 ):
     embed_rimas = nextcord.Embed(
         title="Help",
-        colour=nextcord.Colour.light_gray(),
-        footer=f"Página {pagina}"
+        colour=nextcord.Colour.light_gray()
     )
+    embed_rimas.set_footer(text=f"Página {pagina}")
     for rima in list(RIMAS)[(pagina-1)*TAMAÑO_EMBED:(pagina-1)*TAMAÑO_EMBED+TAMAÑO_EMBED]:
         embed_rimas.add_field(name=rima, value=RIMAS[rima])
 
