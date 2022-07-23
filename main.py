@@ -34,11 +34,21 @@ async def rimas(
 ):
     embed_rimas = nextcord.Embed(
         title="Help",
-        colour=nextcord.Colour.light_gray()
+        colour=nextcord.Colour.random()
     )
     embed_rimas.set_footer(text=f"Página {pagina}")
+    embed_rimas.set_author(name=interaction.user.name,
+                           icon_url=interaction.user.display_avatar.url)
+
     for rima in list(RIMAS)[(pagina-1)*TAMAÑO_EMBED:(pagina-1)*TAMAÑO_EMBED+TAMAÑO_EMBED]:
-        embed_rimas.add_field(name=rima, value=RIMAS[rima])
+        valor = RIMAS[rima]
+
+        if isinstance(valor, tuple):
+            valor = ""
+            for item in RIMAS[rimas]:
+                valor += item + " / "
+
+        embed_rimas.add_field(name=rima, value=valor)
 
     await interaction.response.send_message(embed=embed_rimas)
 
