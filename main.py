@@ -1,3 +1,5 @@
+import youtube_dl
+import asyncio
 import nextcord
 from nextcord import Interaction, SlashOption
 from nextcord.ext import commands
@@ -28,7 +30,7 @@ async def longitud(
 async def rimas(
     interaction: Interaction,
     pagina: int = SlashOption(
-        name="página",
+        name="Página",
         choices=[i for i in range(1, math.ceil(len(RIMAS)/TAMAÑO_EMBED)+1)],
     )
 ):
@@ -58,47 +60,69 @@ async def rimas(
 
     await interaction.response.send_message(embed=embed_rimas)
 
-"""
-async def funcion_help(mensaje):
-    em_help = discord.Embed(
-        title="Help",
-        colour=discord.Colour.light_gray()
-    )
 
-    contenido_analizado_1 = analizar_contenido(mensaje.content, 1)
+ffmpeg_options = {"options": "-vn"}
 
-    if contenido_analizado_1 == "rimas":
-        numero_pag = analizar_contenido(mensaje.content, 2)
 
-        if numero_pag:
-            pagina_deseada = int(numero_pag) - 1
+class Music(commands.Cog):
+    def __init__(self, bot):
+        self.bot = bot
+
+    @commands.command()
+    async def join(self, ctx, *, channel: nextcord.VoiceChannel):
+        """Joins a voice channel"""
+
+        if ctx.voice_client is not None:
+            return await ctx.voice_client.move_to(channel)
+
+        await channel.connect()
+
+    @bot.slash_command(guild_ids=GUILDS, description="Reproduce un audio")
+    async def play(self, interaction: Interaction,
+                   audio: str = SlashOption(
+            name="Audio")):
+        """Plays a file from the local filesystem"""
+
+        if interaction.guild.voice_client is not None:
+            await interaction.guild.voice_client.move_to(interaction.message.author.voice.channel)
         else:
-            numero_pag = 1
-            pagina_deseada = 0
+            await interaction.message.author.voice.channel.connect()
 
-        if int(numero_pag) > len(TUPLA_RIMAS) or int(numero_pag) < 1:
-            await mensaje.channel.send("Esa pagina no existe")
-            return
+        source = nextcord.PCMVolumeTransformer(
+            nextcord.FFmpegPCMAudio(f"sonidos/{audio}.wav"))
+        interaction.guild.voice_client.play(source, after=lambda e: print(
+            f"Player error: {e}") if e else None)
 
-        for rimas in TUPLA_RIMAS[pagina_deseada]:
-            if isinstance(RIMAS[rimas], tuple):
-                suma_rimas = ""
-                for item in RIMAS[rimas]:
-                    suma_rimas += item + " / "
-                em_help.add_field(name=rimas, value=suma_rimas, inline=False)
-            if isinstance(RIMAS[rimas], str):
-                em_help.add_field(name=rimas, value=RIMAS[rimas], inline=False)
+        await interaction.response.send_message(f"Now playing: {audio}")
 
-        em_help.set_footer(text=f"Rimas {pagina_deseada + 1}")
-        await mensaje.channel.send(embed=em_help)
+    # @ commands.command()
+    # async def volume(self, ctx, volume: int):
+    #     """Changes the player's volume"""
 
-    elif contenido_analizado_1 == "comandos" or contenido_analizado_1 == None:
-        for comandos in HELP_DICT.keys():
-            em_help.add_field(name=PREFIJO + comandos,
-                              value=HELP_DICT[comandos], inline=False)
-        em_help.set_footer(text="Comandos")
-        await mensaje.channel.send(embed=em_help)
-"""
+    #     if ctx.voice_client is None:
+    #         return await ctx.send("Not connected to a voice channel.")
+
+    #     ctx.voice_client.source.volume = volume / 100
+    #     await ctx.send(f"Changed volume to {volume}%")
+
+    @ commands.command()
+    async def stop(self, ctx):
+        """Stops and disconnects the bot from voice"""
+
+        await ctx.voice_client.disconnect()
+
+    @ play.before_invoke
+    async def ensure_voice(self, ctx):
+        if ctx.voice_client is None:
+            if ctx.author.voice:
+                await ctx.author.voice.channel.connect()
+            else:
+                await ctx.send("You are not connected to a voice channel.")
+                raise commands.CommandError(
+                    "Author not connected to a voice channel.")
+        elif ctx.voice_client.is_playing():
+            ctx.voice_client.stop()
+
 
 # def dividir_listas(lista_dividible, tipo):
 #     # Divide una lista grande en una tupla de listas
@@ -445,7 +469,7 @@ async def funcion_help(mensaje):
 
 #-------------------------------Al ejecutar-----------------------------------#
 
-@bot.listen('on_message')
+@ bot.listen('on_message')
 async def rimas(msg):
     if msg.author == bot.user:
         return
@@ -462,9 +486,10 @@ async def rimas(msg):
                 return
 
 
-@bot.event
+@ bot.event
 async def on_ready():
     print(f"{bot.user} se inicio correctamente.")
 
 keep_alive()
+bot.add_cog(Music(bot))
 bot.run(os.getenv("TOKEN"))
