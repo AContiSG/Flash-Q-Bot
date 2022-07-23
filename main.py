@@ -374,7 +374,7 @@ async def rimas(msg):
         return
 
     for numero in RIMAS:
-        if msg.endswith(numero):
+        if msg.content.endswith(numero):
             if isinstance(RIMAS[numero], str):
                 rima = RIMAS[numero]
                 await msg.channel.send(rima)
