@@ -1,5 +1,3 @@
-import youtube_dl
-import asyncio
 import nextcord
 from nextcord import Interaction, SlashOption
 from nextcord.ext import commands
@@ -64,6 +62,25 @@ async def rimas(
 ffmpeg_options = {"options": "-vn"}
 
 
+@bot.slash_command(guild_ids=GUILDS, description="Reproduce un audio")
+async def play(self, interaction: Interaction,
+               audio: str = SlashOption(
+                   name="Audio")):
+    """Plays a file from the local filesystem"""
+
+    if interaction.guild.voice_client is not None:
+        await interaction.guild.voice_client.move_to(interaction.message.author.voice.channel)
+    else:
+        await interaction.message.author.voice.channel.connect()
+
+    source = nextcord.PCMVolumeTransformer(
+        nextcord.FFmpegPCMAudio(f"sonidos/{audio}.wav"))
+    interaction.guild.voice_client.play(source, after=lambda e: print(
+        f"Player error: {e}") if e else None)
+
+    await interaction.response.send_message(f"Now playing: {audio}")
+
+
 class Music(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -76,24 +93,6 @@ class Music(commands.Cog):
             return await ctx.voice_client.move_to(channel)
 
         await channel.connect()
-
-    @bot.slash_command(guild_ids=GUILDS, description="Reproduce un audio")
-    async def play(self, interaction: Interaction,
-                   audio: str = SlashOption(
-            name="Audio")):
-        """Plays a file from the local filesystem"""
-
-        if interaction.guild.voice_client is not None:
-            await interaction.guild.voice_client.move_to(interaction.message.author.voice.channel)
-        else:
-            await interaction.message.author.voice.channel.connect()
-
-        source = nextcord.PCMVolumeTransformer(
-            nextcord.FFmpegPCMAudio(f"sonidos/{audio}.wav"))
-        interaction.guild.voice_client.play(source, after=lambda e: print(
-            f"Player error: {e}") if e else None)
-
-        await interaction.response.send_message(f"Now playing: {audio}")
 
     # @ commands.command()
     # async def volume(self, ctx, volume: int):
