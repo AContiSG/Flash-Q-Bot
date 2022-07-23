@@ -1,6 +1,6 @@
 PREFIJO = "$"
 GUILDS = [643940257879949322, 358991360529006592, 922646454944808981]
-TAMAÑO_EMBED = 20
+TAMAÑO_EMBED = 10
 
 # Posibles frases motivadoras
 FRASEMOT_TUP = ("mmmmm yeah",
@@ -90,7 +90,7 @@ DEVICE VENDOR: WI
 # Responde con el valor cuando termina con la clave
 RIMAS = {
     "000": "Esto son puras rimas de albañil",
-    "100": "La tengo como un electrotrén",
+    "100": "La tengo como un trén",
     "00": "Mis huevos somnolientos",
     "90": "La mia desorienta",
     "80": "La mia atormenta",
@@ -101,10 +101,10 @@ RIMAS = {
     "30": "La mia sabe a menta",
     "20": "Mi pene en tu mente",
     "15": "Tu culo +15 papu lince",
-    "14": ("Cuidado no la forces", "A vos te la metió Jorge", "jaja Alexelcapo"),
+    "14": ("A vos te la metió Jorge", "Te pongo en cuatro mirando al norte"),
     "13": "En tu culo se me cuece",
     "12": "Te la meto sin que roce",
-    "11": "la tengo de bronce",
+    "11": "La tengo de bronce",
     "10": "En el culo te la ves",
     "9": "En el culo se te mueve",
     "8": "El culo te abrocho",

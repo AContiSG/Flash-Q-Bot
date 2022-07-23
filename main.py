@@ -33,14 +33,14 @@ async def rimas(
     )
 ):
     embed_rimas = nextcord.Embed(
-        title="Help",
+        title="Rimas posibles",
         colour=nextcord.Colour.random()
     )
     embed_rimas.set_footer(text=f"Página {pagina}")
     embed_rimas.set_author(name=interaction.user.name,
                            icon_url=interaction.user.display_avatar.url)
 
-    b = True
+    b = True  # Contador raro para que cada 2 fields inserte un field vacio
     for rima in list(RIMAS)[(pagina-1)*TAMAÑO_EMBED:(pagina-1)*TAMAÑO_EMBED+TAMAÑO_EMBED]:
         valor = RIMAS[rima]
 
@@ -50,7 +50,9 @@ async def rimas(
                 valor += item + " / "
             valor += RIMAS[rima][-1]
 
-        embed_rimas.add_field(name=rima, value=valor, inline=b)
+        embed_rimas.add_field(name=rima, value=valor)
+        if not b:
+            embed_rimas.add_field(name="\u200b", value="\u200b")
 
         b = False if b else True
 
