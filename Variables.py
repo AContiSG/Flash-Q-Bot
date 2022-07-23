@@ -1,6 +1,6 @@
 PREFIJO = "$"
-
 GUILDS = [643940257879949322, 358991360529006592, 922646454944808981]
+TAMAÑO_EMBED = 20
 
 # Posibles frases motivadoras
 FRASEMOT_TUP = ("mmmmm yeah",
@@ -118,6 +118,7 @@ RIMAS = {
     "0": "Te la meto en el trasero",
     "O.o": "o.O",
     "o.O": "O.o",
+    "Que": "so",
     "que": "so",
     "yeah": "sex",
     "yea": "sex",

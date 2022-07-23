@@ -3,8 +3,9 @@ from nextcord import Interaction, SlashOption
 from nextcord.ext import commands
 import os
 import random
+import math
 from keep_alive import keep_alive
-from Variables import PREFIJO, FRASEMOT_TUP, HELP_DICT, RIMAS, GUILDS
+from Variables import PREFIJO, FRASEMOT_TUP, HELP_DICT, RIMAS, GUILDS, TAMAÑO_EMBED
 
 intents = nextcord.Intents.default()
 intents.message_content = True
@@ -22,6 +23,75 @@ async def longitud(
 ):
     await interaction.response.send_message(f"Cantidad de caracteres: {len(frase)}")
 
+
+@bot.slash_command(guild_ids=GUILDS, description="Devuelve la cantidad de caracteres de lo que pongas")
+async def longitud(
+    interaction: Interaction,
+    frase: str = SlashOption(
+        description="Ingrese lo que quiere medir", required=True),
+):
+    await interaction.response.send_message(f"Cantidad de caracteres: {len(frase)}")
+
+
+@bot.slash_command(guild_ids=GUILDS, description="Lista de rimas")
+async def rimas(
+    interaction: Interaction,
+    pagina: int = SlashOption(
+        name="página",
+        choices=[i for i in range(1, math.ceil(len(RIMAS)/TAMAÑO_EMBED)+1)],
+    )
+):
+    embed_rimas = nextcord.Embed(
+        title="Help",
+        colour=nextcord.Colour.light_gray(),
+        footer=f"Página {pagina}"
+    )
+    for rima in list(RIMAS)[(pagina-1)*TAMAÑO_EMBED:(pagina-1)*TAMAÑO_EMBED+TAMAÑO_EMBED]:
+        embed_rimas.add_field(name=rima, value=RIMAS[rima])
+
+    await interaction.response.send_message(embed=embed_rimas)
+
+"""
+async def funcion_help(mensaje):
+    em_help = discord.Embed(
+        title="Help",
+        colour=discord.Colour.light_gray()
+    )
+
+    contenido_analizado_1 = analizar_contenido(mensaje.content, 1)
+
+    if contenido_analizado_1 == "rimas":
+        numero_pag = analizar_contenido(mensaje.content, 2)
+
+        if numero_pag:
+            pagina_deseada = int(numero_pag) - 1
+        else:
+            numero_pag = 1
+            pagina_deseada = 0
+
+        if int(numero_pag) > len(TUPLA_RIMAS) or int(numero_pag) < 1:
+            await mensaje.channel.send("Esa pagina no existe")
+            return
+
+        for rimas in TUPLA_RIMAS[pagina_deseada]:
+            if isinstance(RIMAS[rimas], tuple):
+                suma_rimas = ""
+                for item in RIMAS[rimas]:
+                    suma_rimas += item + " / "
+                em_help.add_field(name=rimas, value=suma_rimas, inline=False)
+            if isinstance(RIMAS[rimas], str):
+                em_help.add_field(name=rimas, value=RIMAS[rimas], inline=False)
+
+        em_help.set_footer(text=f"Rimas {pagina_deseada + 1}")
+        await mensaje.channel.send(embed=em_help)
+
+    elif contenido_analizado_1 == "comandos" or contenido_analizado_1 == None:
+        for comandos in HELP_DICT.keys():
+            em_help.add_field(name=PREFIJO + comandos,
+                              value=HELP_DICT[comandos], inline=False)
+        em_help.set_footer(text="Comandos")
+        await mensaje.channel.send(embed=em_help)
+"""
 
 # def dividir_listas(lista_dividible, tipo):
 #     # Divide una lista grande en una tupla de listas
